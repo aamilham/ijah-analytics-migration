@@ -36,4 +36,61 @@ Pembaruan website IJAH Analytics dilakukan untuk:
 
 ### Instalasi dan Penggunaan
 
-Saat ini belum ada petunjuk instalasi dan penggunaan karena yang sedang mengerjakan juga bingung gimana cara makenya.
+Saat ini tidak ada instruksi instalasi yang tersedia.
+
+### Komponen
+
+- **Database**
+- **Crawler**
+- **Inserter**
+- **Source**
+- **Web**
+  - **Front-end**
+    - Angular: [https://angular.io/](https://angular.io/)
+  - **Back-end**
+    - PHP-backend
+    - NodeJS-backend
+- **Predictor**
+  - Compound-protein connectivity predictor
+- **Feature**
+  - Similarity
+  - Classifier
+  - Cluster
+  - Dataset
+  - Compound synergy predictor
+
+### Dependencies (Old)
+
+Dependencies yang digunakan pada website lama:
+- numpy >= 1.12.0
+- scipy >= 0.18.1
+- psycopg2 >= 2.6.2
+- scikit-learn >= 0.18.1
+- PHP >= 5.5.9
+- PostgreSQL >= 9.6.1
+
+### Dependencies (New)
+
+Dependencies yang kemungkinan kami gunakan kedepannya:
+- numpy >= 1.24.0
+- scipy >= 1.10.0
+- psycopg2 >= 2.9.7
+- scikit-learn >= 1.3.0
+- PHP >= 8.2.0
+- PostgreSQL >= 15.0
+- and more (see other READMEs)
+
+### To Do List
+
+- Mengupgrade versi PHP untuk meningkatkan keamanan dan performa
+- Mengupgrade versi dependency untuk meningkatkan keamanan dan performa.
+- Meningkatkan antarmuka pengguna agar lebih responsif dan intuitif.
+- Mengoptimalkan performa website untuk meningkatkan kecepatan akses.
+
+### Lisensi
+
+Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+
+### Kontak
+
+Jika Anda memiliki pertanyaan atau memerlukan informasi lebih lanjut, silakan hubungi kami di [support@ijahanalytics.com](mailto:support@ijahanalytics.com).
