@@ -1,3 +1,12 @@
+/* change list : aamilham
+1. change var to const
+2. add cors
+3. add PORT from .env
+4. change parsing body to json
+5. change timestamp code 
+6. change function method to arrow function
+7. change res status from json to response code */
+
 const express = require('express');
 const app = express();
 
