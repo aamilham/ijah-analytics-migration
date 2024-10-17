@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-about',
-  template: `<div class="container mt-3"><h1>About Us</h1></div>`,
-  standalone: true,
+  selector: 'app-about', // The selector for the AboutComponent
+  templateUrl: './about.component.html', // The HTML file that contains the template
+  styleUrls: ['./about.component.css'], // The CSS file for the AboutComponent styles
 })
-export class AboutComponent {}
+export class AboutComponent {
+  // No additional logic is needed if this is a static page
+}

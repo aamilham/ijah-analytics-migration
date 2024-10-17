@@ -1,15 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <!-- Logo -->
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" routerLink="/">
       <img
-        src="assets/logo.png"
+        src="assets/img/logo.png"
         alt="Logo"
-        width="30"
-        height="30"
-        class="d-inline-block align-top"
+        class="d-inline-block align-top img-fluid"
       />
-      Ijah v1
     </a>
 
     <!-- Tombol toggle untuk mobile dengan Offcanvas -->
@@ -45,23 +42,24 @@
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <!-- Item menu untuk mobile -->
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#"> Home </a>
+            <a class="nav-link active" aria-current="page" routerLink="/"
+              >Home</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"> Download </a>
+            <a class="nav-link" routerLink="/download">Download</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"> Upload </a>
-          </li>
-          <!-- Submenu dalam list biasa -->
-          <li class="nav-item">
-            <a class="nav-link" href="#">Help/FAQ</a>
+            <a class="nav-link" routerLink="/upload">Upload</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"> Contact </a>
+            <a class="nav-link" routerLink="/help">Help/FAQ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"> About </a>
+            <a class="nav-link" routerLink="/contact">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/about">About</a>
           </li>
         </ul>
       </div>
@@ -75,22 +73,22 @@
       <ul class="navbar-nav">
         <!-- Item menu untuk desktop -->
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"> Home </a>
+          <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"> Download </a>
+          <a class="nav-link" routerLink="/download">Download</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"> Upload </a>
+          <a class="nav-link" routerLink="/upload">Upload</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Help/FAQ</a>
+          <a class="nav-link" routerLink="/help">Help/FAQ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"> Contact </a>
+          <a class="nav-link" routerLink="/contact">Contact</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"> About </a>
+          <a class="nav-link" routerLink="/about">About</a>
         </li>
       </ul>
     </div>

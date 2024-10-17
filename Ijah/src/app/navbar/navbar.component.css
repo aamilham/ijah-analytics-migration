@@ -1,11 +1,12 @@
 /* Contoh gaya tambahan (opsional) */
 .navbar-brand img {
-  max-height: 30px;
+  max-width: 25vh; /* Sesuaikan nilai ini sesuai keinginan */
+  height: auto; /* Memastikan tinggi gambar mengikuti rasio aspek */
 }
 
 .navbar-nav .nav-link {
   font-size: 1.1rem;
-  padding-left: 20px;
+  margin-right: 1rem;
 }
 
 /* Warna latar belakang header offcanvas */
