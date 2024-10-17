@@ -1,0 +1,73 @@
+/* Container Styling */
+.container {
+  max-width: 800px;
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #495057;
+}
+
+textarea,
+input {
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s;
+}
+
+textarea:focus,
+input:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 8px rgba(128, 189, 255, 0.5);
+  outline: none;
+}
+
+/* Invalid fields */
+.is-invalid {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875rem;
+}
+
+.btn-success {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  background-color: #28a745;
+  transition: background-color 0.3s;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+#successMessage {
+  font-size: 1.1rem;
+  text-align: center;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 20px;
+  display: none;
+}
+
+#successMessage.d-none {
+  display: none;
+}
+
+.modal-content {
+  border-radius: 8px;
+}
