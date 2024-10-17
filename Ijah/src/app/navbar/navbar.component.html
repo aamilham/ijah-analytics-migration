@@ -14,7 +14,7 @@
 
     <!-- Tombol toggle untuk mobile dengan Offcanvas -->
     <button
-      class="navbar-toggler"
+      class="navbar-toggler d-lg-none"
       type="button"
       data-bs-toggle="offcanvas"
       data-bs-target="#offcanvasNavbar"
@@ -24,12 +24,13 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Offcanvas Menu -->
+    <!-- Offcanvas Menu (Hanya untuk Mobile) -->
     <div
-      class="offcanvas offcanvas-end"
+      class="offcanvas offcanvas-end d-lg-none"
       tabindex="-1"
       id="offcanvasNavbar"
       aria-labelledby="offcanvasNavbarLabel"
+      data-bs-backdrop="false"
     >
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
@@ -42,97 +43,54 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <!-- Item menu untuk mobile -->
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">
-              <i class="bi bi-house-door-fill"></i> Home
-            </a>
+            <a class="nav-link active" aria-current="page" href="#"> Home </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="bi bi-download"></i> Download
-            </a>
+            <a class="nav-link" href="#"> Download </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="bi bi-upload"></i> Upload
-            </a>
+            <a class="nav-link" href="#"> Upload </a>
           </li>
-          <!-- Contoh submenu dalam dropdown -->
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="helpDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="bi bi-question-circle-fill"></i> Help/FAQ
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="helpDropdown">
-              <li><a class="dropdown-item" href="#">FAQ</a></li>
-              <li><a class="dropdown-item" href="#">Support</a></li>
-            </ul>
-          </li>
-          <!-- Item menu lainnya -->
+          <!-- Submenu dalam list biasa -->
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="bi bi-envelope-fill"></i> Contact
-            </a>
+            <a class="nav-link" href="#">Help/FAQ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="bi bi-info-circle-fill"></i> About
-            </a>
+            <a class="nav-link" href="#"> Contact </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"> About </a>
           </li>
         </ul>
       </div>
     </div>
 
     <!-- Navbar untuk tampilan desktop -->
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <div
+      class="collapse navbar-collapse justify-content-end d-none d-lg-flex"
+      id="navbarNav"
+    >
       <ul class="navbar-nav">
-        <!-- Item menu yang sama dengan offcanvas -->
+        <!-- Item menu untuk desktop -->
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">
-            <i class="bi bi-house-door-fill"></i> Home
-          </a>
+          <a class="nav-link active" aria-current="page" href="#"> Home </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="bi bi-download"></i> Download
-          </a>
+          <a class="nav-link" href="#"> Download </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"> <i class="bi bi-upload"></i> Upload </a>
-        </li>
-        <!-- Contoh submenu dalam dropdown -->
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="helpDropdownDesktop"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i class="bi bi-question-circle-fill"></i> Help/FAQ
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="helpDropdownDesktop">
-            <li><a class="dropdown-item" href="#">FAQ</a></li>
-            <li><a class="dropdown-item" href="#">Support</a></li>
-          </ul>
-        </li>
-        <!-- Item menu lainnya -->
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="bi bi-envelope-fill"></i> Contact
-          </a>
+          <a class="nav-link" href="#"> Upload </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="bi bi-info-circle-fill"></i> About
-          </a>
+          <a class="nav-link" href="#">Help/FAQ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"> Contact </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"> About </a>
         </li>
       </ul>
     </div>

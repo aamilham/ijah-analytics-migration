@@ -28,3 +28,7 @@
 .nav-link .bi {
   margin-right: 5px;
 }
+
+.offcanvas-backdrop {
+  display: none !important;
+}

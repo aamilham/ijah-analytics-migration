@@ -19,7 +19,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public",
+                "input": "src/assets",
                 "output": "/assets"
               }
             ],
@@ -30,18 +30,7 @@
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ],
-            "vendorChunk": false, // Jika diperlukan
-            "optimization": {
-              "scripts": true,
-              "styles": {
-                "minify": true,
-                "inlineCritical": false
-              },
-              "fonts": true
-            },
-            "extractLicenses": true, // Jika diperlukan
-            "buildOptimizer": true // Jika diperlukan
+            ]
           },
           "configurations": {
             "production": {
@@ -83,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Ijah:build:production"
+              "buildTarget": "Ijah:build:production"
             },
             "development": {
-              "browserTarget": "Ijah:build:development"
+              "buildTarget": "Ijah:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Ijah:build"
+            "buildTarget": "Ijah:build"
           }
         },
         "test": {
@@ -107,7 +96,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public",
+                "input": "src/assets",
                 "output": "/assets"
               }
             ],
