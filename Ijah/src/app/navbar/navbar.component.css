@@ -1,0 +1,30 @@
+/* Contoh gaya tambahan (opsional) */
+.navbar-brand img {
+  max-height: 30px;
+}
+
+.navbar-nav .nav-link {
+  font-size: 1.1rem;
+  padding-left: 20px;
+}
+
+/* Warna latar belakang header offcanvas */
+.offcanvas-header {
+  background-color: #f8f9fa;
+}
+
+/* Efek hover pada nav-link */
+.nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+}
+
+/* Gaya untuk link aktif */
+.nav-link.active {
+  font-weight: bold;
+}
+
+/* Menyesuaikan ukuran ikon */
+.nav-link .bi {
+  margin-right: 5px;
+}
