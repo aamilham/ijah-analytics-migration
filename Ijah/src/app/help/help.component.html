@@ -1,17 +1,17 @@
 <div class="container mt-5">
-  <h1 class="text-center mb-4">Help / FAQ</h1>
+  <h1 class="text-center mb-5">Help / FAQ</h1>
 
   <div id="accordion">
-    <!-- FAQ Section 1 -->
+    <!-- FAQ 1 -->
     <div class="card mb-3">
-      <div class="card-header" id="faqHeading1">
+      <div class="card-header" id="heading1">
         <h5 class="mb-0">
           <button
-            class="btn btn-link collapsed"
-            data-toggle="collapse"
-            data-target="#faq1"
-            aria-expanded="false"
-            aria-controls="faq1"
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse1"
+            aria-expanded="true"
+            aria-controls="collapse1"
           >
             What is Ijah used for?
           </button>
@@ -19,34 +19,45 @@
       </div>
 
       <div
-        id="faq1"
-        class="collapse"
-        aria-labelledby="faqHeading1"
-        data-parent="#accordion"
+        id="collapse1"
+        class="collapse show"
+        aria-labelledby="heading1"
+        data-bs-parent="#accordion"
       >
         <div class="card-body">
           Ijah is used for:
           <ul>
-            <li>Finding connectivity from plants to proteins to diseases.</li>
-            <li>Finding targeted proteins/diseases from compounds.</li>
             <li>
-              Validating/cross-checking plant compositions like Jamu formulas.
+              Given plants/compounds and proteins/diseases, you want to know the
+              connectivity from plants to compounds to proteins to diseases.
+            </li>
+            <li>
+              Given plants/compounds, you want to know targeted
+              proteins/diseases.
+            </li>
+            <li>
+              Given proteins/diseases, you want to know plants/compounds that
+              target (potentially) cure such proteins/diseases.
+            </li>
+            <li>
+              Validating/cross-checking whether some plant compositions, i.e.,
+              Jamu formulas, have certain efficacy.
             </li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- FAQ Section 2 -->
+    <!-- FAQ 2 -->
     <div class="card mb-3">
-      <div class="card-header" id="faqHeading2">
+      <div class="card-header" id="heading2">
         <h5 class="mb-0">
           <button
-            class="btn btn-link collapsed"
-            data-toggle="collapse"
-            data-target="#faq2"
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse2"
             aria-expanded="false"
-            aria-controls="faq2"
+            aria-controls="collapse2"
           >
             How can we download all data available in Ijah?
           </button>
@@ -54,10 +65,10 @@
       </div>
 
       <div
-        id="faq2"
+        id="collapse2"
         class="collapse"
-        aria-labelledby="faqHeading2"
-        data-parent="#accordion"
+        aria-labelledby="heading2"
+        data-bs-parent="#accordion"
       >
         <div class="card-body">
           Please go to our <a href="#">Downloads menu</a>.
@@ -65,16 +76,45 @@
       </div>
     </div>
 
-    <!-- FAQ Section 3 -->
+    <!-- FAQ 3 -->
     <div class="card mb-3">
-      <div class="card-header" id="faqHeading3">
+      <div class="card-header" id="heading3">
         <h5 class="mb-0">
           <button
-            class="btn btn-link collapsed"
-            data-toggle="collapse"
-            data-target="#faq3"
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse3"
             aria-expanded="false"
-            aria-controls="faq3"
+            aria-controls="collapse3"
+          >
+            Where can I see the IJAH Analytics usage manual?
+          </button>
+        </h5>
+      </div>
+
+      <div
+        id="collapse3"
+        class="collapse"
+        aria-labelledby="heading3"
+        data-bs-parent="#accordion"
+      >
+        <div class="card-body">
+          Please go to our <a href="#">Downloads menu</a>, see the Documents
+          section.
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 4 -->
+    <div class="card mb-3">
+      <div class="card-header" id="heading4">
+        <h5 class="mb-0">
+          <button
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse4"
+            aria-expanded="false"
+            aria-controls="collapse4"
           >
             How can we report an issue?
           </button>
@@ -82,28 +122,28 @@
       </div>
 
       <div
-        id="faq3"
+        id="collapse4"
         class="collapse"
-        aria-labelledby="faqHeading3"
-        data-parent="#accordion"
+        aria-labelledby="heading4"
+        data-bs-parent="#accordion"
       >
         <div class="card-body">
-          The best way is to file an issue via our <a href="#">Contact menu</a>.
-          You can also open an issue in our <a href="#">public repository</a>.
+          The best way is to file any issue via the Contact menu. You can also
+          open an issue in our <a href="#">public repository</a>.
         </div>
       </div>
     </div>
 
-    <!-- FAQ Section 4 -->
+    <!-- FAQ 5 -->
     <div class="card mb-3">
-      <div class="card-header" id="faqHeading4">
+      <div class="card-header" id="heading5">
         <h5 class="mb-0">
           <button
-            class="btn btn-link collapsed"
-            data-toggle="collapse"
-            data-target="#faq4"
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse5"
             aria-expanded="false"
-            aria-controls="faq4"
+            aria-controls="collapse5"
           >
             How can we get the SQL dump of Ijah database?
           </button>
@@ -111,36 +151,64 @@
       </div>
 
       <div
-        id="faq4"
+        id="collapse5"
         class="collapse"
-        aria-labelledby="faqHeading4"
-        data-parent="#accordion"
+        aria-labelledby="heading5"
+        data-bs-parent="#accordion"
       >
-        <div class="card-body">Please contact us for further details.</div>
+        <div class="card-body">Please contact us.</div>
       </div>
     </div>
 
-    <!-- More FAQ Sections -->
+    <!-- FAQ 6 -->
     <div class="card mb-3">
-      <div class="card-header" id="faqHeading5">
+      <div class="card-header" id="heading6">
         <h5 class="mb-0">
           <button
-            class="btn btn-link collapsed"
-            data-toggle="collapse"
-            data-target="#faq5"
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse6"
             aria-expanded="false"
-            aria-controls="faq5"
+            aria-controls="collapse6"
           >
-            How to cite the work of Ijah Analytics?
+            Is the source code of IJAH Analytics publicly available?
           </button>
         </h5>
       </div>
 
       <div
-        id="faq5"
+        id="collapse6"
         class="collapse"
-        aria-labelledby="faqHeading5"
-        data-parent="#accordion"
+        aria-labelledby="heading6"
+        data-bs-parent="#accordion"
+      >
+        <div class="card-body">
+          Yes, please see our <a href="#">public repository</a>.
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 7 -->
+    <div class="card mb-3">
+      <div class="card-header" id="heading7">
+        <h5 class="mb-0">
+          <button
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse7"
+            aria-expanded="false"
+            aria-controls="collapse7"
+          >
+            How to cite the work of IJAH Analytics?
+          </button>
+        </h5>
+      </div>
+
+      <div
+        id="collapse7"
+        class="collapse"
+        aria-labelledby="heading7"
+        data-bs-parent="#accordion"
       >
         <div class="card-body">
           In the meantime, please use <a href="#">ijah_webserver_online.bib</a>.
@@ -148,6 +216,221 @@
       </div>
     </div>
 
-    <!-- Additional FAQs can go here -->
+    <!-- FAQ 8 -->
+    <div class="card mb-3">
+      <div class="card-header" id="heading8">
+        <h5 class="mb-0">
+          <button
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse8"
+            aria-expanded="false"
+            aria-controls="collapse8"
+          >
+            How many visitors have visited this IJAH Analytics?
+          </button>
+        </h5>
+      </div>
+
+      <div
+        id="collapse8"
+        class="collapse"
+        aria-labelledby="heading8"
+        data-bs-parent="#accordion"
+      >
+        <div class="card-body">
+          Please see the visitor log on the bottom-right of this page. The log
+          has been running since January 13th, 2017, 6:00 PM (GMT+7:00). For the
+          detailed statistics, please click inside the log area.
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 9 -->
+    <div class="card mb-3">
+      <div class="card-header" id="heading9">
+        <h5 class="mb-0">
+          <button
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse9"
+            aria-expanded="false"
+            aria-controls="collapse9"
+          >
+            Is there any online forum for Ijah users?
+          </button>
+        </h5>
+      </div>
+
+      <div
+        id="collapse9"
+        class="collapse"
+        aria-labelledby="heading9"
+        data-bs-parent="#accordion"
+      >
+        <div class="card-body">
+          Yes, please join us at ijah-users&#64;googlegroups.com.
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 10 -->
+    <div class="card mb-3">
+      <div class="card-header" id="heading10">
+        <h5 class="mb-0">
+          <button
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse10"
+            aria-expanded="false"
+            aria-controls="collapse10"
+          >
+            How to open .csv files? Which application should be used?
+          </button>
+        </h5>
+      </div>
+
+      <div
+        id="collapse10"
+        class="collapse"
+        aria-labelledby="heading10"
+        data-bs-parent="#accordion"
+      >
+        <div class="card-body">
+          You can open .csv files using standard text editors, such as WordPad,
+          Notepad++. You can also open them using MS Excel with "comma" as the
+          delimiter. When opening using MS Excel via "File -&gt; Open", please
+          make sure that you set the file types (to show/open) to "All Files".
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 11 -->
+    <div class="card mb-3">
+      <div class="card-header" id="heading11">
+        <h5 class="mb-0">
+          <button
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse11"
+            aria-expanded="false"
+            aria-controls="collapse11"
+          >
+            Is there any related links pertaining to Indonesia Jamu?
+          </button>
+        </h5>
+      </div>
+
+      <div
+        id="collapse11"
+        class="collapse"
+        aria-labelledby="heading11"
+        data-bs-parent="#accordion"
+      >
+        <div class="card-body">
+          Yes, we have listed several as follows:
+          <ul>
+            <li><a href="http://jamu.or.id/">http://jamu.or.id/</a></li>
+            <li><a href="http://jamu.ipb.ac.id/">http://jamu.ipb.ac.id/</a></li>
+            <li><a href="http://www.iherb.org/">http://www.iherb.org/</a></li>
+            <li><a href="http://www.herbs.org/">http://www.herbs.org/</a></li>
+            <li>
+              <a href="http://www.herbsociety.org/"
+                >http://www.herbsociety.org/</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 12 -->
+    <div class="card mb-3">
+      <div class="card-header" id="heading12">
+        <h5 class="mb-0">
+          <button
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse12"
+            aria-expanded="false"
+            aria-controls="collapse12"
+          >
+            Recommended links for further description about Indonesia plants?
+          </button>
+        </h5>
+      </div>
+
+      <div
+        id="collapse12"
+        class="collapse"
+        aria-labelledby="heading12"
+        data-bs-parent="#accordion"
+      >
+        <div class="card-body">
+          Good references for Indonesian plants include:
+          <a href="#">herbalisnusantara</a>.
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 13 -->
+    <div class="card mb-3">
+      <div class="card-header" id="heading13">
+        <h5 class="mb-0">
+          <button
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse13"
+            aria-expanded="false"
+            aria-controls="collapse13"
+          >
+            Our question is not in the list, where should we ask?
+          </button>
+        </h5>
+      </div>
+
+      <div
+        id="collapse13"
+        class="collapse"
+        aria-labelledby="heading13"
+        data-bs-parent="#accordion"
+      >
+        <div class="card-body">Please contact us.</div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="card mb-3">
+      <div class="card-header" id="heading14">
+        <h5 class="mb-0">
+          <button
+            class="btn btn-link"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse14"
+            aria-expanded="false"
+            aria-controls="collapse14"
+          >
+            Is there any disclaimer for IJAH Analytics?
+          </button>
+        </h5>
+      </div>
+
+      <div
+        id="collapse14"
+        class="collapse"
+        aria-labelledby="heading14"
+        data-bs-parent="#accordion"
+      >
+        <div class="card-body">
+          Yes. IJAH Analytics is provided free-of-charge in the hope that it
+          will be useful. We make no representation or warranty regarding
+          results obtained from using any information provided through this
+          server. We bear no responsibility for any incidental or consequential
+          damages or direct or indirect damages that result from the use of
+          results, data, or information, which have been provided through this
+          server.
+        </div>
+      </div>
+    </div>
   </div>
 </div>

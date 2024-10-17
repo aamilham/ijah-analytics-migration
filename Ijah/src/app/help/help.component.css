@@ -1,7 +1,5 @@
 .container {
   max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
 }
 
 h1 {
@@ -26,4 +24,51 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+.btn-link {
+  text-decoration: none;
+  color: #00563f;
+}
+
+.btn-link:hover {
+  color: #007b5e;
+}
+
+.card-header button {
+  width: 100%;
+  text-align: left;
+  color: #00563f;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-header button:hover {
+  color: #007b5e;
+}
+
+ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.card-header button {
+  font-weight: bold;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.card-header button:hover {
+  color: #0056b3;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  font-size: 1.1em;
+  line-height: 1.5;
 }
