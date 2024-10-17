@@ -67,7 +67,3 @@ input:focus {
 #successMessage.d-none {
   display: none;
 }
-
-.modal-content {
-  border-radius: 8px;
-}

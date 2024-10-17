@@ -1,29 +1,45 @@
 <div class="container mt-5">
   <h1 class="text-center mb-4">Contact Us</h1>
 
-  <!-- Form Contact menggunakan Reactive Forms -->
   <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
     <!-- Subject Options -->
     <div class="form-group row mb-3">
       <label class="col-sm-2 col-form-label">Subject:</label>
       <div class="col-sm-10">
-        <div
-          class="form-check form-check-inline"
-          *ngFor="let subject of subjects"
-        >
+        <div class="form-check form-check-inline">
           <input
             class="form-check-input"
             type="radio"
             formControlName="subject"
-            [value]="subject"
+            value="Question"
             required
           />
-          <label class="form-check-label">{{ subject }}</label>
+          <label class="form-check-label">Question</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            formControlName="subject"
+            value="Error/Bugs"
+            required
+          />
+          <label class="form-check-label">Error/Bugs</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            formControlName="subject"
+            value="Wishlist"
+            required
+          />
+          <label class="form-check-label">Wishlist</label>
         </div>
         <div
           *ngIf="
-            contactForm.get('subject').invalid &&
-            contactForm.get('subject').touched
+            contactForm.get('subject')?.invalid &&
+            contactForm.get('subject')?.touched
           "
           class="invalid-feedback"
         >
@@ -42,17 +58,12 @@
           rows="4"
           maxlength="500"
           placeholder="Your message"
-          [ngClass]="{
-            'is-invalid':
-              contactForm.get('message').invalid &&
-              contactForm.get('message').touched
-          }"
           required
         ></textarea>
         <div
           *ngIf="
-            contactForm.get('message').invalid &&
-            contactForm.get('message').touched
+            contactForm.get('message')?.invalid &&
+            contactForm.get('message')?.touched
           "
           class="invalid-feedback"
         >
@@ -69,16 +80,12 @@
           type="text"
           class="form-control"
           formControlName="name"
-          placeholder="YourFirstName YourLastName"
-          [ngClass]="{
-            'is-invalid':
-              contactForm.get('name').invalid && contactForm.get('name').touched
-          }"
+          placeholder="Your First Name and Last Name"
           required
         />
         <div
           *ngIf="
-            contactForm.get('name').invalid && contactForm.get('name').touched
+            contactForm.get('name')?.invalid && contactForm.get('name')?.touched
           "
           class="invalid-feedback"
         >
@@ -95,17 +102,13 @@
           type="email"
           class="form-control"
           formControlName="email"
-          placeholder="you@yourEmail.com"
-          [ngClass]="{
-            'is-invalid':
-              contactForm.get('email').invalid &&
-              contactForm.get('email').touched
-          }"
+          placeholder="you@youremail.com"
           required
         />
         <div
           *ngIf="
-            contactForm.get('email').invalid && contactForm.get('email').touched
+            contactForm.get('email')?.invalid &&
+            contactForm.get('email')?.touched
           "
           class="invalid-feedback"
         >
@@ -124,7 +127,7 @@
           type="text"
           class="form-control"
           formControlName="affiliation"
-          placeholder="Your university, organization, company, etc"
+          placeholder="Your affiliation"
         />
       </div>
     </div>
@@ -134,7 +137,7 @@
       <div class="col-sm-10 offset-sm-2">
         <button
           type="submit"
-          class="btn btn-success"
+          class="btn btn-primary"
           [disabled]="contactForm.invalid"
         >
           Submit
@@ -143,48 +146,7 @@
     </div>
   </form>
 
-  <!-- Pesan Berhasil -->
-  <div class="alert alert-success mt-3 d-none" id="successMessage">
+  <div *ngIf="contactForm.valid" class="alert alert-success mt-3">
     Your message has been sent successfully!
-  </div>
-
-  <!-- Modal Konfirmasi -->
-  <div
-    class="modal fade"
-    id="confirmationModal"
-    tabindex="-1"
-    aria-labelledby="confirmationModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">Are you sure you want to submit this form?</div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Cancel
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="confirmSubmit()"
-          >
-            Yes, Submit
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
 </div>

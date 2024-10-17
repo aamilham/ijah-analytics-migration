@@ -1,0 +1,29 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  font-family: "Roboto", sans-serif;
+  color: #00563f;
+  font-weight: 700;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+}
+
+.card-body {
+  background-color: #ffffff;
+  color: #333;
+}
+
+a {
+  color: #00563f;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
