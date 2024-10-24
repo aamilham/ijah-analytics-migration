@@ -7,17 +7,17 @@
 /* Heading and paragraph styling */
 .downloads-header h1 {
   font-weight: 700;
-  color: #007bff; /* Primary blue */
+  color: var(--primary-400); /* Use primary color from global */
 }
 
 .downloads-header p {
   font-size: 1.1rem;
-  color: #6c757d; /* Secondary text */
+  color: var(--neutral-500); /* Use neutral color from global */
 }
 
 /* Hover effects for table rows */
 .table-hover tbody tr:hover {
-  background-color: #f1f1f1;
+  background-color: var(--neutral-100); /* Light gray on hover */
 }
 
 /* Responsive table adjustments */
@@ -28,25 +28,25 @@
 
 /* Button styling */
 .btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: var(--primary-400); /* Use primary color from global */
+  border-color: var(--primary-400);
   transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #004085;
+  background-color: var(--primary-500); /* Darker primary on hover */
+  border-color: var(--primary-500);
 }
 
 .alert-warning {
-  background-color: #ffefc2;
-  color: #856404;
+  background-color: var(--yellow-100); /* Warning background */
+  color: var(--yellow-200); /* Warning text */
 }
 
 /* Focus effects for search input */
 input.form-control:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  border-color: var(--primary-400);
+  box-shadow: 0 0 0 0.2rem var(--primary-alpha-10);
 }
 
 /* Adjusting search button */
@@ -57,4 +57,3 @@ input.form-control:focus {
   justify-content: center;
   align-items: center;
 }
-    

@@ -1,4 +1,4 @@
-/* Mengatur tinggi penuh untuk html dan body */
+/* Global settings for html and body */
 html,
 body {
   height: 100%;
@@ -6,19 +6,19 @@ body {
   padding: 0;
 }
 
-/* Wrapper Flexbox untuk memastikan layout kolom */
+/* Flexbox wrapper to ensure layout columns */
 .content-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Menjaga tinggi minimal untuk memenuhi viewport */
+  min-height: 100vh; /* Ensures minimum height to cover viewport */
 }
 
-/* Membuat konten tumbuh untuk memenuhi ruang di antara header dan footer */
+/* Content grows to fill space between header and footer */
 .content {
   flex: 1;
 }
 
-/* Footer tetap berada di bagian bawah */
+/* Footer remains at the bottom */
 footer {
   background-color: #f1f1f1;
   padding: 20px;
@@ -42,4 +42,155 @@ footer small {
 #visitor-count {
   font-weight: bold;
   color: #007bff;
+}
+
+/* Global font family settings */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+/* Heading Styles */
+h1 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 700; /* Bold */
+  font-size: 58px;
+  line-height: 87px;
+  letter-spacing: 0px;
+}
+
+h2 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 700; /* Bold */
+  font-size: 48px;
+  line-height: 72px;
+  letter-spacing: 0px;
+}
+
+h4 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 700; /* Bold */
+  font-size: 34px;
+  line-height: 51px;
+  letter-spacing: 0px;
+}
+
+/* Body text styles */
+p,
+a,
+li {
+  font-family: "IBM Plex Sans Light Italic", sans-serif;
+  font-weight: 300; /* Light */
+  font-style: italic;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0px;
+}
+
+/* Specific styles for text sizes */
+.text-body-b1 {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.text-body-b2 {
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.text-body-b3 {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.text-body-b4 {
+  font-size: 10px;
+  line-height: 15px;
+}
+
+/* Define Color Variables */
+:root {
+  --primary-100: #b4e4bd;
+  --primary-200: #94d49e;
+  --primary-300: #6dbd76;
+  --primary-400: #46a54f;
+  --primary-500: #2d7d37;
+  --primary-alpha-10: rgba(46, 165, 79, 0.1);
+
+  --secondary-100: #b6e6b2;
+  --secondary-200: #92d285;
+  --secondary-300: #64c258;
+  --secondary-400: #3fa62f;
+  --secondary-500: #227c13;
+  --secondary-alpha-10: rgba(63, 166, 47, 0.1);
+
+  --neutral-100: #f7f7f7;
+  --neutral-200: #e2e2e2;
+  --neutral-300: #b6b6b6;
+  --neutral-400: #8a8a8a;
+  --neutral-500: #6b6b6b;
+  --neutral-600: #5b5b5b;
+  --neutral-700: #777777;
+  --neutral-800: #606060;
+  --neutral-900: #4a4a4a;
+  --neutral-1000: #333333;
+  --neutral-alpha-10: rgba(33, 33, 33, 0.1);
+
+  --red-100: #ff6a6a;
+  --red-200: #e83030;
+  --red-alpha-10: rgba(232, 48, 48, 0.1);
+
+  --yellow-100: #ffdd4b;
+  --yellow-200: #e8b000;
+  --yellow-alpha-10: rgba(232, 176, 0, 0.1);
+
+  --green-100: #40c979;
+  --green-200: #1eaa57;
+  --green-alpha-10: rgba(30, 170, 87, 0.1);
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: var(--primary-400);
+  border-color: var(--primary-400);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-400);
+  border-color: var(--secondary-400);
+}
+
+/* Text color usage */
+.text-primary {
+  color: var(--primary-400);
+}
+
+.text-neutral {
+  color: var(--neutral-500);
+}
+
+.alert-danger {
+  background-color: var(--red-100);
+  border-color: var(--red-200);
+}
+
+/* Background styles */
+.bg-primary {
+  background-color: var(--primary-100);
+}
+
+.bg-neutral {
+  background-color: var(--neutral-100);
+}
+
+/* Shadows */
+.shadow-primary {
+  box-shadow: 0 0.5rem 1rem rgba(46, 165, 79, 0.1);
 }

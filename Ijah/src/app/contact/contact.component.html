@@ -1,152 +1,155 @@
-<div class="container mt-5">
-  <h1 class="text-center mb-4">Contact Us</h1>
+<div class="full-height">
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Contact Us</h1>
 
-  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
-    <!-- Subject Options -->
-    <div class="form-group row mb-3">
-      <label class="col-sm-2 col-form-label">Subject:</label>
-      <div class="col-sm-10">
-        <div class="form-check form-check-inline">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+      <!-- Subject Options -->
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Subject:</label>
+        <div class="col-sm-10">
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              formControlName="subject"
+              value="Question"
+              required
+            />
+            <label class="form-check-label">Question</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              formControlName="subject"
+              value="Error/Bugs"
+              required
+            />
+            <label class="form-check-label">Error/Bugs</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              formControlName="subject"
+              value="Wishlist"
+              required
+            />
+            <label class="form-check-label">Wishlist</label>
+          </div>
+          <div
+            *ngIf="
+              contactForm.get('subject')?.invalid &&
+              contactForm.get('subject')?.touched
+            "
+            class="invalid-feedback"
+          >
+            Please select a subject.
+          </div>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div class="form-group row mb-3">
+        <label for="message" class="col-sm-2 col-form-label">Message:</label>
+        <div class="col-sm-10">
+          <textarea
+            class="form-control"
+            formControlName="message"
+            rows="4"
+            maxlength="500"
+            placeholder="Your message"
+            required
+          ></textarea>
+          <div
+            *ngIf="
+              contactForm.get('message')?.invalid &&
+              contactForm.get('message')?.touched
+            "
+            class="invalid-feedback"
+          >
+            Please enter a message (max 500 characters).
+          </div>
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="form-group row mb-3">
+        <label for="name" class="col-sm-2 col-form-label">Name:</label>
+        <div class="col-sm-10">
           <input
-            class="form-check-input"
-            type="radio"
-            formControlName="subject"
-            value="Question"
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Your First Name and Last Name"
             required
           />
-          <label class="form-check-label">Question</label>
+          <div
+            *ngIf="
+              contactForm.get('name')?.invalid &&
+              contactForm.get('name')?.touched
+            "
+            class="invalid-feedback"
+          >
+            Please enter your name.
+          </div>
         </div>
-        <div class="form-check form-check-inline">
+      </div>
+
+      <!-- Email -->
+      <div class="form-group row mb-3">
+        <label for="email" class="col-sm-2 col-form-label">Email:</label>
+        <div class="col-sm-10">
           <input
-            class="form-check-input"
-            type="radio"
-            formControlName="subject"
-            value="Error/Bugs"
+            type="email"
+            class="form-control"
+            formControlName="email"
+            placeholder="you@youremail.com"
             required
           />
-          <label class="form-check-label">Error/Bugs</label>
+          <div
+            *ngIf="
+              contactForm.get('email')?.invalid &&
+              contactForm.get('email')?.touched
+            "
+            class="invalid-feedback"
+          >
+            Please enter a valid email address.
+          </div>
         </div>
-        <div class="form-check form-check-inline">
+      </div>
+
+      <!-- Affiliation -->
+      <div class="form-group row mb-3">
+        <label for="affiliation" class="col-sm-2 col-form-label"
+          >Affiliation:</label
+        >
+        <div class="col-sm-10">
           <input
-            class="form-check-input"
-            type="radio"
-            formControlName="subject"
-            value="Wishlist"
-            required
+            type="text"
+            class="form-control"
+            formControlName="affiliation"
+            placeholder="Your affiliation"
           />
-          <label class="form-check-label">Wishlist</label>
-        </div>
-        <div
-          *ngIf="
-            contactForm.get('subject')?.invalid &&
-            contactForm.get('subject')?.touched
-          "
-          class="invalid-feedback"
-        >
-          Please select a subject.
         </div>
       </div>
-    </div>
 
-    <!-- Message -->
-    <div class="form-group row mb-3">
-      <label for="message" class="col-sm-2 col-form-label">Message:</label>
-      <div class="col-sm-10">
-        <textarea
-          class="form-control"
-          formControlName="message"
-          rows="4"
-          maxlength="500"
-          placeholder="Your message"
-          required
-        ></textarea>
-        <div
-          *ngIf="
-            contactForm.get('message')?.invalid &&
-            contactForm.get('message')?.touched
-          "
-          class="invalid-feedback"
-        >
-          Please enter a message (max 500 characters).
+      <!-- Submit Button -->
+      <div class="form-group row">
+        <div class="col-sm-10 offset-sm-2">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="contactForm.invalid"
+          >
+            Submit
+          </button>
         </div>
       </div>
-    </div>
+    </form>
 
-    <!-- Name -->
-    <div class="form-group row mb-3">
-      <label for="name" class="col-sm-2 col-form-label">Name:</label>
-      <div class="col-sm-10">
-        <input
-          type="text"
-          class="form-control"
-          formControlName="name"
-          placeholder="Your First Name and Last Name"
-          required
-        />
-        <div
-          *ngIf="
-            contactForm.get('name')?.invalid && contactForm.get('name')?.touched
-          "
-          class="invalid-feedback"
-        >
-          Please enter your name.
-        </div>
-      </div>
+    <div *ngIf="contactForm.valid" class="alert alert-success mt-3">
+      Your message has been sent successfully!
     </div>
-
-    <!-- Email -->
-    <div class="form-group row mb-3">
-      <label for="email" class="col-sm-2 col-form-label">Email:</label>
-      <div class="col-sm-10">
-        <input
-          type="email"
-          class="form-control"
-          formControlName="email"
-          placeholder="you@youremail.com"
-          required
-        />
-        <div
-          *ngIf="
-            contactForm.get('email')?.invalid &&
-            contactForm.get('email')?.touched
-          "
-          class="invalid-feedback"
-        >
-          Please enter a valid email address.
-        </div>
-      </div>
-    </div>
-
-    <!-- Affiliation -->
-    <div class="form-group row mb-3">
-      <label for="affiliation" class="col-sm-2 col-form-label"
-        >Affiliation:</label
-      >
-      <div class="col-sm-10">
-        <input
-          type="text"
-          class="form-control"
-          formControlName="affiliation"
-          placeholder="Your affiliation"
-        />
-      </div>
-    </div>
-
-    <!-- Submit Button -->
-    <div class="form-group row">
-      <div class="col-sm-10 offset-sm-2">
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="contactForm.invalid"
-        >
-          Submit
-        </button>
-      </div>
-    </div>
-  </form>
-
-  <div *ngIf="contactForm.valid" class="alert alert-success mt-3">
-    Your message has been sent successfully!
   </div>
 </div>

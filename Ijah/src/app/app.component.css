@@ -1,3 +1,27 @@
+/* Ensure the html and body take up the full viewport height */
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Flexbox container for the entire content */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the wrapper takes up the full viewport height */
+}
+
+/* Main content should grow to take up available space */
 .content {
-  flex: 1 0 auto;
+  flex: 1 0 auto; /* Ensures the content grows to fill the space between the navbar and footer */
+}
+
+/* Footer styling */
+app-footer {
+  flex-shrink: 0; /* Ensure the footer doesn't shrink and stays at the bottom */
+  background-color: #f8f9fa;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
 }

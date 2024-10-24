@@ -1,27 +1,27 @@
 /* General Container Styling */
 .container {
   max-width: 900px;
-  margin: 40px auto; /* Center the content with margin at the top and bottom */
+  margin: 40px auto;
   padding: 30px;
-  background-color: #ffffff; /* White background for clean, minimalist design */
+  background-color: #ffffff; /* White background */
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Softer, more subtle shadow */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Heading Styles */
 h1 {
   font-size: 2.8rem;
   text-align: center;
-  color: #333; /* Slightly darker for better contrast */
+  color: var(--neutral-900); /* Using global neutral color */
   margin-bottom: 30px;
   font-weight: 700;
-  letter-spacing: 1px; /* Small letter spacing for modern feel */
+  letter-spacing: 1px;
 }
 
 h4 {
   font-size: 1.6rem;
   margin-top: 20px;
-  color: #555; /* Lighter gray for headings to give a soft contrast */
+  color: var(--neutral-800); /* Slightly lighter neutral color */
   font-weight: 600;
 }
 
@@ -33,9 +33,9 @@ ul {
 
 ul.list-unstyled li {
   font-size: 1.2rem;
-  color: #666; /* Medium gray for body text */
+  color: var(--neutral-600); /* Medium gray for list items */
   padding: 10px 0;
-  border-bottom: 1px solid #eaeaea; /* Softer borders */
+  border-bottom: 1px solid var(--neutral-200); /* Use neutral colors for borders */
 }
 
 ul.list-unstyled li:last-child {
@@ -43,17 +43,18 @@ ul.list-unstyled li:last-child {
 }
 
 ul.list-unstyled li strong {
-  color: #007bff; /* Use blue for important highlights */
+  color: var(--primary-400); /* Use primary color for highlights */
 }
 
+/* Address and Links Styling */
 address {
   font-style: normal;
-  color: #666;
+  color: var(--neutral-600); /* Neutral color for address text */
   line-height: 1.7;
 }
 
 a {
-  color: #007bff;
+  color: var(--primary-400); /* Primary color for links */
   text-decoration: none;
 }
 
@@ -63,7 +64,7 @@ a:hover {
 
 /* Add spacing between sections */
 .row.mb-4 {
-  margin-bottom: 50px; /* Increased margin for more separation between sections */
+  margin-bottom: 50px;
 }
 
 /* Media Query for Mobile Responsiveness */
