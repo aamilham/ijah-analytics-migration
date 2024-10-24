@@ -1,7 +1,7 @@
 <?php
 
   /* change list : aamilham
-  1. change phpmailer path
+  1. change phpmailer path and version
   2. add sanitize input for preventing SQL injection
   3. simpler the query
   4. change mail to try catch syntax */
