@@ -1,74 +1,79 @@
+/* Global container styles for consistency */
 .container {
   max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
 }
 
+/* Heading 1 */
 h1 {
-  font-family: "Roboto", sans-serif;
-  color: #00563f;
+  font-family: "IBM Plex Sans", sans-serif;
+  color: var(--primary-500);
   font-weight: 700;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Card styles */
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
-  background-color: #f8f9fa;
+  background-color: var(--neutral-100);
+  border-radius: 10px 10px 0 0;
 }
 
 .card-body {
   background-color: #ffffff;
-  color: #333;
+  color: var(--neutral-900);
+  padding: 20px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* FAQ button link styles */
+.btn-link {
+  width: 100%;
+  text-align: left;
+  color: var(--primary-400);
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  color: var(--primary-500);
+  text-decoration: underline;
+}
+
+/* Lists inside FAQ answers */
+ul {
+  padding-left: 20px;
+  list-style-type: disc;
+  color: var(--neutral-900);
 }
 
 a {
-  color: #00563f;
+  color: var(--primary-400);
   font-weight: bold;
 }
 
 a:hover {
+  color: var(--primary-500);
   text-decoration: underline;
 }
 
-.btn-link {
-  text-decoration: none;
-  color: #00563f;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
 
-.btn-link:hover {
-  color: #007b5e;
-}
-
-.card-header button {
-  width: 100%;
-  text-align: left;
-  color: #00563f;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.card-header button:hover {
-  color: #007b5e;
-}
-
-ul {
-  padding-left: 20px;
-  list-style-type: disc;
-}
-
-.card-header button {
-  font-weight: bold;
-  color: #007bff;
-  text-decoration: none;
-}
-
-.card-header button:hover {
-  color: #0056b3;
-}
-
-.card {
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-body {
-  font-size: 1.1em;
-  line-height: 1.5;
+  .card-body {
+    font-size: 1rem;
+  }
 }

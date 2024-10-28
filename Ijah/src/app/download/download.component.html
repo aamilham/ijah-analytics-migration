@@ -1,1 +1,72 @@
-<p>download works!</p>
+<div class="container mt-5">
+  <!-- Downloads Header -->
+  <div class="downloads-header text-center">
+    <h1 class="mb-4 display-4 font-weight-bold text-primary">Downloads</h1>
+    <p class="lead text-secondary">
+      Download .csv files of major entities in our database. All data are
+      freshly served from our system and always up-to-date. Click on a filename
+      below to start downloading. Please note that some downloads may take a
+      while.
+    </p>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-8 col-lg-6">
+      <div class="position-relative">
+        <input
+          type="text"
+          class="form-control form-control-lg border-primary text-dark pr-5"
+          placeholder="Search files..."
+          (input)="onSearch($event)"
+        />
+        <i
+          class="fas fa-search position-absolute text-primary"
+          style="right: 15px; top: 50%; transform: translateY(-50%)"
+        ></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Downloads Table -->
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-hover table-striped table-bordered">
+      <thead class="bg-primary text-white">
+        <tr>
+          <th>File Name</th>
+          <th>Size</th>
+          <th>Date Added</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Loop through filteredFiles to display each file -->
+        <tr *ngFor="let file of filteredFiles">
+          <td class="font-weight-bold text-dark">
+            <i class="fas fa-file-csv file-icon text-success"></i>
+            {{ file.name }}
+          </td>
+          <td class="text-muted">{{ file.size }}</td>
+          <td class="text-muted">{{ file.date }}</td>
+          <td>
+            <a
+              [href]="file.link"
+              class="btn btn-primary btn-sm rounded-pill shadow-sm"
+              download="{{ file.name }}"
+            >
+              <i class="fas fa-download"></i> Download
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- No Files Found Alert -->
+  <div
+    *ngIf="filteredFiles.length === 0"
+    class="alert alert-warning mt-4 text-center"
+  >
+    No files found. Try searching for a different keyword.
+  </div>
+</div>
