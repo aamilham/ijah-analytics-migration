@@ -86,9 +86,8 @@ h4 {
 p,
 a,
 li {
-  font-family: "IBM Plex Sans Light Italic", sans-serif;
+  font-family: "IBM Plex Sans Light", sans-serif;
   font-weight: 300; /* Light */
-  font-style: italic;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0px;
