@@ -1,35 +1,27 @@
-/* Contoh gaya tambahan (opsional) */
+/* Adjust logo size */
 .navbar-brand img {
-  max-width: 25vh; /* Sesuaikan nilai ini sesuai keinginan */
-  height: auto; /* Memastikan tinggi gambar mengikuti rasio aspek */
+  max-width: 200px; /* Adjust as needed */
+  height: auto;
 }
 
+/* Navbar links styling */
 .navbar-nav .nav-link {
-  font-size: 1.1rem;
-  margin-right: 1rem;
+  font-size: 1rem;
+  color: #333;
 }
 
-/* Warna latar belakang header offcanvas */
+/* Styling for the "Contact Us" link on the right */
+.nav-link.fw-bold {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Hover effects for links */
+.nav-link:hover {
+  color: #007bff;
+}
+
+/* Background for Offcanvas */
 .offcanvas-header {
   background-color: #f8f9fa;
-}
-
-/* Efek hover pada nav-link */
-.nav-link:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 5px;
-}
-
-/* Gaya untuk link aktif */
-.nav-link.active {
-  font-weight: bold;
-}
-
-/* Menyesuaikan ukuran ikon */
-.nav-link .bi {
-  margin-right: 5px;
-}
-
-.offcanvas-backdrop {
-  display: none !important;
 }

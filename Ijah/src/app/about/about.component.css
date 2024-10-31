@@ -1,87 +1,169 @@
-/* General Container Styling */
-.container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: #ffffff; /* White background */
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+/* General Container Styling with Adjustable Margins */
+.container-fluid.adjustable-margins {
+  width: 100%; /* Use full width of the viewport */
+  margin-right: var(--container-margin, 0); /* Allow customizable margin */
+  margin-left: var(--container-margin, 0); /* Allow customizable margin */
+  padding: 0; /* Remove default padding */
+}
+/* Set hero section as a container */
+#hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
-/* Heading Styles */
-h1 {
-  font-size: 2.8rem;
-  text-align: center;
-  color: var(--neutral-900); /* Using global neutral color */
-  margin-bottom: 30px;
-  font-weight: 700;
-  letter-spacing: 1px;
+/* Styling for the background image */
+.hero-background {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-h4 {
-  font-size: 1.6rem;
-  margin-top: 20px;
-  color: var(--neutral-800); /* Slightly lighter neutral color */
-  font-weight: 600;
+/* Centering the logo */
+.hero-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the logo */
+  width: 30%; /* Adjust logo size */
+  height: auto;
 }
 
-/* List Styling */
-ul {
-  padding-left: 0;
-  margin-bottom: 30px;
+/* Flexbox Container Styling */
+.d-flex {
+  display: flex;
 }
 
-ul.list-unstyled li {
-  font-size: 1.2rem;
-  color: var(--neutral-600); /* Medium gray for list items */
-  padding: 10px 0;
-  border-bottom: 1px solid var(--neutral-200); /* Use neutral colors for borders */
+.flex-column {
+  flex-direction: column;
 }
 
-ul.list-unstyled li:last-child {
-  border-bottom: none;
+.flex-md-row {
+  flex-direction: row;
 }
 
-ul.list-unstyled li strong {
-  color: var(--primary-400); /* Use primary color for highlights */
+.align-items-center {
+  align-items: center;
 }
 
-/* Address and Links Styling */
-address {
-  font-style: normal;
-  color: var(--neutral-600); /* Neutral color for address text */
-  line-height: 1.7;
+.mb-4 {
+  margin-bottom: 40px;
 }
 
-a {
-  color: var(--primary-400); /* Primary color for links */
-  text-decoration: none;
+.ms-md-4 {
+  margin-left: 20px; /* Add margin on larger screens */
 }
 
-a:hover {
-  text-decoration: underline;
+//* Container Styling */
+#info-section {
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 80%;
+  background-color: #ffffff;
 }
 
-/* Add spacing between sections */
-.row.mb-4 {
-  margin-bottom: 50px;
+/* Flexbox to align text and image side by side */
+.content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Media Query for Mobile Responsiveness */
+/* Styling for the text on the left */
+.text-content {
+  flex: 1;
+  padding-right: 2rem;
+}
+
+.text-content h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.text-content p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Styling for the image on the right */
+.image-content {
+  flex: 1;
+}
+
+.image-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .container {
-    padding: 20px;
+  .content-wrapper {
+    flex-direction: column;
+    text-align: center;
   }
 
-  h1 {
-    font-size: 2.2rem;
+  .text-content {
+    padding-right: 0;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
+    text-align: center;
   }
 
-  h4 {
-    font-size: 1.4rem;
+  .text-content {
+    padding-right: 0;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .flex-md-row {
+    flex-direction: row;
   }
 
-  ul.list-unstyled li {
-    font-size: 1.1rem;
+  .ms-md-4 {
+    margin-left: 40px; /* More spacing on larger screens */
+  }
+}
+
+/* About Section Title Styling */
+h1 {
+  font-size: 2.5rem;
+  text-align: left;
+  color: #333; /* Dark gray */
+  font-weight: 700; /* Bold font */
+}
+
+/* Logo Styling */
+.logo {
+  max-width: 182px; /* Limit logo width to a reasonable size for larger screens */
+  height: auto; /* Maintain aspect ratio */
+}
+
+@media (min-width: 768px) {
+  #about_ijah {
+    padding-right: 15%;
+    padding-left: 15%;
+  }
+}
+
+/* Paragraph Justification */
+.text-justify {
+  text-align: justify; /* Set paragraph text to be fully justified */
+}
+
+/* Media Query Adjustments for Smaller Screens */
+@media (max-width: 768px) {
+  .ms-md-4 {
+    margin-left: 0; /* Remove left margin on smaller screens */
   }
 }

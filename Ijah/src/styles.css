@@ -93,6 +93,11 @@ li {
   letter-spacing: 0px;
 }
 
+strong {
+  font-weight: 700 !important; /* Force bold */
+  color: inherit; /* Maintain the color from the surrounding text */
+}
+
 /* Specific styles for text sizes */
 .text-body-b1 {
   font-size: 16px;
