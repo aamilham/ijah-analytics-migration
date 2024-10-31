@@ -1,32 +1,40 @@
+/* Mengatur tinggi html dan body */
+html,
+body {
+  height: 80%;
+  margin: 0;
+}
+
 /* Flexbox centering for the main content */
 .content-wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  margin-top: -9rem;
+  overflow: hidden;
 }
 
 /* Centered container */
 .container-center {
+  flex: 1; /* Membuat elemen ini fleksibel dan mengambil ruang yang tersedia */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center; /* Memusatkan secara vertikal */
+  align-items: center; /* Memusatkan secara horizontal */
   text-align: center;
-  width: 100%;
-  height: 100% !important;
 }
 
 /* Title styling */
 .title {
-  font-size: 2.5rem;
+  font-size: 2rem; /* Ukuran font disesuaikan */
   font-weight: bold;
-  color: #46a54f; /* Primary color */
+  color: #46a54f; /* Warna primer */
 }
 
 /* Description styling */
 .description {
   font-size: 1.2rem;
   color: #333333;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem; /* Margin disesuaikan */
 }
 
 /* Input field group container */
@@ -37,7 +45,7 @@
   gap: 20px;
   width: 100%;
   max-width: 800px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem; /* Margin disesuaikan */
 }
 
 /* Input wrapper */
@@ -60,7 +68,7 @@
 /* Input field styling */
 .form-control {
   border-radius: 20px;
-  border: 1px solid #b6b6b6; /* Neutral border color */
+  border: 1px solid #b6b6b6; /* Warna border netral */
   padding: 8px;
   width: 100%;
 }
@@ -96,7 +104,8 @@
 .footer-text {
   font-size: 0.9rem;
   color: #333333;
-  margin-top: auto; /* Pushes footer text to the bottom of the container */
+  margin-top: auto; /* Mendorong teks footer ke bagian bawah container */
+  margin-bottom: 1rem; /* Tambahkan margin-bottom jika diperlukan */
 }
 
 .footer-text a {

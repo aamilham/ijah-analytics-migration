@@ -1,27 +1,77 @@
-/* Adjust logo size */
+/* Mengatur navbar */
+.navbar {
+  padding: 0.5rem 1rem;
+}
+
+/* Menyelaraskan item dalam container */
+.navbar .container-fluid {
+  display: flex;
+  align-items: center;
+}
+
+/* Kiri: Logo */
 .navbar-brand img {
-  max-width: 200px; /* Adjust as needed */
+  max-width: 150px;
   height: auto;
 }
 
-/* Navbar links styling */
+/* Tengah: Menu */
+.navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-center .navbar-nav {
+  flex-direction: row;
+}
+
+.navbar-center .nav-item {
+  margin: 0 0.5rem;
+}
+
 .navbar-nav .nav-link {
-  font-size: 1rem;
   color: #333;
+  padding: 0.5rem 1rem;
 }
 
-/* Styling for the "Contact Us" link on the right */
-.nav-link.fw-bold {
-  font-weight: bold;
-  color: #333;
-}
-
-/* Hover effects for links */
-.nav-link:hover {
+.navbar-nav .nav-link:hover {
   color: #007bff;
 }
 
-/* Background for Offcanvas */
-.offcanvas-header {
-  background-color: #f8f9fa;
+/* Kanan: Contact Us */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.navbar-right .nav-link {
+  color: #333;
+}
+
+.navbar-right .nav-link:hover {
+  color: #007bff;
+}
+
+/* Menampilkan tombol hamburger hanya pada mobile */
+.navbar-toggler {
+  border: none;
+}
+
+@media (max-width: 991.98px) {
+  .navbar-center,
+  .navbar-right {
+    justify-content: center;
+  }
+
+  .navbar-center .navbar-nav,
+  .navbar-right .navbar-nav {
+    flex-direction: column;
+  }
+
+  .navbar-center .nav-item,
+  .navbar-right .nav-item {
+    margin: 0;
+  }
 }

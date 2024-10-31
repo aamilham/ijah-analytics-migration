@@ -1,85 +1,49 @@
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
-  <div class="container pt-2">
-    <!-- Logo on the left -->
-    <a class="navbar-brand me-auto" routerLink="/">
-      <img
-        src="assets/img/LogoNew.png"
-        alt="Logo"
-        class="d-inline-block align-top img-fluid"
-      />
+  <div class="container-fluid">
+    <!-- Kiri: Logo -->
+    <a class="navbar-brand" href="#">
+      <img src="assets/img/LogoNew.png" alt="Logo" class="img-fluid" />
     </a>
-
-    <!-- Toggle button for mobile view -->
+    <!-- Tombol Hamburger -->
     <button
       class="navbar-toggler"
       type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasNavbar"
-      aria-controls="offcanvasNavbar"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <!-- Offcanvas Menu for mobile -->
-    <div
-      class="offcanvas offcanvas-end d-lg-none"
-      tabindex="-1"
-      id="offcanvasNavbar"
-      aria-labelledby="offcanvasNavbarLabel"
-    >
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-        <button
-          type="button"
-          class="btn-close text-reset"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+    <!-- Navbar Konten -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Tengah: Menu -->
+      <div class="navbar-center">
+        <ul class="navbar-nav mx-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/about">About</a>
+            <a class="nav-link" href="/about">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/help">Help/FAQ</a>
+            <a class="nav-link" href="/help">Help/FAQ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/legacy">Legacy</a>
+            <a class="nav-link" href="/legacy">Legacy</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/download">Download</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/contact">Contact Us</a>
+            <a class="nav-link" href="/download">Download</a>
           </li>
         </ul>
       </div>
-    </div>
-
-    <!-- Navbar for desktop -->
-    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-      <ul class="navbar-nav">
-        <!-- Centered menu items for desktop -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/help">Help/FAQ</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/legacy">Legacy</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/download">Download</a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- "Contact Us" on the right for desktop -->
-    <div class="d-none d-lg-flex">
-      <a class="nav-link fw-bold" routerLink="/contact">Contact Us</a>
+      <!-- Kanan: Contact Us -->
+      <div class="navbar-right">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link fw-bold" href="/contact">Contact Us</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
