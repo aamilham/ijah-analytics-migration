@@ -54,51 +54,6 @@
   margin-left: 20px; /* Add margin on larger screens */
 }
 
-//* Container Styling */
-#info-section {
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 80%;
-  background-color: #ffffff;
-}
-
-/* Flexbox to align text and image side by side */
-.content-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* Styling for the text on the left */
-.text-content {
-  flex: 1;
-  padding-right: 2rem;
-}
-
-.text-content h2 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-.text-content p {
-  font-size: 1rem;
-  color: #555;
-  line-height: 1.5;
-}
-
-/* Styling for the image on the right */
-.image-content {
-  flex: 1;
-}
-
-.image-content img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .content-wrapper {
@@ -150,9 +105,9 @@ h1 {
 }
 
 @media (min-width: 768px) {
-  #about_ijah {
-    padding-right: 15%;
-    padding-left: 15%;
+  .content {
+    padding-right: 20%;
+    padding-left: 20%;
   }
 }
 

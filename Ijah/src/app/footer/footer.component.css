@@ -14,23 +14,18 @@ body {
 .footer {
   margin-top: auto;
   padding: 10px 0;
-  background-color: #f1f1f1;
+  background-color: var(
+    --primary-400
+  ); /* Use the primary color from global styles */
 }
 
-.footer a {
-  color: #007bff;
+.footer a,
+p,
+span {
+  color: #ffffff;
   text-decoration: none;
 }
 
 .footer a:hover {
   text-decoration: underline;
-}
-
-.footer small {
-  color: #888;
-}
-
-#visitor-count {
-  font-weight: bold;
-  color: #007bff;
 }
