@@ -75,3 +75,30 @@
     margin: 0;
   }
 }
+
+/* Mengatur alignment item menu dalam offcanvas */
+.offcanvas .navbar-nav {
+  margin-left: 0;
+}
+
+.offcanvas .nav-link {
+  text-align: left;
+  padding-left: 1rem;
+}
+/* Mengatur padding dan alignment item menu pada layar kecil */
+.navbar-nav .nav-link {
+  text-align: center;
+  padding: 0.5rem 1rem;
+}
+
+@media (max-width: 991.98px) {
+  /* Menjadikan menu vertikal pada layar kecil */
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .navbar-nav .nav-link {
+    text-align: left;
+    padding-left: 1rem;
+  }
+}

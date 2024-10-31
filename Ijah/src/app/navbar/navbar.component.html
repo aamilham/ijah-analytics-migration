@@ -1,49 +1,66 @@
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
   <div class="container-fluid">
-    <!-- Kiri: Logo -->
     <a class="navbar-brand" href="#">
       <img src="assets/img/LogoNew.png" alt="Logo" class="img-fluid" />
     </a>
+
     <!-- Tombol Hamburger -->
     <button
       class="navbar-toggler"
       type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
+      (click)="toggleCollapse()"
+      [attr.aria-expanded]="!isCollapsed"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <!-- Navbar Konten -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <!-- Tengah: Menu -->
-      <div class="navbar-center">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/help">Help/FAQ</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/legacy">Legacy</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/download">Download</a>
-          </li>
-        </ul>
-      </div>
-      <!-- Kanan: Contact Us -->
-      <div class="navbar-right">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link fw-bold" href="/contact">Contact Us</a>
-          </li>
-        </ul>
-      </div>
+
+    <!-- Menu Navbar -->
+    <div
+      class="navbar-collapse collapse"
+      [class.show]="!isCollapsed"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about" (click)="isCollapsed = true"
+            >About</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/help" (click)="isCollapsed = true"
+            >Help/FAQ</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/legacy" (click)="isCollapsed = true"
+            >Legacy</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/download"
+            (click)="isCollapsed = true"
+            >Download</a
+          >
+        </li>
+        <li class="nav-item d-lg-none">
+          <!-- Contact Us ditampilkan dalam menu pada layar kecil -->
+          <a
+            class="nav-link fw-bold"
+            routerLink="/contact"
+            (click)="isCollapsed = true"
+            >Contact Us</a
+          >
+        </li>
+      </ul>
+      <!-- Contact Us ditampilkan sebagai item terpisah pada layar lebar -->
+      <ul class="navbar-nav d-none d-lg-flex">
+        <li class="nav-item">
+          <a class="nav-link fw-bold" routerLink="/contact">Contact Us</a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

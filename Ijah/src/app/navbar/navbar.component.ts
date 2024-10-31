@@ -1,5 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { Offcanvas } from 'bootstrap';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -7,18 +6,12 @@ import { RouterModule } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
   standalone: true,
-  imports: [RouterModule], // Add RouterModule to support routing
+  imports: [RouterModule],
 })
-export class NavbarComponent implements OnInit {
-  constructor(private ngZone: NgZone) {}
+export class NavbarComponent {
+  isCollapsed = true;
 
-  ngOnInit(): void {
-    // Initialize offcanvas outside Angular zone
-    this.ngZone.runOutsideAngular(() => {
-      const offcanvasEl = document.querySelector('.offcanvas');
-      if (offcanvasEl) {
-        new Offcanvas(offcanvasEl);
-      }
-    });
+  toggleCollapse() {
+    this.isCollapsed = !this.isCollapsed;
   }
 }
