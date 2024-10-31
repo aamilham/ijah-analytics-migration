@@ -12,9 +12,12 @@ body {
   min-height: 100vh; /* Ensures the wrapper takes up the full viewport height */
 }
 
-/* Main content should grow to take up available space */
+/* Main content should center its content */
 .content {
   flex: 1 0 auto; /* Ensures the content grows to fill the space between the navbar and footer */
+  display: flex; /* Enable Flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
 }
 
 /* Footer styling */
@@ -24,4 +27,9 @@ app-footer {
   padding: 20px;
   text-align: center;
   width: 100%;
+}
+.router-content {
+  width: 100%;
+  max-width: 800px; /* Sesuaikan sesuai kebutuhan */
+  text-align: center; /* Jika ingin teks di dalamnya rata tengah */
 }

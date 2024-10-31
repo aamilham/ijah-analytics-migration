@@ -104,6 +104,13 @@ strong {
   line-height: 24px;
 }
 
+.text-body-b1-span {
+  font-size: 20px;
+  line-height: 24px;
+  text-align: justify;
+  display: block; /* Makes span behave like a block-level element */
+}
+
 .text-body-b2 {
   font-size: 14px;
   line-height: 21px;

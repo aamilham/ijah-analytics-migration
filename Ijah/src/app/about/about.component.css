@@ -106,14 +106,9 @@ h1 {
 
 @media (min-width: 768px) {
   .content {
-    padding-right: 20%;
-    padding-left: 20%;
+    padding-right: 12%;
+    padding-left: 12%;
   }
-}
-
-/* Paragraph Justification */
-.text-justify {
-  text-align: justify; /* Set paragraph text to be fully justified */
 }
 
 /* Media Query Adjustments for Smaller Screens */

@@ -1,0 +1,109 @@
+/* Flexbox centering for the main content */
+.content-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Centered container */
+.container-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100% !important;
+}
+
+/* Title styling */
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #46a54f; /* Primary color */
+}
+
+/* Description styling */
+.description {
+  font-size: 1.2rem;
+  color: #333333;
+  margin-bottom: 2rem;
+}
+
+/* Input field group container */
+.input-group-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 1.5rem;
+}
+
+/* Input wrapper */
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 180px;
+}
+
+/* Label styling */
+.input-wrapper label {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  color: #333333;
+}
+
+/* Input field styling */
+.form-control {
+  border-radius: 20px;
+  border: 1px solid #b6b6b6; /* Neutral border color */
+  padding: 8px;
+  width: 100%;
+}
+
+/* Button group styling */
+.btn-group-flex {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Custom button styling */
+.btn-custom {
+  width: 100%;
+  max-width: 130px;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  color: #333333;
+  border-radius: 20px;
+  font-weight: normal;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Hover effect for buttons */
+.btn-custom:hover {
+  background-color: #f1f1f1;
+}
+
+.footer-text {
+  font-size: 0.9rem;
+  color: #333333;
+  margin-top: auto; /* Pushes footer text to the bottom of the container */
+}
+
+.footer-text a {
+  color: #007aff;
+  text-decoration: none;
+}
+
+.footer-text a:hover {
+  text-decoration: underline;
+}
