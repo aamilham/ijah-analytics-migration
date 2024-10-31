@@ -15,21 +15,26 @@
   height: auto;
 }
 
-/* Tengah: Menu */
-.navbar-center {
+/* Menu Tengah */
+.navbar-nav.mx-auto {
   flex: 1;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.navbar-center .navbar-nav {
-  flex-direction: row;
-}
-
-.navbar-center .nav-item {
+.navbar-nav.mx-auto .nav-item {
   margin: 0 0.5rem;
 }
 
+/* Kanan: Contact Us */
+.navbar-nav.ms-auto {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* Gaya umum untuk link navbar */
 .navbar-nav .nav-link {
   color: #333;
   padding: 0.5rem 1rem;
@@ -39,66 +44,35 @@
   color: #007bff;
 }
 
-/* Kanan: Contact Us */
-.navbar-right {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.navbar-right .nav-link {
-  color: #333;
-}
-
-.navbar-right .nav-link:hover {
-  color: #007bff;
-}
-
-/* Menampilkan tombol hamburger hanya pada mobile */
+/* Tombol Hamburger */
 .navbar-toggler {
   border: none;
 }
 
+/* Tampilan Mobile */
 @media (max-width: 991.98px) {
-  .navbar-center,
-  .navbar-right {
-    justify-content: center;
-  }
-
-  .navbar-center .navbar-nav,
-  .navbar-right .navbar-nav {
-    flex-direction: column;
-  }
-
-  .navbar-center .nav-item,
-  .navbar-right .nav-item {
-    margin: 0;
-  }
-}
-
-/* Mengatur alignment item menu dalam offcanvas */
-.offcanvas .navbar-nav {
-  margin-left: 0;
-}
-
-.offcanvas .nav-link {
-  text-align: left;
-  padding-left: 1rem;
-}
-/* Mengatur padding dan alignment item menu pada layar kecil */
-.navbar-nav .nav-link {
-  text-align: center;
-  padding: 0.5rem 1rem;
-}
-
-@media (max-width: 991.98px) {
-  /* Menjadikan menu vertikal pada layar kecil */
+  /* Mengatur menu menjadi vertikal */
   .navbar-nav {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .navbar-nav .nav-item {
+    margin: 0;
+  }
+
   .navbar-nav .nav-link {
     text-align: left;
     padding-left: 1rem;
+  }
+
+  /* Mengatur margin untuk Contact Us agar tidak terdorong ke kanan */
+  .navbar-nav.ms-auto {
+    margin-left: 0;
+  }
+
+  /* Menengahkan konten dalam navbar collapse */
+  .navbar-collapse {
+    text-align: center;
   }
 }

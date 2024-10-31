@@ -1,10 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
   <div class="container-fluid">
+    <!-- Kiri: Logo -->
     <a class="navbar-brand" href="#">
       <img src="assets/img/LogoNew.png" alt="Logo" class="img-fluid" />
     </a>
 
-    <!-- Tombol Hamburger -->
+    <!-- Tombol Hamburger (untuk tampilan mobile) -->
     <button
       class="navbar-toggler"
       type="button"
@@ -15,12 +16,9 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Menu Navbar -->
-    <div
-      class="navbar-collapse collapse"
-      [class.show]="!isCollapsed"
-      id="navbarSupportedContent"
-    >
+    <!-- Navbar Items -->
+    <div class="collapse navbar-collapse" [class.show]="!isCollapsed">
+      <!-- Menu Tengah -->
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/about" (click)="isCollapsed = true"
@@ -45,20 +43,16 @@
             >Download</a
           >
         </li>
-        <li class="nav-item d-lg-none">
-          <!-- Contact Us ditampilkan dalam menu pada layar kecil -->
+      </ul>
+      <!-- Kanan: Contact Us -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
           <a
             class="nav-link fw-bold"
             routerLink="/contact"
             (click)="isCollapsed = true"
             >Contact Us</a
           >
-        </li>
-      </ul>
-      <!-- Contact Us ditampilkan sebagai item terpisah pada layar lebar -->
-      <ul class="navbar-nav d-none d-lg-flex">
-        <li class="nav-item">
-          <a class="nav-link fw-bold" routerLink="/contact">Contact Us</a>
         </li>
       </ul>
     </div>
