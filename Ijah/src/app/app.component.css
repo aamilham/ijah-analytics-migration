@@ -1,8 +1,8 @@
-/* Ensure the html and body take up the full viewport height */
 html,
 body {
   height: 100%;
   margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 /* Flexbox container for the entire content */
@@ -12,24 +12,49 @@ body {
   min-height: 100vh; /* Ensures the wrapper takes up the full viewport height */
 }
 
-/* Main content should center its content */
-.content {
-  flex: 1 0 auto; /* Ensures the content grows to fill the space between the navbar and footer */
-  display: flex; /* Enable Flexbox */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
+/* Navbar styling */
+app-navbar {
+  position: fixed; /* Ensures navbar stays fixed at the top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* High z-index to stay on top */
+  background-color: #ffffff;
+  padding: 10px 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for visibility */
+  width: 100%;
+  text-align: center;
 }
 
 /* Footer styling */
 app-footer {
-  flex-shrink: 0; /* Ensure the footer doesn't shrink and stays at the bottom */
+  position: fixed; /* Ensures footer stays fixed at the bottom */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* High z-index to stay on top */
   background-color: #f8f9fa;
   padding: 20px;
   text-align: center;
   width: 100%;
+  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for visibility */
 }
+
+/* Main content should center its content */
+.content {
+  flex: 1 0 auto; /* Ensures the content grows to fill the space between navbar and footer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 60px; /* Adjust according to navbar height */
+  padding-bottom: 60px; /* Adjust according to footer height */
+}
+
+/* Styling for router-content */
 .router-content {
   width: 100%;
-  max-width: 800px; /* Sesuaikan sesuai kebutuhan */
-  text-align: center; /* Jika ingin teks di dalamnya rata tengah */
+  max-width: 800px; /* Adjust as needed */
+  text-align: center; /* Center-align content within */
+  position: relative; /* Ensures it can be layered behind navbar/footer */
+  z-index: 1; /* Lower z-index to stay visually behind navbar/footer */
 }

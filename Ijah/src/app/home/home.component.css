@@ -1,15 +1,8 @@
-/* Global Styles */
-html,
-body {
-  height: 80%;
-  margin: 0;
-}
-
 /* Content Wrapper */
 .content-wrapper {
   display: flex;
   flex-direction: column;
-  margin-top: -2.4rem;
+  margin-top: -1rem;
   overflow: hidden;
   position: relative;
 }
@@ -17,7 +10,7 @@ body {
 /* Background Image */
 .center-background {
   position: absolute;
-  top: 45%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
@@ -126,7 +119,7 @@ body {
   font-size: 0.9rem;
   color: #777;
   margin-top: auto;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 .footer-text a {
