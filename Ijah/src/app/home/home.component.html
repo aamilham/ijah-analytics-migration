@@ -1,58 +1,106 @@
 <div class="content-wrapper">
+  <!-- Absolute centered background image -->
+  <img
+    src="assets/img/search_background.png"
+    alt="Background Image"
+    class="center-background"
+  />
+
+  <!-- Main content starts here -->
   <div class="container-center">
-    <!-- Title -->
     <h1 class="title">IJAH Analytics</h1>
     <p class="description">
       Search and Predict Connectivity Between Plant, Compound, Protein, and
       Disease.
     </p>
-
-    <!-- Input fields in flexbox -->
+    <!-- Input fields with labels and icons -->
     <div class="input-group-flex">
+      <!-- Plant Filter -->
       <div class="input-wrapper">
-        <label for="plantInput">Plant</label>
-        <input
-          type="text"
-          id="plantInput"
-          class="form-control"
-          placeholder="Enter plant name"
-        />
+        <label for="plantSelect">Plant</label>
+        <div class="input-icon-container">
+          <ng-select
+            class="custom-ng-select"
+            [items]="plantList"
+            bindLabel="name"
+            [multiple]="true"
+            [placeholder]="selectedPlants.length > 0 ? '' : 'Search'"
+            [(ngModel)]="selectedPlants"
+            appendTo="body"
+            [closeOnSelect]="false"
+            [hideSelected]="true"
+            [clearable]="false"
+          ></ng-select>
+        </div>
       </div>
+
+      <!-- Compound Filter -->
       <div class="input-wrapper">
-        <label for="compoundInput">Compound</label>
-        <input
-          type="text"
-          id="compoundInput"
-          class="form-control"
-          placeholder="Enter compound name"
-        />
+        <label for="compoundSelect">Compound</label>
+        <div class="input-icon-container">
+          <ng-select
+            class="custom-ng-select"
+            [items]="compoundList"
+            bindLabel="name"
+            [multiple]="true"
+            [placeholder]="
+              selectedCompounds.length > 0 ? '' : 'Search'
+            "
+            [(ngModel)]="selectedCompounds"
+            appendTo="body"
+            [closeOnSelect]="false"
+            [hideSelected]="true"
+            [clearable]="false"
+          ></ng-select>
+        </div>
       </div>
+
+      <!-- Protein Filter -->
       <div class="input-wrapper">
-        <label for="proteinInput">Protein</label>
-        <input
-          type="text"
-          id="proteinInput"
-          class="form-control"
-          placeholder="Enter protein name"
-        />
+        <label for="proteinSelect">Protein</label>
+        <div class="input-icon-container">
+          <ng-select
+            class="custom-ng-select"
+            [items]="proteinList"
+            bindLabel="name"
+            [multiple]="true"
+            [placeholder]="selectedProteins.length > 0 ? '' : 'Search'"
+            [(ngModel)]="selectedProteins"
+            appendTo="body"
+            [closeOnSelect]="false"
+            [hideSelected]="true"
+            [clearable]="false"
+          ></ng-select>
+        </div>
       </div>
+
+      <!-- Disease Filter -->
       <div class="input-wrapper">
-        <label for="diseaseInput">Disease</label>
-        <input
-          type="text"
-          id="diseaseInput"
-          class="form-control"
-          placeholder="Enter disease name"
-        />
+        <label for="diseaseSelect">Disease</label>
+        <div class="input-icon-container">
+          <ng-select
+            class="custom-ng-select"
+            [items]="diseaseList"
+            bindLabel="name"
+            [multiple]="true"
+            [placeholder]="selectedDiseases.length > 0 ? '' : 'Search'"
+            [(ngModel)]="selectedDiseases"
+            appendTo="body"
+            [closeOnSelect]="false"
+            [hideSelected]="true"
+            [clearable]="false"
+          ></ng-select>
+        </div>
       </div>
     </div>
 
-    <!-- Button group with minimal styling -->
+    <!-- Button group -->
     <div class="btn-group-flex">
-      <button class="btn btn-custom">Search</button>
-      <button class="btn btn-custom">Reset</button>
+      <button class="btn btn-custom" (click)="onSearch()">Search</button>
+      <button class="btn btn-custom" (click)="onReset()">Reset</button>
     </div>
   </div>
+
   <p class="text-center footer-text">
     For guidance on how to use the site, visit our
     <a href="/help" class="text-decoration-none">Help/FAQ</a> section.

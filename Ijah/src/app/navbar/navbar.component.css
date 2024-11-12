@@ -3,38 +3,30 @@
   padding: 0.5rem 1rem;
 }
 
-/* Menyelaraskan item dalam container */
+/* Kanan: Menyelaraskan semua item */
 .navbar .container-fluid {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
 }
 
-/* Kiri: Logo */
+/* Logo dan Badge */
 .navbar-brand img {
   max-width: 150px;
   height: auto;
 }
 
-/* Menu Tengah */
-.navbar-nav.mx-auto {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.badge {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.75rem;
 }
 
-.navbar-nav.mx-auto .nav-item {
-  margin: 0 0.5rem;
-}
-
-/* Kanan: Contact Us */
-.navbar-nav.ms-auto {
+/* Navbar Items */
+.navbar-nav {
   display: flex;
   align-items: center;
-  margin-left: auto;
 }
 
-/* Gaya umum untuk link navbar */
 .navbar-nav .nav-link {
   color: #333;
   padding: 0.5rem 1rem;
@@ -44,6 +36,21 @@
   color: #007bff;
 }
 
+/* Contact Us Button */
+.btn-success {
+  background-color: #28a745;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.navbar-nav .btn {
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+}
+
 /* Tombol Hamburger */
 .navbar-toggler {
   border: none;
@@ -51,10 +58,10 @@
 
 /* Tampilan Mobile */
 @media (max-width: 991.98px) {
-  /* Mengatur menu menjadi vertikal */
+  /* Mengatur menu menjadi vertikal dan rata tengah */
   .navbar-nav {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center; /* Center-aligns the items */
   }
 
   .navbar-nav .nav-item {
@@ -62,17 +69,12 @@
   }
 
   .navbar-nav .nav-link {
-    text-align: left;
-    padding-left: 1rem;
-  }
-
-  /* Mengatur margin untuk Contact Us agar tidak terdorong ke kanan */
-  .navbar-nav.ms-auto {
-    margin-left: 0;
+    text-align: center; /* Center-aligns text within each item */
+    padding-left: 0; /* Removes left padding for centering */
   }
 
   /* Menengahkan konten dalam navbar collapse */
   .navbar-collapse {
-    text-align: center;
+    text-align: center; /* Centers all items within the collapsed navbar */
   }
 }
