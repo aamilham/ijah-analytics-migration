@@ -5,7 +5,8 @@
   justify-content: center; /* Center the content vertically */
   align-items: center; /* Center the content horizontally */
   min-height: 100vh; /* Ensure the container takes up the full viewport height */
-  background-color: var(--neutral-100); /* Use global neutral background */
+  margin: -3rem;
+  margin-bottom: 3rem;
 }
 
 /* Wrapper for the form to give it a cleaner look */
