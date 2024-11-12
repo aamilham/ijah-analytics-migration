@@ -34,7 +34,7 @@ $ijahMailPass = getenv('IJAH_MAIL_PASS') ?: 'jamujoss';
 
 // database config  ///////////////////////////////////////////////////////////////
 // $str = file_get_contents('/home/haekal/karajo/csipb-jamu-prj/webserver/api/config_database.json');
-$dbConfigStr = file_get_contents(__DIR__ . './config_database.json');
+$dbConfigStr = file_get_contents(__DIR__ . "/config_database.json");
 if ($dbConfigStr === false) {
     throw new Exception('Failed to read database config');
 }
