@@ -1,21 +1,18 @@
-/* Global container styles for consistency */
 .container {
   max-width: 900px;
   margin: 40px auto;
   padding: 30px;
 }
 
-/* Heading 1 */
 h1 {
   font-family: "IBM Plex Sans", sans-serif;
-  color: var(--primary-500);
+  color: #000; /* Warna teks menjadi hitam */
   font-weight: 700;
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 2rem;
 }
 
-/* Card styles */
 .card {
   border: none;
   border-radius: 10px;
@@ -23,57 +20,46 @@ h1 {
 }
 
 .card-header {
-  background-color: var(--neutral-100);
+  background-color: #f9f9f9;
   border-radius: 10px 10px 0 0;
 }
 
 .card-body {
   background-color: #ffffff;
-  color: var(--neutral-900);
+  color: #000; /* Warna teks menjadi hitam */
   padding: 20px;
   font-size: 1.1rem;
   line-height: 1.6;
 }
 
-/* FAQ button link styles */
 .btn-link {
   width: 100%;
   text-align: left;
-  color: var(--primary-400);
+  color: #000; /* Warna teks tombol menjadi hitam */
   font-size: 1.2rem;
   font-weight: bold;
   text-decoration: none;
 }
 
 .btn-link:hover {
-  color: var(--primary-500);
+  color: #555; /* Warna hover (opsional) */
   text-decoration: underline;
 }
 
-/* Lists inside FAQ answers */
 ul {
   padding-left: 20px;
   list-style-type: disc;
-  color: var(--neutral-900);
+  color: #000; /* Warna daftar menjadi hitam */
 }
 
-a {
-  color: var(--primary-400);
-  font-weight: bold;
+.collapse {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease, opacity 0.3s ease; /* Tambahkan animasi */
 }
 
-a:hover {
-  color: var(--primary-500);
-  text-decoration: underline;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-
-  .card-body {
-    font-size: 1rem;
-  }
+.collapse.show {
+  height: auto;
+  opacity: 1;
+  transition: height 0.3s ease, opacity 0.3s ease;
 }

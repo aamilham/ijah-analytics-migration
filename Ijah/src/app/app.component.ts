@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router'; // Impor RouterModule
 import { NavbarComponent } from './navbar/navbar.component'; // Impor NavbarComponent
 import { FooterComponent } from './footer/footer.component'; // Import FooterComponent
+import { HelpComponent } from './help/help.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,7 +10,8 @@ import { FooterComponent } from './footer/footer.component'; // Import FooterCom
   imports: [
     RouterModule, // Tambahkan RouterModule ke imports
     NavbarComponent,
-    FooterComponent, // Tambahkan NavbarComponent jika digunakan dalam template
+    FooterComponent,
+    HelpComponent, // Tambahkan NavbarComponent jika digunakan dalam template
   ],
 })
 export class AppComponent {
