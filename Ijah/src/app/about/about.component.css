@@ -1,119 +1,345 @@
-/* General Container Styling with Adjustable Margins */
 .container-fluid.adjustable-margins {
-  width: 100%; /* Use full width of the viewport */
-  margin-right: var(--container-margin, 0); /* Allow customizable margin */
-  margin-left: var(--container-margin, 0); /* Allow customizable margin */
-  padding: 0; /* Remove default padding */
-}
-/* Set hero section as a container */
-#hero {
-  position: relative;
   width: 100%;
-  overflow: hidden;
+  margin-right: var(--container-margin, 0);
+  margin-left: var(--container-margin, 0);
+  padding: 0;
+  background-image: url("../../assets/img/Background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 6rem;
+  position: relative;
+  min-height: 100vh; /* Menambahkan min-height untuk memastikan background tidak terpotong */
 }
 
-/* Styling for the background image */
+.container-fluid.adjustable-margins::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 0;
+}
+
+.container-fluid.adjustable-margins > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-section {
+  width: 100%;
+  height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
 .hero-background {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-/* Centering the logo */
-.hero-logo {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Center the logo */
-  width: 30%; /* Adjust logo size */
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.hero-logo {
+  width: 30%;
   height: auto;
+  z-index: 1;
 }
 
-/* Flexbox Container Styling */
-.d-flex {
+.content-section {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 850px;
+  gap: 3rem;
+  margin: 3rem auto 50px auto;
+  flex-wrap: wrap;
 }
 
-.flex-column {
+.content-section.reverse {
+  flex-direction: row-reverse;
+}
+
+.image-container {
+  flex: none;
+  width: 100%;
+  max-width: 424px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.fixed-size-1,
+.fixed-size {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.text-container {
+  flex: 1;
+  width: 100%;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
-.flex-md-row {
-  flex-direction: row;
+.text-container p {
+  color: #666;
+  text-align: justify;
+  margin-top: 0;
+  margin-bottom: 5px;
+  line-height: 1.8;
+  max-width: 900px;
 }
 
-.align-items-center {
+.text-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.full-width-map .map-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.full-width-map iframe {
+  width: 100%;
+  height: auto;
+  max-height: 332.37px;
+  border: none;
+  border-radius: 0;
+}
+
+@media (max-width: 1200px) {
+  .content-section {
+    width: 90%;
+    flex-direction: column;
+  }
+
+  .content-section.reverse {
+    flex-direction: column;
+  }
+
+  .image-container,
+  .text-container {
+    width: 100%;
+  }
+
+  .fixed-size,
+  .fixed-size-1 {
+    width: 100%;
+    height: auto;
+  }
+
+  .full-width-map iframe {
+    max-height: 443.16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-section {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .image-container,
+  .text-container {
+    width: 100%;
+  }
+
+  .fixed-size,
+  .fixed-size-1 {
+    width: 100%;
+    height: auto;
+  }
+
+  .full-width-map iframe {
+    max-height: 443.16px;
+  }
+}
+
+.btn-main-green {
+  display: inline-block;
+  padding: 10px 20px;
+  width: 9.5rem;
+  background-color: #68c976;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 24px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-main-green:hover {
+  background-color: #218838;
+  text-decoration: none;
+  color: #fff;
+}
+
+/* CSS untuk Container Baru */
+.outer-container {
+  width: 52.5rem;
+  margin: auto;
+  height: 23rem;
+  margin-top: 3rem;
+  padding: 20px 0;
+  border-radius: 20px;
+  box-shadow: 0px 2px 20px -10px #00000033;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(180deg, #cdedd1 10%, #ffffff 90%);
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.mb-4 {
-  margin-bottom: 40px;
+.inner-container {
+  width: 765px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.ms-md-4 {
-  margin-left: 20px; /* Add margin on larger screens */
+.left-section,
+.right-section {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .content-wrapper {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .text-content {
-    padding-right: 0;
-    margin-bottom: 1.5rem;
-  }
+.left-section {
+  padding-right: 10px;
+  align-items: flex-start;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .content-wrapper {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .text-content {
-    padding-right: 0;
-    margin-bottom: 1.5rem;
-  }
+.right-section {
+  padding-left: 10px;
+  align-items: center;
 }
 
-@media (min-width: 768px) {
-  .flex-md-row {
-    flex-direction: row;
-  }
-
-  .ms-md-4 {
-    margin-left: 40px; /* More spacing on larger screens */
-  }
-}
-
-/* About Section Title Styling */
-h1 {
-  font-size: 2.5rem;
+.left-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
   text-align: left;
-  color: #333; /* Dark gray */
-  font-weight: 700; /* Bold font */
 }
 
-/* Logo Styling */
-.logo {
-  max-width: 182px; /* Limit logo width to a reasonable size for larger screens */
-  height: auto; /* Maintain aspect ratio */
+.left-section p {
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  text-align: justify;
 }
 
-@media (min-width: 768px) {
-  .content {
-    padding-right: 12%;
-    padding-left: 12%;
-  }
+.right-section img {
+  padding-left: 2rem;
+  max-width: 197.25px;
+  height: auto;
+  border-radius: 8px;
 }
 
-/* Media Query Adjustments for Smaller Screens */
+/* Responsif */
 @media (max-width: 768px) {
-  .ms-md-4 {
-    margin-left: 0; /* Remove left margin on smaller screens */
+  .outer-container {
+    width: 100%;
   }
+
+  .inner-container {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .left-section,
+  .right-section {
+    width: 100%;
+    padding: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .left-section {
+    margin-bottom: 20px;
+  }
+
+  .left-section h2,
+  .left-section p {
+    text-align: center;
+  }
+}
+
+/* Kelas tambahan untuk memastikan tinggi penuh */
+.full-height {
+  min-height: 100vh;
+}
+
+/* Container Utama */
+.team-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+/* Container dalam */
+.container {
+  max-width: 50rem; /* Setara dengan 800px */
+  width: 100%;
+  margin: auto;
+}
+
+/* Judul Bagian */
+.section-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+/* Flexbox untuk Kolom */
+.team-container {
+  display: flex;
+  gap: 2rem; /* Jarak antar kolom */
+  flex-wrap: wrap; /* Agar kolom bertumpuk di layar kecil */
+}
+
+/* Kolom */
+.team-column {
+  flex: 1; /* Semua kolom mendapatkan lebar yang sama */
+  min-width: 15rem; /* Setara dengan 240px untuk menjaga layout di layar kecil */
+}
+
+/* Heading dan Daftar */
+.team-column p {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.team-column h5 {
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.team-column ul {
+  margin-left: 1.25rem; /* Setara dengan 20px */
+  list-style-type: none;
+}
+
+.team-column ul li::before {
+  content: "• ";
+  color: #333;
 }
