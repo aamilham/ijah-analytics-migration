@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
-import { HelpComponent } from './help/help.component';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +10,7 @@ import { HelpComponent } from './help/help.component';
   imports: [
     RouterModule,
     NavbarComponent,
-    FooterComponent,
-    HelpComponent,
+    FooterComponent
   ],
 })
 export class AppComponent {
@@ -24,5 +22,4 @@ export class AppComponent {
       visitorCountElement.innerText = this.visitorCount.toString();
     }
   }
-  title = 'Ijah';
 }
