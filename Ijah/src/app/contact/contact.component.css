@@ -37,10 +37,10 @@ body {
 
 /* 6. Peringatan (Error Message) */
 .error-message {
-  color: red;
+  color: #dc3545;
   font-size: 12px;
   margin-top: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   display: none;
 }
 
@@ -57,9 +57,10 @@ body {
 /* 9. Formulir */
 .contact-form {
   display: flex;
-  flex: 1;
   gap: 15px;
-  max-height: 20rem;
+  margin-bottom: 2rem;
+  min-height: fit-content;
+  max-height: none;
 }
 
 /* 10. Kolom Kiri */
@@ -87,6 +88,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  padding: 5px;
 }
 
 .radio-group label {
@@ -95,6 +97,11 @@ body {
   gap: 5px;
   font-size: 14px;
   color: #555;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 8px;
+  cursor: pointer;
 }
 
 /* 12. Tombol Submit */
@@ -135,6 +142,7 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
+  margin-bottom: 15px;
 }
 
 .input-group label {
@@ -145,25 +153,58 @@ body {
 }
 
 .input-group input,
+.input-group input[type="text"],
+.input-group input[type="email"],
 .input-group textarea {
-  padding: 8px 15px;
-  border: 1px solid #ccc;
-  border-radius: 25px;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  border-radius: 15px !important;
+  -webkit-border-radius: 15px !important;
+  -moz-border-radius: 15px !important;
+  padding: 12px 15px !important;
+  border: 1px solid #ccc !important;
   font-size: 14px;
   width: 100%;
   box-sizing: border-box;
+  background-color: #fff;
 }
 
 .input-group textarea {
   resize: vertical;
   min-height: 100px;
-  border-radius: 15px;
+  border-radius: 15px !important;
+  -webkit-border-radius: 15px !important;
+  -moz-border-radius: 15px !important;
+}
+
+.input-group input.ng-untouched,
+.input-group textarea.ng-untouched {
+  border-color: #ccc;
+}
+
+.input-group input.ng-touched.ng-valid,
+.input-group textarea.ng-touched.ng-valid {
+  border-color: #28a745;
+}
+
+.input-group input.ng-touched.ng-invalid,
+.input-group textarea.ng-touched.ng-invalid {
+  border-color: #dc3545;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25);
+  border-color: #28a745;
 }
 
 /* Map Container */
 .full-width-map {
   margin-top: 2rem;
   width: 100%;
+  clear: both;
 }
 
 .map-container {
@@ -180,6 +221,10 @@ body {
   border-radius: 1rem;
 }
 
+.ng-untouched.ng-pristine.ng-valid
+.ng-untouched.ng-pristine.ng-valid{
+  border-radius: 8px;
+}
 /* Responsive Styles */
 @media screen and (max-width: 768px) {
   .contact-container {
