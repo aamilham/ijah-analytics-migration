@@ -10,11 +10,17 @@
     ]
   },
   "files": [
-    "src/main.ts",
-    "src/main.server.ts",
-    "server.ts"
+    "src/main.ts"
   ],
   "include": [
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/**/*.server.ts",
+    "server.ts",
+    "src/main.server.ts",
+    "src/app/app.config.server.ts"
   ]
 }
