@@ -48,8 +48,15 @@
 
 .hero-logo {
   width: 30%;
+  min-width: 200px; /* Prevents logo from becoming too small */
   height: auto;
   z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .hero-logo {
+    width: 250px; /* Fixed width for mobile views */
+  }
 }
 
 .content-section {
@@ -112,14 +119,15 @@
   width: 100%;
   padding: 0;
   margin: 0;
+  line-height: 0;
 }
 
 .full-width-map iframe {
   width: 100%;
-  height: auto;
-  max-height: 332.37px;
+  height: 332.37px;
   border: none;
   border-radius: 0;
+  display: block;
 }
 
 @media (max-width: 1200px) {
@@ -246,21 +254,25 @@
 }
 
 .right-section img {
-  padding-left: 2rem;
+  width: 100%;
   max-width: 197.25px;
   height: auto;
   border-radius: 8px;
+  object-fit: contain;
 }
 
 /* Responsif */
 @media (max-width: 768px) {
   .outer-container {
     width: 100%;
+    height: auto;
+    padding: 2rem 1rem;
   }
 
   .inner-container {
     width: 100%;
     flex-direction: column;
+    padding: 0 1rem;
   }
 
   .left-section,
@@ -279,6 +291,12 @@
   .left-section p {
     text-align: center;
   }
+
+  .right-section img {
+    padding-left: 0;
+    max-width: 150px;
+    margin: 1rem auto;
+  }
 }
 
 /* Kelas tambahan untuk memastikan tinggi penuh */
@@ -291,8 +309,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
-  padding: 20px;
+  min-height: fit-content;
+  padding: 40px 20px;
 }
 
 /* Container dalam */
