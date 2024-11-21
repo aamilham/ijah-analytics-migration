@@ -26,8 +26,9 @@
 /* Navbar Items */
 .navbar-nav {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .navbar-nav .nav-link {
@@ -55,6 +56,88 @@
   padding: 0.5rem 1.5rem;
 }
 
+/* Hamburger Menu Animation */
+.navbar-toggler {
+  display: none;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.hamburger-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.navbar-toggler-icon {
+  background-image: none !important;
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  background-color: #333;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background-color: #333;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggler-icon::before {
+  top: -8px;
+}
+
+.navbar-toggler-icon::after {
+  bottom: -8px;
+}
+
+/* X Animation */
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  background: transparent !important;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+  bottom: 0;
+  transform: rotate(-45deg);
+}
+
+/* Navbar Collapse Animation */
+.navbar-collapse {
+  display: flex;
+  flex-basis: auto;
+}
+
+.navbar-collapse.show {
+  max-height: 500px; /* Adjust this value based on your content height */
+  transition: max-height 0.3s ease-in;
+}
+
+.navbar-collapse.collapsing {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.navbar-collapse.show .navbar-nav {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Tombol Hamburger */
 .navbar-toggler {
   border: none;
@@ -70,26 +153,57 @@
     max-width: 120px;
   }
 
+  .navbar-toggler {
+    display: flex;
+    border: none;
+    background: transparent;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+  }
+
   .navbar-collapse {
+    display: block;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     background-color: white;
-    padding: 1rem;
+    padding: 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     z-index: 1000;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  }
+
+  .navbar-collapse.show {
+    max-height: 500px;
+    padding: 1rem;
+    transition: max-height 0.3s ease-in, padding 0.3s ease-in;
   }
 
   .navbar-nav {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+
+  .navbar-collapse.show .navbar-nav {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease-in 0.1s, transform 0.3s ease-in 0.1s;
   }
 
   .navbar-nav .nav-item {
-    margin: 0;
     width: 100%;
+    text-align: center;
   }
 
   .navbar-nav .nav-link {
