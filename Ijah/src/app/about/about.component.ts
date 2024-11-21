@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -8,6 +8,28 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink]
 })
-export class AboutComponent {
-  // No additional logic is needed if this is a static page
+export class AboutComponent implements OnInit, AfterViewInit {
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  ngAfterViewInit() {
+    this.initScrollAnimation();
+  }
+
+  private initScrollAnimation() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Observe all content sections
+    document.querySelectorAll('.content-section').forEach((section) => {
+      observer.observe(section);
+    });
+  }
 }
