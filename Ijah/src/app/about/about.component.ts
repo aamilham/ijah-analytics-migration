@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-about', // The selector for the AboutComponent
-  templateUrl: './about.component.html', // The HTML file that contains the template
-  styleUrls: ['./about.component.css'], // The CSS file for the AboutComponent styles
+  selector: 'app-about',
+  templateUrl: './about.component.html',
+  styleUrls: ['./about.component.css'],
+  standalone: true,
+  imports: [RouterLink]
 })
 export class AboutComponent {
   // No additional logic is needed if this is a static page
