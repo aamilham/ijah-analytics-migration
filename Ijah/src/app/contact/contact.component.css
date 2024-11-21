@@ -146,6 +146,16 @@ body {
   color: #333;
 }
 
+.input-group input.ng-untouched.ng-pristine.ng-invalid,
+.input-group textarea.ng-untouched.ng-pristine.ng-invalid,
+.ng-untouched.ng-pristine.ng-valid{
+    border-radius: 25px !important;
+    border: 1px solid #ccc !important;
+    padding: 8px;
+    -webkit-border-radius: 25px !important;
+    -moz-border-radius: 25px !important;
+}
+
 /* 16. Input dan Textarea Styling */
 .input-group input,
 .input-group textarea {
