@@ -39,6 +39,23 @@ export class HomeComponent {
   selectedProteins: any[] = [];
   selectedDiseases: any[] = [];
 
+  // Methods to check field states
+  isCompoundDisabled(): boolean {
+    return this.selectedPlants.length > 0 || this.selectedProteins.length > 0;
+  }
+
+  isDiseaseDisabled(): boolean {
+    return this.selectedPlants.length > 0 || this.selectedProteins.length > 0;
+  }
+
+  isPlantDisabled(): boolean {
+    return this.selectedCompounds.length > 0 || this.selectedDiseases.length > 0;
+  }
+
+  isProteinDisabled(): boolean {
+    return this.selectedCompounds.length > 0 || this.selectedDiseases.length > 0;
+  }
+
   // Methods for Search and Reset buttons
   onSearch() {
     // Implement search functionality here
