@@ -146,7 +146,18 @@
   padding: 8px;
   background-color: #ffffff;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+
+::ng-deep .custom-ng-select.ng-select-disabled {
+  opacity: 0.6;
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+::ng-deep .custom-ng-select.ng-select-disabled .ng-select-container {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
 }
 
 ::ng-deep .custom-ng-select:hover {
