@@ -1,6 +1,8 @@
 /* Mengatur navbar */
 .navbar {
-  padding: 0.5rem 5rem 0.5rem 5rem;
+  padding: 0.5rem 5rem;
+  position: relative;
+  width: 100%;
 }
 
 /* Kanan: Menyelaraskan semua item */
@@ -60,23 +62,53 @@
 
 /* Tampilan Mobile */
 @media (max-width: 991.98px) {
-  /* Mengatur menu menjadi vertikal dan rata tengah */
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-brand img {
+    max-width: 120px;
+  }
+
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+
   .navbar-nav {
     flex-direction: column;
-    align-items: center; /* Center-aligns the items */
+    align-items: center;
+    gap: 1rem;
   }
 
   .navbar-nav .nav-item {
     margin: 0;
+    width: 100%;
   }
 
   .navbar-nav .nav-link {
-    text-align: center; /* Center-aligns text within each item */
-    padding-left: 0; /* Removes left padding for centering */
+    text-align: center;
+    padding: 0.5rem 0;
+    width: 100%;
   }
 
-  /* Menengahkan konten dalam navbar collapse */
-  .navbar-collapse {
-    text-align: center; /* Centers all items within the collapsed navbar */
+  .navbar-nav .btn {
+    width: 100%;
+    max-width: 200px;
+    margin: 0.5rem auto;
+    display: block;
+    text-align: center;
+  }
+
+  .navbar-nav .nav-item:last-child {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }
