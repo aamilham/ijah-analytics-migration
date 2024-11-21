@@ -1,101 +1,233 @@
-/* General page layout */
-.full-height {
+/* 1. Atur Tinggi pada html dan body */
+html,
+body {
+  height: 100%;
+
+  padding: 0;
+}
+
+/* 3. Kontainer Utama */
+.contact-container {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center the content vertically */
-  align-items: center; /* Center the content horizontally */
-  min-height: 100vh; /* Ensure the container takes up the full viewport height */
-  margin: -3rem;
-  margin-bottom: 3rem;
+  justify-content: center;
+  max-width: 1000px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #fff;
+  min-height: 80vh;
 }
 
-/* Wrapper for the form to give it a cleaner look */
-.container {
-  max-width: 800px;
-  width: 100%;
-  padding: 30px;
-  background-color: var(--neutral-100); /* White or light background */
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin: 20px; /* Add margin around the container */
-}
-
-/* Heading styling */
-h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
+/* 4. Judul */
+.contact-title {
   text-align: center;
-  color: var(--neutral-900); /* Neutral heading color */
+  margin-bottom: 20px; /* Kurangi margin */
+  font-size: 28px;
+  color: #333;
 }
 
-/* Input fields and textarea styling */
-textarea,
-input {
-  font-size: 1rem;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid var(--neutral-300); /* Use neutral border */
-  transition: border-color 0.3s ease;
+/* 5. Pesan Sukses */
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px 15px;
+  border: 1px solid #c3e6cb;
+  border-radius: var(--RADIUSradius-2);
+  margin-bottom: 15px; /* Kurangi margin */
 }
 
-textarea:focus,
-input:focus {
-  border-color: var(--primary-400); /* Primary color on focus */
-  box-shadow: 0 0 8px rgba(46, 165, 79, 0.2); /* Shadow on focus */
-  outline: none;
+/* 6. Peringatan (Error Message) */
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: 15px; /* Tambahkan margin-bottom untuk konsistensi */
+  display: none; /* Disembunyikan secara default */
 }
 
-/* Error message and invalid input styling */
-.is-invalid {
-  border-color: var(--red-200); /* Global red for invalid fields */
+/* 7. Styling untuk Input yang Invalid */
+.invalid {
+  border-color: red;
 }
 
-.invalid-feedback {
-  color: var(--red-200); /* Red for error messages */
-  font-size: 0.875rem;
+/* 8. Tampilkan pesan error ketika input invalid */
+.invalid + .error-message {
+  display: block;
 }
 
-/* Button styling */
-.btn-primary {
-  padding: 10px 20px;
-  font-size: 1.1rem;
-  border-radius: 5px;
-  background-color: var(--primary-400); /* Use primary button color */
-  border-color: var(--primary-400);
+/* 9. Formulir */
+.contact-form {
+  display: flex;
+  flex: 1; /* Mengambil ruang yang tersedia */
+  gap: 15px; /* Kurangi gap */
+  max-height: 20rem;
+}
+
+/* 10. Kolom Kiri */
+.form-left {
+  flex: 1;
+  max-width: 200px;
+  padding: 5px; /* Kurangi padding */
+}
+
+/* 11. Subject Group dengan Outline Rounded */
+.subject-group {
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  padding: 10px; /* Kurangi padding */
+}
+
+.subject-group legend {
+  font-weight: bold;
+  margin-bottom: 5px; /* Kurangi margin */
+  font-size: 16px;
+  color: #333;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Kurangi gap */
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Kurangi gap */
+  font-size: 14px;
+  color: #555;
+}
+
+/* 12. Tombol Submit */
+.submit-button {
+  margin-top: 15px; /* Kurangi margin */
+  padding: 10px; /* Kurangi padding */
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: var(
+    --RADIUSradius-2
+  ); /* Sudut membulat menggunakan variabel */
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%; /* Selebar outline Subject */
   transition: background-color 0.3s ease;
 }
 
-.btn-primary:hover {
-  background-color: var(--primary-500); /* Darker shade on hover */
+.submit-button:hover {
+  background-color: #218838;
 }
 
-/* Success message styling */
-.alert-success {
-  background-color: var(--green-100); /* Green background for success alert */
-  color: var(--green-200); /* Darker green text */
-  border: 1px solid var(--green-200);
-  border-radius: 8px;
-  padding: 15px;
-  margin-top: 20px;
+/* 13. Kolom Kanan */
+.form-right {
+  flex: 2; /* Kolom kanan lebih lebar */
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Kurangi gap */
 }
 
-/* Add margin for form fields */
-.form-group {
-  margin-bottom: 20px;
+/* 14. Input Group Inline */
+.input-group-inline {
+  display: flex;
+  gap: 10px; /* Kurangi gap */
 }
 
-/* Responsive adjustments */
+/* 15. Individual Input Group */
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  margin-bottom: 3px; /* Kurangi margin */
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+/* 16. Input dan Textarea Styling */
+.input-group input,
+.input-group textarea {
+  padding: 8px; /* Kurangi padding */
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  font-size: 14px;
+  outline: none; /* Menghapus outline default */
+  transition: border-color 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: #28a745;
+}
+
+.input-group textarea {
+  resize: vertical;
+}
+
+/* 17. Placeholder Styling */
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+  color: #999;
+  opacity: 1; /* Firefox */
+}
+
+.input-group input:-ms-input-placeholder,
+.input-group textarea:-ms-input-placeholder {
+  color: #999;
+}
+
+.input-group input::-webkit-input-placeholder,
+.input-group textarea::-webkit-input-placeholder {
+  color: #999;
+}
+
+/* 18. Responsif */
 @media (max-width: 768px) {
-  .container {
-    padding: 20px;
+  .contact-form {
+    flex-direction: column;
+    gap: 10px; /* Kurangi gap */
   }
 
-  h1 {
-    font-size: 2rem;
+  .form-left,
+  .form-right {
+    flex: 1;
+    min-width: 100%;
+    padding: 5px; /* Pastikan padding tetap kecil */
   }
 
-  .btn-primary {
-    font-size: 1rem;
+  .input-group-inline {
+    flex-direction: column;
+    gap: 10px; /* Kurangi gap */
   }
+
+  .submit-button {
+    width: 100%;
+  }
+}
+
+/* 19. Bagian Peta */
+.full-width-map {
+  margin-top: 2rem; /* Atur jarak antara form dan map menjadi 2rem */
+  margin-bottom: 2rem; /* Atur jarak di bawah map menjadi 2rem */
+  padding-bottom: 0; /* Menghapus padding-bottom */
+  background-color: #fff;
+  flex-grow: 1; /* Mengambil ruang yang tersisa */
+  max-height: 15rem;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%; /* Mengisi tinggi dari parent container (.full-width-map) */
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem; /* Membulatkan sudut peta, sesuai dengan variabel RADIUS */
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%; /* Mengisi seluruh kontainer peta */
+  border: 0;
+  border-radius: 1rem; /* Membulatkan sudut peta */
 }
