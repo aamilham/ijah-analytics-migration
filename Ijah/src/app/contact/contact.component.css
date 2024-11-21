@@ -2,7 +2,6 @@
 html,
 body {
   height: 100%;
-
   padding: 0;
 }
 
@@ -21,7 +20,7 @@ body {
 /* 4. Judul */
 .contact-title {
   text-align: center;
-  margin-bottom: 20px; /* Kurangi margin */
+  margin-bottom: 20px;
   font-size: 28px;
   color: #333;
 }
@@ -33,7 +32,7 @@ body {
   padding: 10px 15px;
   border: 1px solid #c3e6cb;
   border-radius: var(--RADIUSradius-2);
-  margin-bottom: 15px; /* Kurangi margin */
+  margin-bottom: 15px;
 }
 
 /* 6. Peringatan (Error Message) */
@@ -41,8 +40,8 @@ body {
   color: red;
   font-size: 12px;
   margin-top: 5px;
-  margin-bottom: 15px; /* Tambahkan margin-bottom untuk konsistensi */
-  display: none; /* Disembunyikan secara default */
+  margin-bottom: 15px;
+  display: none;
 }
 
 /* 7. Styling untuk Input yang Invalid */
@@ -58,8 +57,8 @@ body {
 /* 9. Formulir */
 .contact-form {
   display: flex;
-  flex: 1; /* Mengambil ruang yang tersedia */
-  gap: 15px; /* Kurangi gap */
+  flex: 1;
+  gap: 15px;
   max-height: 20rem;
 }
 
@@ -67,19 +66,19 @@ body {
 .form-left {
   flex: 1;
   max-width: 200px;
-  padding: 5px; /* Kurangi padding */
+  padding: 5px;
 }
 
 /* 11. Subject Group dengan Outline Rounded */
 .subject-group {
   border: 1px solid #ccc;
   border-radius: 1rem;
-  padding: 10px; /* Kurangi padding */
+  padding: 10px;
 }
 
 .subject-group legend {
   font-weight: bold;
-  margin-bottom: 5px; /* Kurangi margin */
+  margin-bottom: 5px;
   font-size: 16px;
   color: #333;
 }
@@ -87,30 +86,28 @@ body {
 .radio-group {
   display: flex;
   flex-direction: column;
-  gap: 5px; /* Kurangi gap */
+  gap: 5px;
 }
 
 .radio-group label {
   display: flex;
   align-items: center;
-  gap: 5px; /* Kurangi gap */
+  gap: 5px;
   font-size: 14px;
   color: #555;
 }
 
 /* 12. Tombol Submit */
 .submit-button {
-  margin-top: 15px; /* Kurangi margin */
-  padding: 10px; /* Kurangi padding */
+  margin-top: 15px;
+  padding: 10px;
   background-color: #28a745;
   color: #fff;
   border: none;
-  border-radius: var(
-    --RADIUSradius-2
-  ); /* Sudut membulat menggunakan variabel */
+  border-radius: var(--RADIUSradius-2);
   cursor: pointer;
   font-size: 16px;
-  width: 100%; /* Selebar outline Subject */
+  width: 100%;
   transition: background-color 0.3s ease;
 }
 
@@ -120,124 +117,152 @@ body {
 
 /* 13. Kolom Kanan */
 .form-right {
-  flex: 2; /* Kolom kanan lebih lebar */
+  flex: 2;
   min-width: 300px;
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Kurangi gap */
+  gap: 10px;
 }
 
 /* 14. Input Group Inline */
 .input-group-inline {
   display: flex;
-  gap: 10px; /* Kurangi gap */
+  gap: 10px;
 }
 
 /* 15. Individual Input Group */
 .input-group {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .input-group label {
-  margin-bottom: 3px; /* Kurangi margin */
+  margin-bottom: 3px;
   font-weight: bold;
   font-size: 14px;
   color: #333;
 }
 
-.input-group input.ng-untouched.ng-pristine.ng-invalid,
-.input-group textarea.ng-untouched.ng-pristine.ng-invalid,
-.ng-untouched.ng-pristine.ng-valid{
-    border-radius: 25px !important;
-    border: 1px solid #ccc !important;
-    padding: 8px;
-    -webkit-border-radius: 25px !important;
-    -moz-border-radius: 25px !important;
-}
-
-/* 16. Input dan Textarea Styling */
 .input-group input,
 .input-group textarea {
-  padding: 8px; /* Kurangi padding */
+  padding: 8px 15px;
   border: 1px solid #ccc;
-  border-radius: 1rem;
+  border-radius: 25px;
   font-size: 14px;
-  outline: none; /* Menghapus outline default */
-  transition: border-color 0.3s ease;
-}
-
-.input-group input:focus,
-.input-group textarea:focus {
-  border-color: #28a745;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .input-group textarea {
   resize: vertical;
+  min-height: 100px;
+  border-radius: 15px;
 }
 
-/* 17. Placeholder Styling */
-.input-group input::placeholder,
-.input-group textarea::placeholder {
-  color: #999;
-  opacity: 1; /* Firefox */
-}
-
-.input-group input:-ms-input-placeholder,
-.input-group textarea:-ms-input-placeholder {
-  color: #999;
-}
-
-.input-group input::-webkit-input-placeholder,
-.input-group textarea::-webkit-input-placeholder {
-  color: #999;
-}
-
-/* 18. Responsif */
-@media (max-width: 768px) {
-  .contact-form {
-    flex-direction: column;
-    gap: 10px; /* Kurangi gap */
-  }
-
-  .form-left,
-  .form-right {
-    flex: 1;
-    min-width: 100%;
-    padding: 5px; /* Pastikan padding tetap kecil */
-  }
-
-  .input-group-inline {
-    flex-direction: column;
-    gap: 10px; /* Kurangi gap */
-  }
-
-  .submit-button {
-    width: 100%;
-  }
-}
-
-/* 19. Bagian Peta */
+/* Map Container */
 .full-width-map {
-  margin-top: 2rem; /* Atur jarak antara form dan map menjadi 2rem */
-  margin-bottom: 2rem; /* Atur jarak di bawah map menjadi 2rem */
-  padding-bottom: 0; /* Menghapus padding-bottom */
-  background-color: #fff;
-  flex-grow: 1; /* Mengambil ruang yang tersisa */
-  max-height: 15rem;
+  margin-top: 2rem;
+  width: 100%;
 }
 
 .map-container {
   width: 100%;
-  height: 100%; /* Mengisi tinggi dari parent container (.full-width-map) */
-  position: relative;
+  height: 400px;
+  border-radius: 1rem;
   overflow: hidden;
-  border-radius: 1rem; /* Membulatkan sudut peta, sesuai dengan variabel RADIUS */
 }
 
 .map-container iframe {
   width: 100%;
-  height: 100%; /* Mengisi seluruh kontainer peta */
+  height: 100%;
   border: 0;
-  border-radius: 1rem; /* Membulatkan sudut peta */
+  border-radius: 1rem;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .contact-container {
+    padding: 1rem;
+    min-height: auto;
+  }
+
+  .contact-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  .contact-form {
+    flex-direction: column;
+    max-height: none;
+    gap: 20px;
+  }
+
+  .form-left {
+    max-width: 100%;
+    order: 2;
+    padding: 0;
+  }
+
+  .form-right {
+    min-width: auto;
+    order: 1;
+  }
+
+  .input-group-inline {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .input-group input,
+  .input-group textarea {
+    width: 100%;
+    padding: 8px 15px;
+  }
+
+  .subject-group {
+    margin-bottom: 15px;
+  }
+
+  .map-container {
+    height: 300px;
+    margin-top: 20px;
+  }
+
+  .radio-group {
+    gap: 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .contact-container {
+    padding: 0.8rem;
+  }
+
+  .contact-title {
+    font-size: 22px;
+  }
+
+  .input-group label {
+    font-size: 13px;
+  }
+
+  .radio-group label {
+    font-size: 13px;
+  }
+
+  .submit-button {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .input-group input,
+  .input-group textarea {
+    font-size: 13px;
+    padding: 7px 12px;
+  }
+
+  .map-container {
+    height: 250px;
+  }
 }
