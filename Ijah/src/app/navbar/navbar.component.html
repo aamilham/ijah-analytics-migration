@@ -21,35 +21,19 @@
       <!-- Menu Tengah -->
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/about" (click)="isCollapsed = true"
-            >About</a
-          >
+          <a class="nav-link" [routerLink]="['/about']" routerLinkActive="active" (click)="isCollapsed = true">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/help" (click)="isCollapsed = true"
-            >Help/FAQ</a
-          >
+          <a class="nav-link" [routerLink]="['/help']" routerLinkActive="active" (click)="isCollapsed = true">Help/FAQ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/legacy" (click)="isCollapsed = true"
-            >Legacy</a
-          >
+          <a class="nav-link" [routerLink]="['/legacy']" routerLinkActive="active" (click)="isCollapsed = true">Legacy</a>
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/download"
-            (click)="isCollapsed = true"
-            >Download</a
-          >
+          <a class="nav-link" [routerLink]="['/download']" routerLinkActive="active" (click)="isCollapsed = true">Download</a>
         </li>
         <li class="nav-item">
-          <a
-            class="btn btn-success text-white fw-bold px-3"
-            routerLink="/contact"
-            (click)="isCollapsed = true"
-            >Contact Us</a
-          >
+          <a class="btn btn-success text-white fw-bold px-3" [routerLink]="['/contact']" routerLinkActive="active" (click)="isCollapsed = true">Contact Us</a>
         </li>
       </ul>
     </div>
