@@ -223,10 +223,11 @@
   margin: 0;
   height: auto;
   line-height: normal;
-  background-color: #f1f1f1; /* Opsional: latar belakang tag */
+  background-color: #333333; /* Opsional: latar belakang tag */
   border-radius: 4px; /* Opsional: sudut membulat pada tag */
   margin-right: 4px;
   margin-bottom: 4px;
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
