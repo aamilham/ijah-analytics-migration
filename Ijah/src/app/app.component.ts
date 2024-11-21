@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router'; // Impor RouterModule
-import { NavbarComponent } from './navbar/navbar.component'; // Impor NavbarComponent
-import { FooterComponent } from './footer/footer.component'; // Import FooterComponent
+import { RouterModule } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 import { HelpComponent } from './help/help.component';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
   imports: [
-    RouterModule, // Tambahkan RouterModule ke imports
+    RouterModule,
     NavbarComponent,
     FooterComponent,
-    HelpComponent, // Tambahkan NavbarComponent jika digunakan dalam template
+    HelpComponent,
   ],
 })
 export class AppComponent {
-  visitorCount: number = 12345; // Contoh, ganti dengan logika yang sesuai
+  visitorCount: number = 12345;
 
   ngOnInit() {
-    // Kamu bisa menambahkan logika API di sini untuk mendapatkan jumlah pengunjung
     const visitorCountElement = document.getElementById('visitor-count');
     if (visitorCountElement) {
       visitorCountElement.innerText = this.visitorCount.toString();

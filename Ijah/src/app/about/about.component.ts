@@ -27,7 +27,6 @@ export class AboutComponent implements OnInit, AfterViewInit {
       });
     }, { threshold: 0.1 });
 
-    // Observe all content sections
     document.querySelectorAll('.content-section').forEach((section) => {
       observer.observe(section);
     });

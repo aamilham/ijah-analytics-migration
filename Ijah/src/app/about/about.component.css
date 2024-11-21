@@ -8,7 +8,7 @@
   background-repeat: no-repeat;
   background-position: center 6rem;
   position: relative;
-  min-height: 100vh; /* Menambahkan min-height untuk memastikan background tidak terpotong */
+  min-height: 100vh;
 }
 
 .container-fluid.adjustable-margins::before {
@@ -62,14 +62,14 @@
 
 .hero-logo {
   width: 30%;
-  min-width: 200px; /* Prevents logo from becoming too small */
+  min-width: 200px;
   height: auto;
   z-index: 1;
 }
 
 @media (max-width: 768px) {
   .hero-logo {
-    width: 250px; /* Fixed width for mobile views */
+    width: 250px;
   }
 }
 
@@ -220,7 +220,6 @@
   color: #fff;
 }
 
-/* CSS untuk Container Baru */
 .outer-container {
   width: 52.5rem;
   margin: auto;
@@ -284,7 +283,6 @@
   object-fit: contain;
 }
 
-/* Responsif */
 @media (max-width: 768px) {
   .outer-container {
     width: 100%;
@@ -322,12 +320,10 @@
   }
 }
 
-/* Kelas tambahan untuk memastikan tinggi penuh */
 .full-height {
   min-height: 100vh;
 }
 
-/* Container Utama */
 .team-section {
   display: flex;
   justify-content: center;
@@ -336,14 +332,12 @@
   padding: 40px 20px;
 }
 
-/* Container dalam */
 .container {
-  max-width: 50rem; /* Setara dengan 800px */
+  max-width: 50rem;
   width: 100%;
   margin: auto;
 }
 
-/* Judul Bagian */
 .section-title {
   text-align: center;
   margin-bottom: 1rem;
@@ -351,20 +345,17 @@
   font-weight: bold;
 }
 
-/* Flexbox untuk Kolom */
 .team-container {
   display: flex;
-  gap: 2rem; /* Jarak antar kolom */
-  flex-wrap: wrap; /* Agar kolom bertumpuk di layar kecil */
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
-/* Kolom */
 .team-column {
-  flex: 1; /* Semua kolom mendapatkan lebar yang sama */
-  min-width: 15rem; /* Setara dengan 240px untuk menjaga layout di layar kecil */
+  flex: 1;
+  min-width: 15rem;
 }
 
-/* Heading dan Daftar */
 .team-column p {
   margin-bottom: 0.5rem;
   font-weight: bold;
@@ -376,7 +367,7 @@
 }
 
 .team-column ul {
-  margin-left: 1.25rem; /* Setara dengan 20px */
+  margin-left: 1.25rem;
   list-style-type: none;
 }
 

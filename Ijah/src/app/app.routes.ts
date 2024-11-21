@@ -6,9 +6,9 @@ import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent }, // Rute untuk halaman Home
-  { path: 'download', component: DownloadComponent }, // Rute untuk halaman Download
-  { path: 'help', component: HelpComponent }, // Rute untuk halaman Help/FAQ
-  { path: 'contact', component: ContactComponent }, // Rute untuk halaman Contact
-  { path: 'about', component: AboutComponent }, // Rute untuk halaman About
+  { path: '', component: HomeComponent },
+  { path: 'download', component: DownloadComponent },
+  { path: 'help', component: HelpComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'about', component: AboutComponent },
 ];
