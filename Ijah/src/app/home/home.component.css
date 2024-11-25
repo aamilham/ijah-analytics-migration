@@ -89,23 +89,33 @@
   display: flex !important;
   flex-wrap: wrap !important;
   gap: 4px !important;
-  max-width: 100% !important;
-  overflow: hidden !important;
-  padding: 2px !important;
+  width: 100% !important;
+  min-height: 36px !important;
+  padding: 2px 4px !important;
+  overflow: visible !important;
 }
 
 ::ng-deep .custom-ng-select .ng-value-container .ng-value {
   display: inline-flex !important;
   align-items: center !important;
-  max-width: calc(100% - 8px) !important;
-  margin: 2px !important;
-  padding: 2px 6px !important;
   background-color: #333333 !important;
   color: #ffffff !important;
+  padding: 4px 8px !important;
   border-radius: 4px !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
+  margin: 2px !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 24px !important;
+}
+
+::ng-deep .custom-ng-select .ng-value-container .ng-value .ng-value-label {
+  display: inline-block !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  line-height: 1.2 !important;
+  max-width: none !important;
 }
 
 ::ng-deep .custom-ng-select .ng-value-container .ng-input {
