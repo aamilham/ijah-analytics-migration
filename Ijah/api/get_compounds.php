@@ -8,7 +8,22 @@ header('Access-Control-Allow-Headers: Content-Type');
 require_once 'init.php';
 
 try {
-    $query = "SELECT com_id as id, COALESCE(com_drugbank_id, com_knapsack_id, com_kegg_id, com_pubchem_id, com_cas_id) as name FROM compound ORDER BY name";
+    // Get search term from query parameter
+    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+    
+    // Base query
+    $query = "SELECT com_id as id, com_name as name FROM compound";
+    
+    // Add search condition if search term is provided
+    if (!empty($search)) {
+        // Using ILIKE for case-insensitive search and adding wildcards for partial matches
+        $search = pg_escape_string($link, $search);
+        $query .= " WHERE com_name ILIKE '%$search%'";
+    }
+    
+    // Add ordering
+    $query .= " ORDER BY com_name";
+    
     $result = pg_query($link, $query);
     
     if (!$result) {
