@@ -144,4 +144,65 @@ export class HomeComponent implements OnInit {
     this.selectedDiseases = [];
     this.searchResults = null;
   }
+
+  onFocus(event: any) {
+    const input = event.target;
+    if (input) {
+      const container = input.closest('.ng-select-container');
+      if (container) {
+        const placeholder = container.querySelector('.ng-placeholder');
+        if (placeholder) {
+          placeholder.style.display = 'none';
+        }
+      }
+    }
+  }
+
+  clearSearchInput(event: any) {
+    const ngSelect = event.target?.closest('.ng-select');
+    if (ngSelect) {
+      // Find and clear the search input
+      const searchInput = ngSelect.querySelector('.ng-select-container input');
+      if (searchInput) {
+        searchInput.value = '';
+      }
+
+      // Force the ng-select to clear its internal search text
+      const ngSelectInstance = event.target;
+      if (ngSelectInstance) {
+        setTimeout(() => {
+          ngSelectInstance.searchTerm = '';
+          ngSelectInstance.clearSearch();
+        });
+      }
+    }
+  }
+
+  onSearchChange(event: any) {
+    const ngSelect = event.target?.closest('.ng-select');
+    if (ngSelect) {
+      const searchInput = ngSelect.querySelector('.ng-select-container input');
+      if (searchInput && event.term) {
+        // Store the current search term
+        ngSelect.setAttribute('data-last-search', event.term);
+      }
+    }
+  }
+
+  onOpen(event: any) {
+    const ngSelect = event.target?.closest('.ng-select');
+    if (ngSelect) {
+      // Clear any previous search term
+      const searchInput = ngSelect.querySelector('.ng-select-container input');
+      if (searchInput) {
+        searchInput.value = '';
+      }
+      // Clear the ng-select's internal search term
+      const ngSelectInstance = event.target;
+      if (ngSelectInstance) {
+        ngSelectInstance.searchTerm = '';
+        ngSelectInstance.clearSearch();
+      }
+    }
+  }
 }
