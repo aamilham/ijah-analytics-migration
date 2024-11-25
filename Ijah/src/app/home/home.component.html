@@ -24,13 +24,18 @@
             [items]="plantList"
             bindLabel="name"
             [multiple]="true"
-            [placeholder]="isPlantDisabled() ? '' : (selectedPlants.length > 0 ? '' : 'Search')"
+            [placeholder]="'Search'"
             [(ngModel)]="selectedPlants"
             appendTo="body"
             [closeOnSelect]="false"
             [hideSelected]="true"
             [clearable]="false"
             [disabled]="isPlantDisabled()"
+            (focus)="onFocus($event)"
+            (change)="clearSearchInput($event)"
+            [searchable]="true"
+            (search)="onSearchChange($event)"
+            (open)="onOpen($event)"
           ></ng-select>
         </div>
       </div>
@@ -44,13 +49,18 @@
             [items]="compoundList"
             bindLabel="name"
             [multiple]="true"
-            [placeholder]="isCompoundDisabled() ? '' : (selectedCompounds.length > 0 ? '' : 'Search')"
+            [placeholder]="'Search'"
             [(ngModel)]="selectedCompounds"
             appendTo="body"
             [closeOnSelect]="false"
             [hideSelected]="true"
             [clearable]="false"
             [disabled]="isCompoundDisabled()"
+            (focus)="onFocus($event)"
+            (change)="clearSearchInput($event)"
+            [searchable]="true"
+            (search)="onSearchChange($event)"
+            (open)="onOpen($event)"
           ></ng-select>
         </div>
       </div>
@@ -64,13 +74,18 @@
             [items]="proteinList"
             bindLabel="name"
             [multiple]="true"
-            [placeholder]="isProteinDisabled() ? '' : (selectedProteins.length > 0 ? '' : 'Search')"
+            [placeholder]="'Search'"
             [(ngModel)]="selectedProteins"
             appendTo="body"
             [closeOnSelect]="false"
             [hideSelected]="true"
             [clearable]="false"
             [disabled]="isProteinDisabled()"
+            (focus)="onFocus($event)"
+            (change)="clearSearchInput($event)"
+            [searchable]="true"
+            (search)="onSearchChange($event)"
+            (open)="onOpen($event)"
           ></ng-select>
         </div>
       </div>
@@ -84,13 +99,18 @@
             [items]="diseaseList"
             bindLabel="name"
             [multiple]="true"
-            [placeholder]="isDiseaseDisabled() ? '' : (selectedDiseases.length > 0 ? '' : 'Search')"
+            [placeholder]="'Search'"
             [(ngModel)]="selectedDiseases"
             appendTo="body"
             [closeOnSelect]="false"
             [hideSelected]="true"
             [clearable]="false"
             [disabled]="isDiseaseDisabled()"
+            (focus)="onFocus($event)"
+            (change)="clearSearchInput($event)"
+            [searchable]="true"
+            (search)="onSearchChange($event)"
+            (open)="onOpen($event)"
           ></ng-select>
         </div>
       </div>
