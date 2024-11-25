@@ -38,6 +38,69 @@ Pembaruan website IJAH Analytics dilakukan untuk:
 
 Saat ini tidak ada instruksi instalasi yang tersedia.
 
+### Panduan Instalasi: Backend, Database, dan Konfigurasi
+
+#### Pengaturan Backend
+
+##### Buat File Konfigurasi
+
+- Buat `config_database.json` dan letakkan di direktori `ijah/api`.
+- Buat file `.env` dan letakkan di direktori `ijah/api_upload`.
+- Buat `config_webserver.ts` dan letakkan di `ijah/src/app`.
+
+##### Unduh dan Impor Database
+
+- Dapatkan file dump database dan impor menggunakan psql atau pgAdmin4.
+
+##### Instal Dependensi
+
+- Pastikan Composer sudah terinstal di komputer Anda.
+- Jalankan `composer install` di dalam direktori `ijah/api` untuk menginstal dependensi PHP yang diperlukan.
+
+##### Konfigurasi File Lingkungan
+
+- Perbarui file konfigurasi (`config_database.json`, `.env`, `config_webserver.ts`) dengan nomor port dan detail konektivitas yang sesuai dengan pengaturan Anda.
+
+##### Jalankan Server Backend
+
+- Mulai server backend dengan menjalankan perintah:
+
+  ```
+  php -S localhost:8000
+  ```
+
+##### Uji Konektivitas Database
+
+- Verifikasi bahwa backend terhubung ke database dengan mengakses URL berikut di browser Anda: [http://localhost:8000/connectivity.php](http://localhost:8000/connectivity.php)
+
+#### Pengaturan Frontend
+
+##### Instal Dependensi Frontend
+
+- Arahkan ke direktori frontend dan jalankan:
+
+  ```
+  npm install
+  ```
+
+##### Mulai Backend dan Database
+
+- Pastikan bahwa server backend dan database sudah berjalan sebelum melanjutkan ke frontend.
+
+##### Jalankan Server Frontend
+
+- Mulai server pengembangan Angular dengan menjalankan:
+
+  ```
+  ng serve
+  ```
+
+##### Akses Aplikasi
+
+- Server frontend akan tersedia di [http://localhost:4200](http://localhost:4200).
+
+  Catatan: Pastikan semua dependensi yang diperlukan telah diinstal, dan konfigurasi backend sudah selaras dengan frontend untuk memastikan operasi aplikasi berjalan dengan lancar.
+
 ### Komponen
 
 - **Database**
@@ -94,3 +157,4 @@ Proyek ini dilisensikan di bawah [MIT License](LICENSE).
 ### Kontak
 
 Jika Anda memiliki pertanyaan atau memerlukan informasi lebih lanjut, silakan hubungi kami di [support@ijahanalytics.com](mailto:support@ijahanalytics.com).
+
