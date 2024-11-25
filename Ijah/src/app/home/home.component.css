@@ -485,6 +485,29 @@
   }
 }
 
+/* Clear search text styles */
+::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-input {
+  padding: 0;
+  margin: 0;
+}
+
+::ng-deep .ng-select.ng-select-focused .ng-select-container .ng-value-container .ng-input {
+  padding-left: 0;
+}
+
+::ng-deep .ng-select.ng-select-multiple.ng-select-filtered .ng-select-container .ng-value-container .ng-input {
+  visibility: visible;
+}
+
+::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-input input {
+  min-width: 0;
+}
+
+::ng-deep .ng-select.ng-select-multiple.ng-has-value .ng-select-container .ng-value-container .ng-input input {
+  min-width: 0;
+  padding: 0;
+}
+
 /* Results Container */
 .results-container {
   margin-top: 2rem;
@@ -517,4 +540,25 @@
 button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+/* Hide placeholder when typing or focused */
+::ng-deep .ng-select.ng-select-focused .ng-placeholder,
+::ng-deep .ng-select.ng-select-opened .ng-placeholder,
+::ng-deep .ng-select-container .ng-input > input:not([value=""]) ~ .ng-placeholder,
+::ng-deep .ng-select.ng-select-filtered .ng-placeholder,
+::ng-deep .ng-select .ng-has-value .ng-placeholder,
+::ng-deep .ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container .ng-placeholder {
+  display: none !important;
+}
+
+/* Additional rule to hide placeholder when dropdown is open */
+::ng-deep .ng-dropdown-panel-opened .ng-placeholder {
+  display: none !important;
+}
+
+/* Hide placeholder when searching */
+::ng-deep .ng-select.ng-select-focused .ng-has-value .ng-placeholder,
+::ng-deep .ng-select .ng-has-value .ng-placeholder {
+  display: none !important;
 }
