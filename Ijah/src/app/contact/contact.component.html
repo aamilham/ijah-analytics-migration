@@ -2,13 +2,13 @@
   <h2 class="contact-title">Contact Us</h2>
 
   <!-- Pesan Sukses -->
-  <div class="success-message" *ngIf="submissionSuccess">
-    Thank you! Your message has been sent successfully.
+  <div class="alert alert-success" *ngIf="submissionSuccess">
+    <i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully.
   </div>
 
   <!-- Pesan Error -->
-  <div class="error-message" *ngIf="submissionError">
-    Oops! There was an error sending your message. Please try again later.
+  <div class="alert alert-danger" *ngIf="submissionError">
+    <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
   </div>
 
   <form
@@ -51,7 +51,6 @@
             Other
           </label>
         </div>
-        <!-- Pesan Error untuk Subject -->
         <div
           class="error-message"
           *ngIf="
@@ -62,7 +61,14 @@
           Please select a subject.
         </div>
       </fieldset>
-      <button type="submit" class="submit-button">Submit</button>
+
+      <button 
+        type="submit" 
+        class="submit-button"
+        [disabled]="!contactForm.valid || isSubmitting">
+        <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        {{ isSubmitting ? 'Sending...' : 'Submit' }}
+      </button>
     </div>
 
     <!-- Kolom Kanan -->
@@ -83,14 +89,12 @@
           />
           <div
             class="error-message"
-            *ngIf="
-              contactForm.get('name')?.touched &&
-              contactForm.get('name')?.invalid
-            "
+            *ngIf="nameErrors"
           >
-            Please enter your name.
+            {{ nameErrors }}
           </div>
         </div>
+
         <div class="input-group">
           <label for="affiliation">Affiliation</label>
           <input
@@ -99,9 +103,15 @@
             formControlName="affiliation"
             placeholder="University, organization, company, or etc"
           />
-          <!-- Tidak ada validasi untuk Affiliation karena tidak wajib -->
+          <div
+            class="error-message"
+            *ngIf="contactForm.get('affiliation')?.errors?.['pattern']"
+          >
+            Affiliation can only contain letters, numbers, spaces, dots and hyphens
+          </div>
         </div>
       </div>
+
       <div class="input-group">
         <label for="email">Email</label>
         <input
@@ -117,14 +127,12 @@
         />
         <div
           class="error-message"
-          *ngIf="
-            contactForm.get('email')?.touched &&
-            contactForm.get('email')?.invalid
-          "
+          *ngIf="emailErrors"
         >
-          Please enter a valid email address.
+          {{ emailErrors }}
         </div>
       </div>
+
       <div class="input-group">
         <label for="message">Message</label>
         <textarea
@@ -140,26 +148,28 @@
         ></textarea>
         <div
           class="error-message"
-          *ngIf="
-            contactForm.get('message')?.touched &&
-            contactForm.get('message')?.invalid
-          "
+          *ngIf="messageErrors"
         >
-          Please enter your message (max 500 characters).
+          {{ messageErrors }}
         </div>
+        <small class="char-count" *ngIf="contactForm.get('message')?.value">
+          {{ contactForm.get('message')?.value.length }}/500 characters
+        </small>
       </div>
     </div>
   </form>
 
   <section class="full-width-map">
     <div class="map-container">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1dXXXXXXXXXX!2d106.79170529690614!3d-6.58788533132443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f17.1!3m3!1m2!1s0x2e69c5ccb84430c3%3A0x4b47ca3cd9f4813f!2sJl.%20Taman%20Kencana%20No.3%2C%20RT.03%2FRW.03%2C%20Babakan%2C%20Kecamatan%20Bogor%20Tengah%2C%20Kota%20Bogor%2C%20Jawa%20Barat%2016128!5e0!3m2!1sen!2sid!4v1731984676178!5m2!1sen!2sid"
-        style="border: 0"
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.4752229693186!2d106.79886721085063!3d-6.587698793378441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5bccacb1641%3A0x8ba4345a311eb4ee!2sTropBRC!5e0!3m2!1sen!2sid!4v1732503408472!5m2!1sen!2sid"
+        width="991.07"
+        height="450"
+        style="border:0;"
         allowfullscreen=""
         loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe>
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
     </div>
   </section>
 </div>

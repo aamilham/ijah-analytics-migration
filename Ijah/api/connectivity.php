@@ -8,14 +8,11 @@
   include 'init.php';
 
   // Check if the database connection is successful
-  if (!$link) {
+  if (!$db_link) {
     error_log("Database connection failed: " . pg_last_error());
     echo json_encode(["error" => "Database connection failed"]);
     exit;
   }
-
-  echo json_encode(["success" => "Database connected successfully"]);
-
 
   $postdata = file_get_contents("php://input");
   // Debugging: Log raw input data
@@ -28,7 +25,7 @@
     error_log("JSON decoding failed. Raw input data was: " . $postdata);
     echo json_encode(["error" => "Invalid JSON input"]);
     exit;
-}
+  }
 
   $condArr = [];
   $comIdArr = [];
@@ -126,9 +123,9 @@
     $query = "SELECT * FROM $table WHERE $condStr";
 
     // Execute the query
-    $resp = pg_query($link, $query);
+    $resp = pg_query($db_link, $query);
     if (!$resp) {
-      error_log("Query failed: " . pg_last_error($link));
+      error_log("Query failed: " . pg_last_error($db_link));
       continue;
     }
 
