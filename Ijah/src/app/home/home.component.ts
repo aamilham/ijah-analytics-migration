@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ElementRef, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DataService } from '../services/data.service';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ import { DataService } from '../services/data.service';
   imports: [CommonModule, NgSelectModule, FormsModule, HttpClientModule],
   providers: [DataService]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // Lists for dropdown options
   plantList: any[] = [];
   compoundList: any[] = [];
@@ -30,70 +31,124 @@ export class HomeComponent implements OnInit {
   loading = false;
   searchResults: any = null;
 
-  constructor(private dataService: DataService) {}
+  @ViewChildren('ngSelect') ngSelects!: QueryList<NgSelectComponent>;
+  private searchInputCache = new WeakMap<HTMLElement, HTMLInputElement>();
+  private selectInstances = new WeakMap<HTMLElement, NgSelectComponent>();
+  private animationFrame: number | null = null;
+  private readonly debounceTime = 16; // Reduced to 16ms (1 frame)
+
+  constructor(private dataService: DataService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.loadAllData();
   }
 
+  ngAfterViewInit() {
+    // Cache select instances and search inputs
+    this.ngSelects.forEach(select => {
+      if (select.element) {
+        this.selectInstances.set(select.element, select);
+        const input = select.element.querySelector('.ng-select-container input') as HTMLInputElement;
+        if (input) {
+          this.searchInputCache.set(select.element, input);
+        }
+      }
+    });
+
+    // Pre-bind event handlers
+    this.clearSearchInput = this.clearSearchInput.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
+    this.onOpen = this.onOpen.bind(this);
+  }
+
+  ngOnDestroy() {
+    if (this.animationFrame !== null) {
+      cancelAnimationFrame(this.animationFrame);
+    }
+    this.searchInputCache = new WeakMap();
+    this.selectInstances = new WeakMap();
+  }
+
+  private scheduleUpdate(callback: () => void) {
+    if (this.animationFrame !== null) {
+      cancelAnimationFrame(this.animationFrame);
+    }
+    this.animationFrame = requestAnimationFrame(() => {
+      callback();
+      this.animationFrame = null;
+      // Trigger change detection after the update
+      this.cdr.detectChanges();
+    });
+  }
+
+  private updateSearchInput(element: HTMLElement, value: string = '') {
+    const input = this.searchInputCache.get(element);
+    const select = this.selectInstances.get(element);
+    
+    if (!input || !select) return;
+
+    this.scheduleUpdate(() => {
+      // Update the visible input
+      input.value = value;
+      
+      // Update ng-select internal state
+      select.searchTerm = value;
+      select.itemsList.resetFilteredItems();
+      select.itemsList.markSelectedOrDefault(select.markFirst);
+      
+      // Notify ng-select of changes
+      select.detectChanges();
+    });
+  }
+
+  clearSearchInput(event: any) {
+    const element = event?.currentTarget;
+    if (!element) return;
+    
+    this.updateSearchInput(element);
+  }
+
+  onSearchChange(event: { term: string, items: any[] }) {
+    if (!event?.term) return;
+    
+    // Store term in memory instead of DOM
+    const term = event.term;
+    if (document.activeElement instanceof HTMLElement) {
+      const select = document.activeElement.closest('.ng-select');
+      if (select instanceof HTMLElement) {
+        this.updateSearchInput(select, term);
+      }
+    }
+  }
+
+  onOpen(event: any) {
+    const element = event?.currentTarget;
+    if (!element) return;
+    
+    this.updateSearchInput(element);
+  }
+
+  // Optimize data loading
   loadAllData() {
     this.loading = true;
-    let completedCalls = 0;
-    const totalCalls = 4; // plants, compounds, proteins, diseases
-    
-    const checkComplete = () => {
-      completedCalls++;
-      if (completedCalls === totalCalls) {
+
+    // Load data in parallel
+    Promise.all([
+      this.dataService.getPlants().toPromise(),
+      this.dataService.getCompounds().toPromise(),
+      this.dataService.getProteins().toPromise(),
+      this.dataService.getDiseases().toPromise()
+    ]).then(([plants, compounds, proteins, diseases]) => {
+      this.scheduleUpdate(() => {
+        this.plantList = plants || [];
+        this.compoundList = compounds || [];
+        this.proteinList = proteins || [];
+        this.diseaseList = diseases || [];
         this.loading = false;
-      }
-    };
-    
-    this.dataService.getPlants().subscribe({
-      next: (data) => {
-        console.log('Plants loaded:', data);
-        this.plantList = data;
-        checkComplete();
-      },
-      error: (error) => {
-        console.error('Error loading plants:', error);
-        checkComplete();
-      }
-    });
-
-    this.dataService.getCompounds().subscribe({
-      next: (data) => {
-        console.log('Compounds loaded:', data);
-        this.compoundList = data;
-        checkComplete();
-      },
-      error: (error) => {
-        console.error('Error loading compounds:', error);
-        checkComplete();
-      }
-    });
-
-    this.dataService.getProteins().subscribe({
-      next: (data) => {
-        console.log('Proteins loaded:', data);
-        this.proteinList = data;
-        checkComplete();
-      },
-      error: (error) => {
-        console.error('Error loading proteins:', error);
-        checkComplete();
-      }
-    });
-
-    this.dataService.getDiseases().subscribe({
-      next: (data) => {
-        console.log('Diseases loaded:', data);
-        this.diseaseList = data;
-        checkComplete();
-      },
-      error: (error) => {
-        console.error('Error loading diseases:', error);
-        checkComplete();
-      }
+      });
+    }).catch(error => {
+      console.error('Error loading data:', error);
+      this.loading = false;
     });
   }
 
@@ -154,54 +209,6 @@ export class HomeComponent implements OnInit {
         if (placeholder) {
           placeholder.style.display = 'none';
         }
-      }
-    }
-  }
-
-  clearSearchInput(event: any) {
-    const ngSelect = event.target?.closest('.ng-select');
-    if (ngSelect) {
-      // Find and clear the search input
-      const searchInput = ngSelect.querySelector('.ng-select-container input');
-      if (searchInput) {
-        searchInput.value = '';
-      }
-
-      // Force the ng-select to clear its internal search text
-      const ngSelectInstance = event.target;
-      if (ngSelectInstance) {
-        setTimeout(() => {
-          ngSelectInstance.searchTerm = '';
-          ngSelectInstance.clearSearch();
-        });
-      }
-    }
-  }
-
-  onSearchChange(event: any) {
-    const ngSelect = event.target?.closest('.ng-select');
-    if (ngSelect) {
-      const searchInput = ngSelect.querySelector('.ng-select-container input');
-      if (searchInput && event.term) {
-        // Store the current search term
-        ngSelect.setAttribute('data-last-search', event.term);
-      }
-    }
-  }
-
-  onOpen(event: any) {
-    const ngSelect = event.target?.closest('.ng-select');
-    if (ngSelect) {
-      // Clear any previous search term
-      const searchInput = ngSelect.querySelector('.ng-select-container input');
-      if (searchInput) {
-        searchInput.value = '';
-      }
-      // Clear the ng-select's internal search term
-      const ngSelectInstance = event.target;
-      if (ngSelectInstance) {
-        ngSelectInstance.searchTerm = '';
-        ngSelectInstance.clearSearch();
       }
     }
   }

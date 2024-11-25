@@ -20,6 +20,8 @@
         <label for="plantSelect">Plant</label>
         <div class="input-icon-container">
           <ng-select
+            #ngSelect
+            id="plant-select"
             class="custom-ng-select"
             [items]="plantList"
             bindLabel="name"
@@ -45,6 +47,8 @@
         <label for="compoundSelect">Compound</label>
         <div class="input-icon-container">
           <ng-select
+            #ngSelect
+            id="compound-select"
             class="custom-ng-select"
             [items]="compoundList"
             bindLabel="name"
@@ -70,6 +74,8 @@
         <label for="proteinSelect">Protein</label>
         <div class="input-icon-container">
           <ng-select
+            #ngSelect
+            id="protein-select"
             class="custom-ng-select"
             [items]="proteinList"
             bindLabel="name"
@@ -95,6 +101,8 @@
         <label for="diseaseSelect">Disease</label>
         <div class="input-icon-container">
           <ng-select
+            #ngSelect
+            id="disease-select"
             class="custom-ng-select"
             [items]="diseaseList"
             bindLabel="name"
