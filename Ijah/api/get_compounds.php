@@ -11,18 +11,25 @@ try {
     // Get search term from query parameter
     $search = isset($_GET['search']) ? trim($_GET['search']) : '';
     
-    // Base query
-    $query = "SELECT com_id as id, com_name as name FROM compound";
+    // Base query with COALESCE to handle multiple ID fields
+    $query = "SELECT com_id as id, 
+              COALESCE(com_drugbank_id, com_knapsack_id, com_kegg_id, com_pubchem_id, com_cas_id) as name 
+              FROM compound";
     
     // Add search condition if search term is provided
     if (!empty($search)) {
         // Using ILIKE for case-insensitive search and adding wildcards for partial matches
         $search = pg_escape_string($link, $search);
-        $query .= " WHERE com_name ILIKE '%$search%'";
+        $query .= " WHERE 
+                   com_drugbank_id ILIKE '%$search%' OR 
+                   com_knapsack_id ILIKE '%$search%' OR 
+                   com_kegg_id ILIKE '%$search%' OR 
+                   com_pubchem_id ILIKE '%$search%' OR 
+                   com_cas_id ILIKE '%$search%'";
     }
     
-    // Add ordering
-    $query .= " ORDER BY com_name";
+    // Add ordering by the COALESCE result
+    $query .= " ORDER BY name";
     
     $result = pg_query($link, $query);
     
