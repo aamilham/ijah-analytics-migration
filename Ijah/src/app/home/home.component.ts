@@ -15,14 +15,16 @@ import { NgSelectComponent } from '@ng-select/ng-select';
   providers: [DataService]
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
-  // Lists for dropdown options
+  // Lists for dropdowns
   plantList: any[] = [];
-  filteredPlantList: any[] = [];
   compoundList: any[] = [];
-  filteredCompoundList: any[] = [];
   proteinList: any[] = [];
-  filteredProteinList: any[] = [];
   diseaseList: any[] = [];
+
+  // Filtered lists
+  filteredPlantList: any[] = [];
+  filteredCompoundList: any[] = [];
+  filteredProteinList: any[] = [];
   filteredDiseaseList: any[] = [];
 
   // Selected items
@@ -36,12 +38,25 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   searchResults: any = null;
 
   @ViewChildren('ngSelect') ngSelects!: QueryList<NgSelectComponent>;
-  private searchInputCache = new WeakMap<HTMLElement, HTMLInputElement>();
-  private selectInstances = new WeakMap<HTMLElement, NgSelectComponent>();
+  private searchInputCache = new Map<HTMLElement, HTMLInputElement>();
+  private selectInstances = new Map<HTMLElement, NgSelectComponent>();
   private animationFrame: number | null = null;
   private readonly debounceTime = 16; // Reduced to 16ms (1 frame)
 
-  constructor(private dataService: DataService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef
+  ) {
+    // Initialize the Map to store NgSelect instances
+    this.selectInstances = new Map<HTMLElement, NgSelectComponent>();
+    
+    // Pre-bind event handlers
+    this.onSearchChange = this.onSearchChange.bind(this);
+    this.onOpen = this.onOpen.bind(this);
+    this.onSelect = this.onSelect.bind(this);
+    this.onAdd = this.onAdd.bind(this);
+    this.onClose = this.onClose.bind(this);
+  }
 
   ngOnInit() {
     this.loadAllData();
@@ -49,29 +64,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    // Cache select instances and search inputs
+    // Store references to NgSelect instances
     this.ngSelects.forEach(select => {
-      if (select.element) {
-        this.selectInstances.set(select.element, select);
-        const input = select.element.querySelector('.ng-select-container input') as HTMLInputElement;
-        if (input) {
-          this.searchInputCache.set(select.element, input);
-        }
+      this.selectInstances.set(select.element, select);
+      const input = select.element.querySelector('.ng-select-container input') as HTMLInputElement;
+      if (input) {
+        this.searchInputCache.set(select.element, input);
       }
     });
-
-    // Pre-bind event handlers
-    this.clearSearchInput = this.clearSearchInput.bind(this);
-    this.onSearchChange = this.onSearchChange.bind(this);
-    this.onOpen = this.onOpen.bind(this);
   }
 
   ngOnDestroy() {
     if (this.animationFrame !== null) {
       cancelAnimationFrame(this.animationFrame);
     }
-    this.searchInputCache = new WeakMap();
-    this.selectInstances = new WeakMap();
   }
 
   private scheduleUpdate(callback: () => void) {
@@ -80,38 +86,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.animationFrame = requestAnimationFrame(() => {
       callback();
-      this.animationFrame = null;
-      // Trigger change detection after the update
       this.cdr.detectChanges();
     });
   }
 
-  private updateSearchInput(element: HTMLElement, value: string = '') {
-    const input = this.searchInputCache.get(element);
-    const select = this.selectInstances.get(element);
-    
-    if (!input || !select) return;
-
-    this.scheduleUpdate(() => {
-      // Update the visible input
-      input.value = value;
-      
-      // Update ng-select internal state
-      select.searchTerm = value;
-      select.itemsList.resetFilteredItems();
-      select.itemsList.markSelectedOrDefault(select.markFirst);
-      
-      // Notify ng-select of changes
-      select.detectChanges();
-    });
-  }
-
-  clearSearchInput(event: any) {
-    const element = event?.currentTarget;
-    if (!element) return;
-    
-    this.updateSearchInput(element);
+  private clearNgSelectInput(select: NgSelectComponent) {
+    select.searchTerm = '';
+    const searchInput = select.element.querySelector('.ng-select-container input') as HTMLInputElement;
+    if (searchInput) {
+      searchInput.value = '';
+    }
+    select.itemsList.resetFilteredItems();
     this.initializeFilteredLists();
+    select.detectChanges();
   }
 
   onSearchChange(event: { term: string, items: any[] }) {
@@ -122,7 +109,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     
     const searchTerm = event.term.toLowerCase();
     
-    // Determine which list to filter based on the active dropdown
     if (document.activeElement instanceof HTMLElement) {
       const select = document.activeElement.closest('.ng-select');
       if (select) {
@@ -151,94 +137,128 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     }
+  }
 
-    // Store term in memory instead of DOM
-    const term = event.term;
-    if (document.activeElement instanceof HTMLElement) {
-      const select = document.activeElement.closest('.ng-select');
-      if (select instanceof HTMLElement) {
-        this.updateSearchInput(select, term);
+  onAdd() {
+    requestAnimationFrame(() => {
+      const activeElement = document.activeElement;
+      if (activeElement instanceof HTMLElement) {
+        const select = activeElement.closest('.ng-select');
+        if (select instanceof HTMLElement) {
+          const ngSelect = this.selectInstances.get(select);
+          if (ngSelect) {
+            this.clearNgSelectInput(ngSelect);
+            ngSelect.open();
+          }
+        }
       }
-    }
+    });
+  }
+
+  onSelect() {
+    requestAnimationFrame(() => {
+      const activeElement = document.activeElement;
+      if (activeElement instanceof HTMLElement) {
+        const select = activeElement.closest('.ng-select');
+        if (select instanceof HTMLElement) {
+          const ngSelect = this.selectInstances.get(select);
+          if (ngSelect) {
+            this.clearNgSelectInput(ngSelect);
+            ngSelect.open();
+          }
+        }
+      }
+    });
   }
 
   onOpen(event: any) {
     const element = event?.currentTarget;
     if (!element) return;
     
-    this.updateSearchInput(element);
+    const select = this.selectInstances.get(element);
+    if (select) {
+      this.clearNgSelectInput(select);
+    }
   }
 
-  private initializeFilteredLists() {
+  onClose() {
+    if (document.activeElement instanceof HTMLElement) {
+      const select = document.activeElement.closest('.ng-select');
+      if (select instanceof HTMLElement) {
+        const ngSelect = this.selectInstances.get(select);
+        if (ngSelect) {
+          this.clearNgSelectInput(ngSelect);
+        }
+      }
+    }
+  }
+
+  async loadAllData() {
+    try {
+      const [plants, compounds, proteins, diseases] = await Promise.all([
+        this.dataService.getPlants().toPromise(),
+        this.dataService.getCompounds().toPromise(),
+        this.dataService.getProteins().toPromise(),
+        this.dataService.getDiseases().toPromise()
+      ]);
+
+      this.plantList = plants || [];
+      this.compoundList = compounds || [];
+      this.proteinList = proteins || [];
+      this.diseaseList = diseases || [];
+
+      this.initializeFilteredLists();
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  }
+
+  initializeFilteredLists() {
     this.filteredPlantList = [...this.plantList];
     this.filteredCompoundList = [...this.compoundList];
     this.filteredProteinList = [...this.proteinList];
     this.filteredDiseaseList = [...this.diseaseList];
   }
 
-  // Optimize data loading
-  loadAllData() {
-    this.loading = true;
-
-    // Load data in parallel
-    Promise.all([
-      this.dataService.getPlants().toPromise(),
-      this.dataService.getCompounds().toPromise(),
-      this.dataService.getProteins().toPromise(),
-      this.dataService.getDiseases().toPromise()
-    ]).then(([plants, compounds, proteins, diseases]) => {
-      this.scheduleUpdate(() => {
-        this.plantList = plants || [];
-        this.compoundList = compounds || [];
-        this.proteinList = proteins || [];
-        this.diseaseList = diseases || [];
-        this.initializeFilteredLists();
-        this.loading = false;
-      });
-    }).catch(error => {
-      console.error('Error loading data:', error);
-      this.loading = false;
-    });
-  }
-
-  // Methods to check field states
-  isCompoundDisabled(): boolean {
-    return this.selectedPlants.length > 0 || this.selectedProteins.length > 0;
-  }
-
-  isDiseaseDisabled(): boolean {
-    return this.selectedPlants.length > 0 || this.selectedProteins.length > 0;
-  }
-
-  isPlantDisabled(): boolean {
-    return this.selectedCompounds.length > 0 || this.selectedDiseases.length > 0;
-  }
-
-  isProteinDisabled(): boolean {
-    return this.selectedCompounds.length > 0 || this.selectedDiseases.length > 0;
-  }
-
-  // Methods for Search and Reset buttons
   onSearch() {
-    this.loading = true;
+    if (this.loading) return;
+
     const searchData = {
-      plants: this.selectedPlants.map(p => p.id),
-      compounds: this.selectedCompounds.map(c => c.id),
-      proteins: this.selectedProteins.map(p => p.id),
-      diseases: this.selectedDiseases.map(d => d.id)
+      plants: this.selectedPlants,
+      compounds: this.selectedCompounds,
+      proteins: this.selectedProteins,
+      diseases: this.selectedDiseases
     };
 
+    this.loading = true;
+    this.searchResults = null;
+
     this.dataService.search(searchData).subscribe({
-      next: (results) => {
+      next: (results: any) => {
         this.searchResults = results;
         this.loading = false;
       },
-      error: (error) => {
+      error: (error: Error) => {
         console.error('Search error:', error);
         this.loading = false;
-        alert('An error occurred during search. Please try again.');
       }
     });
+  }
+
+  isPlantDisabled(): boolean {
+    return this.loading;
+  }
+
+  isCompoundDisabled(): boolean {
+    return this.loading;
+  }
+
+  isProteinDisabled(): boolean {
+    return this.loading;
+  }
+
+  isDiseaseDisabled(): boolean {
+    return this.loading;
   }
 
   onReset() {
@@ -258,18 +278,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         if (placeholder) {
           placeholder.style.display = 'none';
         }
-      }
-    }
-  }
-
-  onClose() {
-    // Reset all filtered lists to their original state
-    this.initializeFilteredLists();
-    // Clear any search terms
-    if (document.activeElement instanceof HTMLElement) {
-      const select = document.activeElement.closest('.ng-select');
-      if (select instanceof HTMLElement) {
-        this.updateSearchInput(select, '');
       }
     }
   }
