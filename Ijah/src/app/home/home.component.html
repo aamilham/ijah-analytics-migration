@@ -34,11 +34,12 @@
             [clearable]="false"
             [disabled]="isPlantDisabled()"
             (focus)="onFocus($event)"
-            (change)="clearSearchInput($event)"
             [searchable]="true"
             (search)="onSearchChange($event)"
             (open)="onOpen($event)"
             (close)="onClose()"
+            (select)="onSelect()"
+            (add)="onAdd()"
           ></ng-select>
         </div>
       </div>
@@ -62,11 +63,12 @@
             [clearable]="false"
             [disabled]="isCompoundDisabled()"
             (focus)="onFocus($event)"
-            (change)="clearSearchInput($event)"
             [searchable]="true"
             (search)="onSearchChange($event)"
             (open)="onOpen($event)"
             (close)="onClose()"
+            (select)="onSelect()"
+            (add)="onAdd()"
           ></ng-select>
         </div>
       </div>
@@ -90,11 +92,12 @@
             [clearable]="false"
             [disabled]="isProteinDisabled()"
             (focus)="onFocus($event)"
-            (change)="clearSearchInput($event)"
             [searchable]="true"
             (search)="onSearchChange($event)"
             (open)="onOpen($event)"
             (close)="onClose()"
+            (select)="onSelect()"
+            (add)="onAdd()"
           ></ng-select>
         </div>
       </div>
@@ -118,11 +121,12 @@
             [clearable]="false"
             [disabled]="isDiseaseDisabled()"
             (focus)="onFocus($event)"
-            (change)="clearSearchInput($event)"
             [searchable]="true"
             (search)="onSearchChange($event)"
             (open)="onOpen($event)"
             (close)="onClose()"
+            (select)="onSelect()"
+            (add)="onAdd()"
           ></ng-select>
         </div>
       </div>
