@@ -17,9 +17,13 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // Lists for dropdown options
   plantList: any[] = [];
+  filteredPlantList: any[] = [];
   compoundList: any[] = [];
+  filteredCompoundList: any[] = [];
   proteinList: any[] = [];
+  filteredProteinList: any[] = [];
   diseaseList: any[] = [];
+  filteredDiseaseList: any[] = [];
 
   // Selected items
   selectedPlants: any[] = [];
@@ -41,6 +45,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.loadAllData();
+    this.initializeFilteredLists();
   }
 
   ngAfterViewInit() {
@@ -106,11 +111,47 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!element) return;
     
     this.updateSearchInput(element);
+    this.initializeFilteredLists();
   }
 
   onSearchChange(event: { term: string, items: any[] }) {
-    if (!event?.term) return;
+    if (!event?.term) {
+      this.initializeFilteredLists();
+      return;
+    }
     
+    const searchTerm = event.term.toLowerCase();
+    
+    // Determine which list to filter based on the active dropdown
+    if (document.activeElement instanceof HTMLElement) {
+      const select = document.activeElement.closest('.ng-select');
+      if (select) {
+        const selectId = select.getAttribute('id');
+        switch(selectId) {
+          case 'plant-select':
+            this.filteredPlantList = this.plantList.filter(item => 
+              item.name.toLowerCase().includes(searchTerm)
+            );
+            break;
+          case 'compound-select':
+            this.filteredCompoundList = this.compoundList.filter(item => 
+              item.name.toLowerCase().includes(searchTerm)
+            );
+            break;
+          case 'protein-select':
+            this.filteredProteinList = this.proteinList.filter(item => 
+              item.name.toLowerCase().includes(searchTerm)
+            );
+            break;
+          case 'disease-select':
+            this.filteredDiseaseList = this.diseaseList.filter(item => 
+              item.name.toLowerCase().includes(searchTerm)
+            );
+            break;
+        }
+      }
+    }
+
     // Store term in memory instead of DOM
     const term = event.term;
     if (document.activeElement instanceof HTMLElement) {
@@ -126,6 +167,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!element) return;
     
     this.updateSearchInput(element);
+  }
+
+  private initializeFilteredLists() {
+    this.filteredPlantList = [...this.plantList];
+    this.filteredCompoundList = [...this.compoundList];
+    this.filteredProteinList = [...this.proteinList];
+    this.filteredDiseaseList = [...this.diseaseList];
   }
 
   // Optimize data loading
@@ -144,6 +192,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.compoundList = compounds || [];
         this.proteinList = proteins || [];
         this.diseaseList = diseases || [];
+        this.initializeFilteredLists();
         this.loading = false;
       });
     }).catch(error => {
@@ -209,6 +258,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         if (placeholder) {
           placeholder.style.display = 'none';
         }
+      }
+    }
+  }
+
+  onClose() {
+    // Reset all filtered lists to their original state
+    this.initializeFilteredLists();
+    // Clear any search terms
+    if (document.activeElement instanceof HTMLElement) {
+      const select = document.activeElement.closest('.ng-select');
+      if (select instanceof HTMLElement) {
+        this.updateSearchInput(select, '');
       }
     }
   }
