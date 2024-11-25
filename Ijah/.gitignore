@@ -12,7 +12,6 @@ npm-debug.log
 yarn-error.log
 
 # IDEs and editors
-.idea/
 .project
 .classpath
 .c9/
@@ -40,3 +39,50 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# PHP
+/vendor/
+composer.phar
+*.log
+.env
+
+# Database
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+/api/config_database.json
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Environment specific files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE specific files
+.idea
+.vscode
+*.swp
+*.swo
+*.swn
+*.bak
+*.orig

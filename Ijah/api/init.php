@@ -11,11 +11,22 @@ void {
 }
 set_error_handler("exception_error_handler");
 
-// handle CORS
+// Allow from any origin
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
     header('Access-Control-Allow-Credentials: true');
     header('Access-Control-Max-Age: 86400');    // cache for 1 day
+}
+
+// Add CORS headers
+header('Access-Control-Allow-Origin: http://localhost:4200');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// Handle preflight requests
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit();
 }
 
 // Access-Control headers are received during OPTIONS requests
@@ -33,7 +44,6 @@ $ijahMail = getenv('IJAH_MAIL') ?: 'ijahweb@gmail.com';
 $ijahMailPass = getenv('IJAH_MAIL_PASS') ?: 'jamujoss';
 
 // database config  ///////////////////////////////////////////////////////////////
-// $str = file_get_contents('/home/haekal/karajo/csipb-jamu-prj/webserver/api/config_database.json');
 $dbConfigStr = file_get_contents(__DIR__ . "/config_database.json");
 if ($dbConfigStr === false) {
     throw new Exception('Failed to read database config');

@@ -1,43 +1,101 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true,
-  imports: [CommonModule, NgSelectModule, FormsModule],
+  imports: [CommonModule, NgSelectModule, FormsModule, HttpClientModule],
+  providers: [DataService]
 })
-export class HomeComponent {
-  // Predefined lists (filters)
-  plantList: any[] = [
-    { id: 1, name: 'Plant A' },
-    { id: 2, name: 'Plant B' },
-    { id: 3, name: 'Plant C' },
-  ];
-  compoundList: any[] = [
-    { id: 1, name: 'Compound X' },
-    { id: 2, name: 'Compound Y' },
-    { id: 3, name: 'Compound Z' },
-  ];
-  proteinList: any[] = [
-    { id: 1, name: 'Protein 1' },
-    { id: 2, name: 'Protein 2' },
-    { id: 3, name: 'Protein 3' },
-  ];
-  diseaseList: any[] = [
-    { id: 1, name: 'Disease Alpha' },
-    { id: 2, name: 'Disease Beta' },
-    { id: 3, name: 'Disease Gamma' },
-  ];
+export class HomeComponent implements OnInit {
+  // Lists for dropdown options
+  plantList: any[] = [];
+  compoundList: any[] = [];
+  proteinList: any[] = [];
+  diseaseList: any[] = [];
 
   // Selected items
   selectedPlants: any[] = [];
   selectedCompounds: any[] = [];
   selectedProteins: any[] = [];
   selectedDiseases: any[] = [];
+
+  // Loading states
+  loading = false;
+  searchResults: any = null;
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    this.loadAllData();
+  }
+
+  loadAllData() {
+    this.loading = true;
+    let completedCalls = 0;
+    const totalCalls = 4; // plants, compounds, proteins, diseases
+    
+    const checkComplete = () => {
+      completedCalls++;
+      if (completedCalls === totalCalls) {
+        this.loading = false;
+      }
+    };
+    
+    this.dataService.getPlants().subscribe({
+      next: (data) => {
+        console.log('Plants loaded:', data);
+        this.plantList = data;
+        checkComplete();
+      },
+      error: (error) => {
+        console.error('Error loading plants:', error);
+        checkComplete();
+      }
+    });
+
+    this.dataService.getCompounds().subscribe({
+      next: (data) => {
+        console.log('Compounds loaded:', data);
+        this.compoundList = data;
+        checkComplete();
+      },
+      error: (error) => {
+        console.error('Error loading compounds:', error);
+        checkComplete();
+      }
+    });
+
+    this.dataService.getProteins().subscribe({
+      next: (data) => {
+        console.log('Proteins loaded:', data);
+        this.proteinList = data;
+        checkComplete();
+      },
+      error: (error) => {
+        console.error('Error loading proteins:', error);
+        checkComplete();
+      }
+    });
+
+    this.dataService.getDiseases().subscribe({
+      next: (data) => {
+        console.log('Diseases loaded:', data);
+        this.diseaseList = data;
+        checkComplete();
+      },
+      error: (error) => {
+        console.error('Error loading diseases:', error);
+        checkComplete();
+      }
+    });
+  }
 
   // Methods to check field states
   isCompoundDisabled(): boolean {
@@ -58,12 +116,25 @@ export class HomeComponent {
 
   // Methods for Search and Reset buttons
   onSearch() {
-    // Implement search functionality here
-    console.log('Selected Plants:', this.selectedPlants);
-    console.log('Selected Compounds:', this.selectedCompounds);
-    console.log('Selected Proteins:', this.selectedProteins);
-    console.log('Selected Diseases:', this.selectedDiseases);
-    alert('Fungsi pencarian belum diimplementasikan.');
+    this.loading = true;
+    const searchData = {
+      plants: this.selectedPlants.map(p => p.id),
+      compounds: this.selectedCompounds.map(c => c.id),
+      proteins: this.selectedProteins.map(p => p.id),
+      diseases: this.selectedDiseases.map(d => d.id)
+    };
+
+    this.dataService.search(searchData).subscribe({
+      next: (results) => {
+        this.searchResults = results;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Search error:', error);
+        this.loading = false;
+        alert('An error occurred during search. Please try again.');
+      }
+    });
   }
 
   onReset() {
@@ -71,5 +142,6 @@ export class HomeComponent {
     this.selectedCompounds = [];
     this.selectedProteins = [];
     this.selectedDiseases = [];
+    this.searchResults = null;
   }
 }
