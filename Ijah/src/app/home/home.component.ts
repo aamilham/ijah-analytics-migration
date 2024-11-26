@@ -37,7 +37,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   loading = false;
   searchResults: any = null;
 
+  private readonly MINIMUM_SEARCH_LENGTH = 1;
+  private searchDebounceTime = 100;
+  private searchDebouncer: any;
+
   @ViewChildren('ngSelect') ngSelects!: QueryList<NgSelectComponent>;
+  private activeDropdown: string | null = null;
   private searchInputCache = new Map<HTMLElement, HTMLInputElement>();
   private selectInstances = new Map<HTMLElement, NgSelectComponent>();
   private animationFrame: number | null = null;
@@ -61,6 +66,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.loadAllData();
     this.initializeFilteredLists();
+    this.loadMemoFromLocalStorage();
   }
 
   ngAfterViewInit() {
@@ -101,42 +107,99 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     select.detectChanges();
   }
 
+  onOpen(event: any, type: string) {
+    this.activeDropdown = type;
+    if (this.searchDebouncer) {
+      clearTimeout(this.searchDebouncer);
+    }
+    
+    // Pre-load data for the opened dropdown
+    switch(type) {
+      case 'plant':
+        this.filteredPlantList = this.plantList.slice(0, 50);
+        break;
+      case 'compound':
+        this.filteredCompoundList = this.compoundList.slice(0, 50);
+        break;
+      case 'protein':
+        this.filteredProteinList = this.proteinList.slice(0, 50);
+        break;
+      case 'disease':
+        this.filteredDiseaseList = this.diseaseList.slice(0, 50);
+        break;
+    }
+  }
+
   onSearchChange(event: { term: string, items: any[] }) {
-    if (!event?.term) {
-      this.initializeFilteredLists();
-      return;
+    if (this.searchDebouncer) {
+      clearTimeout(this.searchDebouncer);
     }
-    
-    const searchTerm = event.term.toLowerCase();
-    
-    if (document.activeElement instanceof HTMLElement) {
-      const select = document.activeElement.closest('.ng-select');
-      if (select) {
-        const selectId = select.getAttribute('id');
-        switch(selectId) {
-          case 'plant-select':
-            this.filteredPlantList = this.plantList.filter(item => 
-              item.name.toLowerCase().includes(searchTerm)
-            );
-            break;
-          case 'compound-select':
-            this.filteredCompoundList = this.compoundList.filter(item => 
-              item.name.toLowerCase().includes(searchTerm)
-            );
-            break;
-          case 'protein-select':
-            this.filteredProteinList = this.proteinList.filter(item => 
-              item.name.toLowerCase().includes(searchTerm)
-            );
-            break;
-          case 'disease-select':
-            this.filteredDiseaseList = this.diseaseList.filter(item => 
-              item.name.toLowerCase().includes(searchTerm)
-            );
-            break;
-        }
+
+    this.searchDebouncer = setTimeout(() => {
+      if (!event?.term || event.term.length < this.MINIMUM_SEARCH_LENGTH) {
+        this.resetFilteredList(this.activeDropdown);
+        return;
       }
+      
+      const searchTerm = event.term.toLowerCase();
+      this.performSearch(searchTerm);
+    }, this.searchDebounceTime);
+  }
+
+  private performSearch(searchTerm: string) {
+    const binarySearch = (list: any[], term: string, maxResults: number = 50) => {
+      return list
+        .filter(item => item.name.toLowerCase().includes(term))
+        .slice(0, maxResults);
+    };
+
+    switch(this.activeDropdown) {
+      case 'plant':
+        this.filteredPlantList = binarySearch(this.plantList, searchTerm);
+        break;
+      case 'compound':
+        this.filteredCompoundList = binarySearch(this.compoundList, searchTerm);
+        break;
+      case 'protein':
+        this.filteredProteinList = binarySearch(this.proteinList, searchTerm);
+        break;
+      case 'disease':
+        this.filteredDiseaseList = binarySearch(this.diseaseList, searchTerm);
+        break;
     }
+  }
+
+  private resetFilteredList(type: string | null) {
+    const initialItems = 50;
+    switch(type) {
+      case 'plant':
+        this.filteredPlantList = this.plantList.slice(0, initialItems);
+        break;
+      case 'compound':
+        this.filteredCompoundList = this.compoundList.slice(0, initialItems);
+        break;
+      case 'protein':
+        this.filteredProteinList = this.proteinList.slice(0, initialItems);
+        break;
+      case 'disease':
+        this.filteredDiseaseList = this.diseaseList.slice(0, initialItems);
+        break;
+    }
+  }
+
+  onClose() {
+    this.activeDropdown = null;
+    if (this.searchDebouncer) {
+      clearTimeout(this.searchDebouncer);
+    }
+  }
+
+  initializeFilteredLists() {
+    const initialItems = 50;
+    this.filteredPlantList = this.plantList.slice(0, initialItems);
+    this.filteredCompoundList = this.compoundList.slice(0, initialItems);
+    this.filteredProteinList = this.proteinList.slice(0, initialItems);
+    this.filteredDiseaseList = this.diseaseList.slice(0, initialItems);
   }
 
   onAdd() {
@@ -165,36 +228,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           if (ngSelect) {
             this.clearNgSelectInput(ngSelect);
             ngSelect.open();
+            this.saveMemoToLocalStorage(); // Save after selection
           }
         }
       }
     });
   }
 
-  onOpen(event: any) {
-    const element = event?.currentTarget;
-    if (!element) return;
-    
-    const select = this.selectInstances.get(element);
-    if (select) {
-      this.clearNgSelectInput(select);
-    }
-  }
-
-  onClose() {
-    if (document.activeElement instanceof HTMLElement) {
-      const select = document.activeElement.closest('.ng-select');
-      if (select instanceof HTMLElement) {
-        const ngSelect = this.selectInstances.get(select);
-        if (ngSelect) {
-          this.clearNgSelectInput(ngSelect);
-        }
-      }
-    }
-  }
-
   async loadAllData() {
     try {
+      // Load data in parallel
       const [plants, compounds, proteins, diseases] = await Promise.all([
         this.dataService.getPlants().toPromise(),
         this.dataService.getCompounds().toPromise(),
@@ -202,22 +245,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dataService.getDiseases().toPromise()
       ]);
 
-      this.plantList = plants || [];
-      this.compoundList = compounds || [];
-      this.proteinList = proteins || [];
-      this.diseaseList = diseases || [];
+      // Sort data alphabetically for faster searching
+      this.plantList = (plants || []).sort((a, b) => a.name.localeCompare(b.name));
+      this.compoundList = (compounds || []).sort((a, b) => a.name.localeCompare(b.name));
+      this.proteinList = (proteins || []).sort((a, b) => a.name.localeCompare(b.name));
+      this.diseaseList = (diseases || []).sort((a, b) => a.name.localeCompare(b.name));
 
+      // Initialize filtered lists with sorted data
       this.initializeFilteredLists();
     } catch (error) {
       console.error('Error loading data:', error);
     }
-  }
-
-  initializeFilteredLists() {
-    this.filteredPlantList = [...this.plantList];
-    this.filteredCompoundList = [...this.compoundList];
-    this.filteredProteinList = [...this.proteinList];
-    this.filteredDiseaseList = [...this.diseaseList];
   }
 
   onSearch() {
@@ -267,6 +305,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedProteins = [];
     this.selectedDiseases = [];
     this.searchResults = null;
+    localStorage.removeItem('ijah-search-memo'); // Clear memo on reset
   }
 
   onFocus(event: any) {
@@ -278,6 +317,32 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         if (placeholder) {
           placeholder.style.display = 'none';
         }
+      }
+    }
+  }
+
+  private saveMemoToLocalStorage() {
+    const memo = {
+      plants: this.selectedPlants,
+      compounds: this.selectedCompounds,
+      proteins: this.selectedProteins,
+      diseases: this.selectedDiseases,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('ijah-search-memo', JSON.stringify(memo));
+  }
+
+  private loadMemoFromLocalStorage() {
+    const memoStr = localStorage.getItem('ijah-search-memo');
+    if (memoStr) {
+      try {
+        const memo = JSON.parse(memoStr);
+        this.selectedPlants = memo.plants || [];
+        this.selectedCompounds = memo.compounds || [];
+        this.selectedProteins = memo.proteins || [];
+        this.selectedDiseases = memo.diseases || [];
+      } catch (e) {
+        console.error('Error loading memo:', e);
       }
     }
   }
