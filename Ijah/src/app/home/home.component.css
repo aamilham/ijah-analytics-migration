@@ -180,11 +180,33 @@
 }
 
 /* Responsive Styles */
+@media (max-width: 1024px) {
+  .input-group-flex {
+    gap: 3rem;
+    padding: 0 20px;
+    margin-bottom: 1.5rem;
+  }
+
+  .input-wrapper {
+    max-width: 250px;
+  }
+
+  .btn-group-flex {
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-text {
+    margin-bottom: 2rem;
+    padding: 0 20px;
+    text-align: center;
+  }
+}
+
 @media (max-width: 991.98px) {
   .content-wrapper {
     min-height: 100vh;
     margin: 0;
-    padding: 0;
+    padding: 20px;
     display: flex;
     align-items: center;
   }
@@ -197,45 +219,92 @@
 
   .container-center {
     width: 100%;
-    min-height: calc(100vh - 70px); /* Adjust based on navbar height */
-    display: flex;
-    flex-direction: column;
+    min-height: calc(100vh - 70px);
+    padding: 2rem 1rem;
     justify-content: center;
-    padding: 1rem;
-    margin-top: -35px; /* Half of navbar height to offset perfect center */
+  }
+
+  .title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    padding: 0 15px;
+  }
+
+  .description {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    padding: 0 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .input-group-flex {
+    gap: 2rem;
+    padding: 0 15px;
+  }
+
+  .input-wrapper {
+    max-width: 300px;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn-group-flex {
+    flex-direction: row;
+    gap: 15px;
+    margin-top: 1rem;
+  }
+
+  .btn-custom {
+    max-width: 130px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 15px;
   }
 
   .title {
     font-size: 2rem;
-    margin-bottom: 1rem;
+    padding: 0 10px;
   }
 
   .description {
     font-size: 1rem;
-    margin-bottom: 2rem;
-    padding: 0 1rem;
+    padding: 0 15px;
   }
 
   .input-group-flex {
-    flex-direction: column;
-    gap: 2rem;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
+    gap: 1.5rem;
+    padding: 0 10px;
   }
 
   .input-wrapper {
-    width: 100%;
+    max-width: 100%;
+    width: calc(100% - 20px);
+    margin: 0 10px 0.5rem 10px;
   }
 
-  .input-icon-container {
-    width: 100%;
+  .btn-group-flex {
+    width: calc(100% - 20px);
+    max-width: none;
+    padding: 0 10px;
   }
 
-  .custom-ng-select {
-    width: 100%;
+  .btn-custom {
+    max-width: none;
+    flex: 1;
+  }
+
+  .footer-text {
+    padding: 0 15px;
+    margin-bottom: 1.5rem;
+  }
+
+  ::ng-deep .custom-ng-select {
+    margin: 0;
   }
 }
 
