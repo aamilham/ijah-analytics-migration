@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,26 +9,46 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink]
 })
 export class AboutComponent implements OnInit, AfterViewInit {
-  constructor() { }
+  private observer: IntersectionObserver | undefined;
+
+  constructor(private elementRef: ElementRef) { }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
-    this.initScrollAnimation();
+    this.setupScrollAnimations();
   }
 
-  private initScrollAnimation() {
-    const observer = new IntersectionObserver((entries) => {
+  private setupScrollAnimations() {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate');
         }
       });
-    }, { threshold: 0.1 });
+    }, options);
 
-    document.querySelectorAll('.content-section').forEach((section) => {
-      observer.observe(section);
+    // Observe all sections that should animate
+    const sections = this.elementRef.nativeElement.querySelectorAll(
+      '.content-section, .team-section, .full-width-map, .outer-container'
+    );
+
+    sections.forEach((section: Element) => {
+      section.classList.add('scroll-animation');
+      this.observer?.observe(section);
     });
+  }
+
+  ngOnDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   }
 }
