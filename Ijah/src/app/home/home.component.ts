@@ -228,7 +228,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           if (ngSelect) {
             this.clearNgSelectInput(ngSelect);
             ngSelect.open();
-            this.saveMemoToLocalStorage(); // Save after selection
+            this.saveMemoToLocalStorage();
           }
         }
       }
@@ -283,20 +283,36 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  getPlantPlaceholder(): string {
+    return this.selectedCompounds.length > 0 ? '' : 'Search';
+  }
+
+  getCompoundPlaceholder(): string {
+    return this.selectedPlants.length > 0 ? '' : 'Search';
+  }
+
+  getProteinPlaceholder(): string {
+    return this.selectedDiseases.length > 0 ? '' : 'Search';
+  }
+
+  getDiseasePlaceholder(): string {
+    return this.selectedProteins.length > 0 ? '' : 'Search';
+  }
+
   isPlantDisabled(): boolean {
-    return this.loading;
+    return this.loading || this.selectedCompounds.length > 0;
   }
 
   isCompoundDisabled(): boolean {
-    return this.loading;
+    return this.loading || this.selectedPlants.length > 0;
   }
 
   isProteinDisabled(): boolean {
-    return this.loading;
+    return this.loading || this.selectedDiseases.length > 0;
   }
 
   isDiseaseDisabled(): boolean {
-    return this.loading;
+    return this.loading || this.selectedProteins.length > 0;
   }
 
   onReset() {
@@ -305,7 +321,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedProteins = [];
     this.selectedDiseases = [];
     this.searchResults = null;
-    localStorage.removeItem('ijah-search-memo'); // Clear memo on reset
+    this.saveMemoToLocalStorage();
   }
 
   onFocus(event: any) {
