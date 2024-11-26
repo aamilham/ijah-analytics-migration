@@ -84,7 +84,7 @@
   flex-wrap: wrap;
   opacity: 0;
   transform: translateY(50px);
-  transition: all 0.6s ease-out;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .content-section.animate {
@@ -93,8 +93,15 @@
 }
 
 .content-section.reverse {
-  flex-direction: row-reverse;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: 0.2s;
+}
+
+.content-section.reverse.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .image-container {
@@ -151,6 +158,17 @@
   border: none;
   border-radius: 0;
   display: block;
+}
+
+.full-width-map {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.full-width-map.animate {
+  opacity: 1;
+  transform: scale(1);
 }
 
 @media (max-width: 1200px) {
@@ -212,12 +230,16 @@
   border-radius: 24px;
   font-size: 1rem;
   transition: background-color 0.3s ease;
+  transition: all 0.3s ease-in-out;
+  transform: translateY(0);
 }
 
 .btn-main-green:hover {
   background-color: #218838;
   text-decoration: none;
   color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .outer-container {
@@ -233,6 +255,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.outer-container.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .inner-container {
@@ -330,6 +360,14 @@
   align-items: center;
   min-height: fit-content;
   padding: 40px 20px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.team-section.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .container {
@@ -354,6 +392,19 @@
 .team-column {
   flex: 1;
   min-width: 15rem;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0.2s;
+}
+
+.team-section.animate .team-column {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.team-section.animate .team-column:nth-child(2) {
+  transition-delay: 0.4s;
 }
 
 .team-column p {
@@ -374,4 +425,23 @@
 .team-column ul li::before {
   content: "• ";
   color: #333;
+}
+
+.image-container img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.image-container:hover img {
+  transform: scale(1.05);
+}
+
+.scroll-animation {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-animation.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
