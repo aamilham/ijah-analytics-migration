@@ -362,4 +362,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
   }
+
+  // Add this method to check if any items are selected
+  hasSelectedItems(): boolean {
+    return this.selectedPlants.length > 0 ||
+           this.selectedCompounds.length > 0 ||
+           this.selectedProteins.length > 0 ||
+           this.selectedDiseases.length > 0;
+  }
 }
