@@ -162,11 +162,19 @@
 
     <!-- Button group -->
     <div class="btn-group-flex">
-      <button class="btn btn-custom" (click)="onSearch()" [disabled]="loading">
+      <button 
+        class="btn btn-custom" 
+        (click)="onSearch()" 
+        [disabled]="loading || !hasSelectedItems()"
+      >
         <span *ngIf="!loading">Search</span>
         <span *ngIf="loading">Searching...</span>
       </button>
-      <button class="btn btn-custom" (click)="onReset()" [disabled]="loading">Reset</button>
+      <button 
+        class="btn btn-custom" 
+        (click)="onReset()" 
+        [disabled]="loading"
+      >Reset</button>
     </div>
 
     <!-- Search Results -->
