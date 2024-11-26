@@ -22,6 +22,17 @@
       "dom"
     ]
   },
+  "files": [
+    "src/main.ts"
+  ],
+  "include": [
+    "src/app/app.component.ts",
+    "src/app/app.routes.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
