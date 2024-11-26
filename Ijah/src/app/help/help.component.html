@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <h1 class="text-center mb-5">Help / FAQ</h1>
+  <h1 class="text-center">Help/FAQ</h1>
 
   <div id="accordion">
     <div *ngFor="let faq of faqs; let i = index" class="card mb-3">
@@ -20,18 +20,17 @@
       <!-- Content -->
       <div
         id="collapse{{ i }}"
-        class="collapse"
-        [ngClass]="{ show: expanded[i] }"
-        [attr.aria-labelledby]="'heading' + i"
+        class="collapse-content"
+        [class.expanded]="expanded[i]"
       >
         <div class="card-body">
           <ng-container *ngIf="faq.isList; else textAnswer">
-            <ul>
-              <li *ngFor="let item of faq.answer">{{ item }}</li>
-            </ul>
+            <ng-container *ngFor="let item of faq.answer">
+              <p [innerHTML]="item"></p>
+            </ng-container>
           </ng-container>
           <ng-template #textAnswer>
-            <p>{{ faq.answer[0] }}</p>
+            <p [innerHTML]="faq.answer[0]"></p>
           </ng-template>
         </div>
       </div>
