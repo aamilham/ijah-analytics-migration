@@ -6,7 +6,7 @@
 
 h1 {
   font-family: "IBM Plex Sans", sans-serif;
-  color: #000; /* Warna teks menjadi hitam */
+  color: #2c3e50;
   font-weight: 700;
   font-size: 2.5rem;
   text-align: center;
@@ -15,51 +15,121 @@ h1 {
 
 .card {
   border: none;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
-  background-color: #f9f9f9;
-  border-radius: 10px 10px 0 0;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
-.card-body {
-  background-color: #ffffff;
-  color: #000; /* Warna teks menjadi hitam */
-  padding: 20px;
-  font-size: 1.1rem;
-  line-height: 1.6;
+.card-header h5 {
+  margin: 0;
 }
 
 .btn-link {
   width: 100%;
   text-align: left;
-  color: #000; /* Warna teks tombol menjadi hitam */
-  font-size: 1.2rem;
-  font-weight: bold;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1rem;
   text-decoration: none;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
 }
 
 .btn-link:hover {
-  color: #555; /* Warna hover (opsional) */
+  color: #46a54f;
+}
+
+.btn-link:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.card-body {
+  padding: 0 1rem 1rem 1rem;
+  color: #34495e;
+  line-height: 1.6;
+}
+
+.card-body p {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.card-body p:last-child {
+  margin-bottom: 0;
+}
+
+.card-body a {
+  color: #46a54f;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.card-body a:hover {
+  color: #388e40;
   text-decoration: underline;
 }
 
 ul {
-  padding-left: 20px;
+  padding-left: 1.5rem;
+  margin-bottom: 0;
   list-style-type: disc;
-  color: #000; /* Warna daftar menjadi hitam */
+  color: #000;
 }
 
-.collapse {
-  height: 0;
+li {
+  margin-bottom: 0.5rem;
+}
+
+li:last-child {
+  margin-bottom: 0;
+}
+
+/* Animation styles */
+.collapse-content {
+  max-height: 0;
   overflow: hidden;
-  transition: height 0.3s ease, opacity 0.3s ease; /* Tambahkan animasi */
+  transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+  opacity: 0;
 }
 
-.collapse.show {
-  height: auto;
+.collapse-content.expanded {
+  max-height: 2000px;
   opacity: 1;
-  transition: height 0.3s ease, opacity 0.3s ease;
+  transition: max-height 0.5s ease-in, opacity 0.3s ease-in;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    margin: 20px auto;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-link {
+    font-size: 1rem;
+  }
+
+  .card-body {
+    padding: 1rem;
+    font-size: 1rem;
+  }
 }
