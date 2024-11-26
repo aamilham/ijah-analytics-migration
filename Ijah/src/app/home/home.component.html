@@ -28,6 +28,9 @@
             [multiple]="true"
             [placeholder]="'Search'"
             [(ngModel)]="selectedPlants"
+            [virtualScroll]="true"
+            [loading]="loading"
+            [bufferAmount]="10"
             appendTo="body"
             [closeOnSelect]="false"
             [hideSelected]="true"
@@ -36,11 +39,15 @@
             (focus)="onFocus($event)"
             [searchable]="true"
             (search)="onSearchChange($event)"
-            (open)="onOpen($event)"
+            (open)="onOpen($event, 'plant')"
             (close)="onClose()"
             (select)="onSelect()"
             (add)="onAdd()"
-          ></ng-select>
+          >
+            <ng-template ng-option-tmp let-item="item">
+              <span [title]="item.name">{{ item.name }}</span>
+            </ng-template>
+          </ng-select>
         </div>
       </div>
 
@@ -57,6 +64,9 @@
             [multiple]="true"
             [placeholder]="'Search'"
             [(ngModel)]="selectedCompounds"
+            [virtualScroll]="true"
+            [loading]="loading"
+            [bufferAmount]="10"
             appendTo="body"
             [closeOnSelect]="false"
             [hideSelected]="true"
@@ -65,11 +75,15 @@
             (focus)="onFocus($event)"
             [searchable]="true"
             (search)="onSearchChange($event)"
-            (open)="onOpen($event)"
+            (open)="onOpen($event, 'compound')"
             (close)="onClose()"
             (select)="onSelect()"
             (add)="onAdd()"
-          ></ng-select>
+          >
+            <ng-template ng-option-tmp let-item="item">
+              <span [title]="item.name">{{ item.name }}</span>
+            </ng-template>
+          </ng-select>
         </div>
       </div>
 
@@ -86,6 +100,9 @@
             [multiple]="true"
             [placeholder]="'Search'"
             [(ngModel)]="selectedProteins"
+            [virtualScroll]="true"
+            [loading]="loading"
+            [bufferAmount]="10"
             appendTo="body"
             [closeOnSelect]="false"
             [hideSelected]="true"
@@ -94,11 +111,15 @@
             (focus)="onFocus($event)"
             [searchable]="true"
             (search)="onSearchChange($event)"
-            (open)="onOpen($event)"
+            (open)="onOpen($event, 'protein')"
             (close)="onClose()"
             (select)="onSelect()"
             (add)="onAdd()"
-          ></ng-select>
+          >
+            <ng-template ng-option-tmp let-item="item">
+              <span [title]="item.name">{{ item.name }}</span>
+            </ng-template>
+          </ng-select>
         </div>
       </div>
 
@@ -115,6 +136,9 @@
             [multiple]="true"
             [placeholder]="'Search'"
             [(ngModel)]="selectedDiseases"
+            [virtualScroll]="true"
+            [loading]="loading"
+            [bufferAmount]="10"
             appendTo="body"
             [closeOnSelect]="false"
             [hideSelected]="true"
@@ -123,11 +147,15 @@
             (focus)="onFocus($event)"
             [searchable]="true"
             (search)="onSearchChange($event)"
-            (open)="onOpen($event)"
+            (open)="onOpen($event, 'disease')"
             (close)="onClose()"
             (select)="onSelect()"
             (add)="onAdd()"
-          ></ng-select>
+          >
+            <ng-template ng-option-tmp let-item="item">
+              <span [title]="item.name">{{ item.name }}</span>
+            </ng-template>
+          </ng-select>
         </div>
       </div>
     </div>
