@@ -1,0 +1,303 @@
+<div class="result-container">
+  <!-- Summary Container -->
+  <div class="container summary-container">
+    <h2>Summary</h2>
+    <div class="summary-content">
+      <div class="summary-grid">
+        <!-- Content Summary -->
+        <div class="content-summary">
+          <h3>Content Summary</h3>
+          <div class="content-items">
+            <div class="content-item">
+              <div class="circle green"></div>
+              <span class="label" [class.selected]="isPlantSelected">Plant(s)</span>
+              <div class="value-container">
+                <span class="value" [class.selected]="isPlantSelected">0</span>
+                <span class="selected-tag" *ngIf="isPlantSelected">Selected</span>
+              </div>
+            </div>
+            <div class="content-item">
+              <div class="circle yellow"></div>
+              <span class="label" [class.selected]="isCompoundSelected">Compound(s)</span>
+              <div class="value-container">
+                <span class="value" [class.selected]="isCompoundSelected">0</span>
+                <span class="selected-tag" *ngIf="isCompoundSelected">Selected</span>
+              </div>
+            </div>
+            <div class="content-item">
+              <div class="circle blue"></div>
+              <span class="label" [class.selected]="isProteinSelected">Protein(s)</span>
+              <div class="value-container">
+                <span class="value" [class.selected]="isProteinSelected">0</span>
+                <span class="selected-tag" *ngIf="isProteinSelected">Selected</span>
+              </div>
+            </div>
+            <div class="content-item">
+              <div class="circle red"></div>
+              <span class="label" [class.selected]="isDiseaseSelected">Disease(s)</span>
+              <div class="value-container">
+                <span class="value" [class.selected]="isDiseaseSelected">0</span>
+                <span class="selected-tag" *ngIf="isDiseaseSelected">Selected</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connectivity Pie Chart -->
+        <div class="connectivity-summary">
+          <h3>Connectivity Summary</h3>
+          <canvas id="connectivityPieChart"></canvas>
+        </div>
+
+        <!-- Status Doughnut Chart -->
+        <div class="status-summary">
+          <h3>Status Summary</h3>
+          <canvas id="statusDoughnutChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connectivity Diagram Container -->
+  <div class="container connectivity-container">
+    <h2>Connectivity Diagram</h2>
+    <div class="connectivity-content">
+      <highcharts-chart
+        [Highcharts]="Highcharts"
+        [options]="sankeyOptions"
+        class="sankey-chart">
+      </highcharts-chart>
+    </div>
+  </div>
+
+  <!-- Table Diagram Container -->
+  <div class="container table-container">
+    <h2>Connectivity Tables</h2>
+    <mat-tab-group>
+      <!-- Plant to Compound Table -->
+      <mat-tab label="Plant-to-Compound">
+        <ng-template matTabContent>
+          <table mat-table [dataSource]="plantToCompoundDataSource" class="mat-elevation-z8">
+            <!-- Plant Latin Name Column -->
+            <ng-container matColumnDef="plantLatinName">
+              <th mat-header-cell *matHeaderCellDef>Plant (Latin Name)</th>
+              <td mat-cell *matCellDef="let element">{{element.plantLatinName}}</td>
+            </ng-container>
+
+            <!-- Local Plant Name Column -->
+            <ng-container matColumnDef="localPlantName">
+              <th mat-header-cell *matHeaderCellDef>Local Plant Name</th>
+              <td mat-cell *matCellDef="let element">{{element.localPlantName}}</td>
+            </ng-container>
+
+            <!-- Compound CAS Number Column -->
+            <ng-container matColumnDef="compoundCAS">
+              <th mat-header-cell *matHeaderCellDef>Compound CAS Number</th>
+              <td mat-cell *matCellDef="let element">{{element.compoundCAS}}</td>
+            </ng-container>
+
+            <!-- Compound Common Name Column -->
+            <ng-container matColumnDef="compoundCommonName">
+              <th mat-header-cell *matHeaderCellDef>Compound Common Name</th>
+              <td mat-cell *matCellDef="let element">{{element.compoundCommonName}}</td>
+            </ng-container>
+
+            <!-- Compound IUPAC Name Column -->
+            <ng-container matColumnDef="compoundIUPAC">
+              <th mat-header-cell *matHeaderCellDef>Compound IUPAC Name</th>
+              <td mat-cell *matCellDef="let element">{{element.compoundIUPAC}}</td>
+            </ng-container>
+
+            <!-- Data Source Column -->
+            <ng-container matColumnDef="dataSource">
+              <th mat-header-cell *matHeaderCellDef>Data Source</th>
+              <td mat-cell *matCellDef="let element">{{element.dataSource}}</td>
+            </ng-container>
+
+            <!-- Confidence Score Column -->
+            <ng-container matColumnDef="confidenceScore">
+              <th mat-header-cell *matHeaderCellDef>Confidence Score (Weight)</th>
+              <td mat-cell *matCellDef="let element">{{element.confidenceScore}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="plantToCompoundColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: plantToCompoundColumns;"></tr>
+          </table>
+        </ng-template>
+      </mat-tab>
+
+      <!-- Compound to Protein Table -->
+      <mat-tab label="Compound-to-Protein">
+        <ng-template matTabContent>
+          <table mat-table [dataSource]="compoundToProteinDataSource" class="mat-elevation-z8">
+            <!-- Compound CAS Number Column -->
+            <ng-container matColumnDef="compoundCAS">
+              <th mat-header-cell *matHeaderCellDef>Compound CAS Number</th>
+              <td mat-cell *matCellDef="let element">{{element.compoundCAS}}</td>
+            </ng-container>
+
+            <!-- Compound Common Name Column -->
+            <ng-container matColumnDef="compoundCommonName">
+              <th mat-header-cell *matHeaderCellDef>Compound Common Name</th>
+              <td mat-cell *matCellDef="let element">{{element.compoundCommonName}}</td>
+            </ng-container>
+
+            <!-- Compound IUPAC Name Column -->
+            <ng-container matColumnDef="compoundIUPAC">
+              <th mat-header-cell *matHeaderCellDef>Compound IUPAC Name</th>
+              <td mat-cell *matCellDef="let element">{{element.compoundIUPAC}}</td>
+            </ng-container>
+
+            <!-- UniProt ID Column -->
+            <ng-container matColumnDef="uniprotID">
+              <th mat-header-cell *matHeaderCellDef>UniProt ID</th>
+              <td mat-cell *matCellDef="let element">{{element.uniprotID}}</td>
+            </ng-container>
+
+            <!-- UniProt Protein Name Column -->
+            <ng-container matColumnDef="uniprotProteinName">
+              <th mat-header-cell *matHeaderCellDef>UniProt Protein Name</th>
+              <td mat-cell *matCellDef="let element">{{element.uniprotProteinName}}</td>
+            </ng-container>
+
+            <!-- PDB IDs Column -->
+            <ng-container matColumnDef="pdbIDs">
+              <th mat-header-cell *matHeaderCellDef>PDB IDs</th>
+              <td mat-cell *matCellDef="let element">{{element.pdbIDs}}</td>
+            </ng-container>
+
+            <!-- Data Source Column -->
+            <ng-container matColumnDef="dataSource">
+              <th mat-header-cell *matHeaderCellDef>Data Source</th>
+              <td mat-cell *matCellDef="let element">{{element.dataSource}}</td>
+            </ng-container>
+
+            <!-- Confidence Score Column -->
+            <ng-container matColumnDef="confidenceScore">
+              <th mat-header-cell *matHeaderCellDef>Confidence Score (Weight)</th>
+              <td mat-cell *matCellDef="let element">{{element.confidenceScore}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="compoundToProteinColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: compoundToProteinColumns;"></tr>
+          </table>
+        </ng-template>
+      </mat-tab>
+
+      <!-- Protein to Disease Table -->
+      <mat-tab label="Protein-to-Disease">
+        <ng-template matTabContent>
+          <table mat-table [dataSource]="proteinToDiseaseDataSource" class="mat-elevation-z8">
+            <!-- UniProt ID Column -->
+            <ng-container matColumnDef="uniprotID">
+              <th mat-header-cell *matHeaderCellDef>UniProt ID</th>
+              <td mat-cell *matCellDef="let element">{{element.uniprotID}}</td>
+            </ng-container>
+
+            <!-- Protein Name Column -->
+            <ng-container matColumnDef="proteinName">
+              <th mat-header-cell *matHeaderCellDef>Protein Name</th>
+              <td mat-cell *matCellDef="let element">{{element.proteinName}}</td>
+            </ng-container>
+
+            <!-- PDB IDs Column -->
+            <ng-container matColumnDef="pdbIDs">
+              <th mat-header-cell *matHeaderCellDef>PDB IDs</th>
+              <td mat-cell *matCellDef="let element">{{element.pdbIDs}}</td>
+            </ng-container>
+
+            <!-- OMIM ID Column -->
+            <ng-container matColumnDef="omimID">
+              <th mat-header-cell *matHeaderCellDef>OMIM ID</th>
+              <td mat-cell *matCellDef="let element">{{element.omimID}}</td>
+            </ng-container>
+
+            <!-- Disease Name Column -->
+            <ng-container matColumnDef="diseaseName">
+              <th mat-header-cell *matHeaderCellDef>Disease Name</th>
+              <td mat-cell *matCellDef="let element">{{element.diseaseName}}</td>
+            </ng-container>
+
+            <!-- Data Source Column -->
+            <ng-container matColumnDef="dataSource">
+              <th mat-header-cell *matHeaderCellDef>Data Source</th>
+              <td mat-cell *matCellDef="let element">{{element.dataSource}}</td>
+            </ng-container>
+
+            <!-- Confidence Score Column -->
+            <ng-container matColumnDef="confidenceScore">
+              <th mat-header-cell *matHeaderCellDef>Confidence Score (Weight)</th>
+              <td mat-cell *matCellDef="let element">{{element.confidenceScore}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="proteinToDiseaseColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: proteinToDiseaseColumns;"></tr>
+          </table>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <!-- Add this before closing div.result-container -->
+  <div class="container metadata-container">
+    <h2>Metadata</h2>
+    <mat-tab-group>
+      <!-- Plant Metadata -->
+      <mat-tab label="Plant">
+        <table mat-table [dataSource]="plantMetadataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="latinName">
+            <th mat-header-cell *matHeaderCellDef>Plant Name (Latin)</th>
+            <td mat-cell *matCellDef="let element">{{element.latinName}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="localName">
+            <th mat-header-cell *matHeaderCellDef>Local Name</th>
+            <td mat-cell *matCellDef="let element">{{element.localName}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="plantMetadataColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: plantMetadataColumns;"></tr>
+        </table>
+      </mat-tab>
+
+      <!-- Compound Metadata -->
+      <mat-tab label="Compound">
+        <table mat-table [dataSource]="compoundMetadataSource" class="mat-elevation-z8">
+          <ng-container *ngFor="let column of compoundMetadataColumns" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef>{{column | titlecase}}</th>
+            <td mat-cell *matCellDef="let element">{{element[column]}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="compoundMetadataColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: compoundMetadataColumns;"></tr>
+        </table>
+      </mat-tab>
+
+      <!-- Protein Metadata -->
+      <mat-tab label="Protein">
+        <table mat-table [dataSource]="proteinMetadataSource" class="mat-elevation-z8">
+          <ng-container *ngFor="let column of proteinMetadataColumns" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef>{{column | titlecase}}</th>
+            <td mat-cell *matCellDef="let element">{{element[column]}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="proteinMetadataColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: proteinMetadataColumns;"></tr>
+        </table>
+      </mat-tab>
+
+      <!-- Disease Metadata -->
+      <mat-tab label="Disease">
+        <table mat-table [dataSource]="diseaseMetadataSource" class="mat-elevation-z8">
+          <ng-container *ngFor="let column of diseaseMetadataColumns" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef>{{column | titlecase}}</th>
+            <td mat-cell *matCellDef="let element">{{element[column]}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="diseaseMetadataColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: diseaseMetadataColumns;"></tr>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
