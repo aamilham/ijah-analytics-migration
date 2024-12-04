@@ -1,7 +1,10 @@
 // app.config.ts
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes'; // Pastikan ini sesuai
 import { provideClientHydration } from '@angular/platform-browser';
@@ -10,6 +13,11 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideClientHydration(),
-    provideHttpClient(withFetch())
+    provideAnimations(),
+    importProvidersFrom(
+      HighchartsChartModule,
+      MatTableModule,
+      MatTabsModule
+    )
   ]
 };
