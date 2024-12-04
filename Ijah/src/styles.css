@@ -205,3 +205,6 @@ strong {
 .shadow-primary {
   box-shadow: 0 0.5rem 1rem rgba(46, 165, 79, 0.1);
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
