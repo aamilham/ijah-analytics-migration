@@ -4,7 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import * as Highcharts from 'highcharts';
 import HC_sankey from 'highcharts/modules/sankey';
 import { MatTableDataSource } from '@angular/material/table';
-import { HighchartsChartModule } from 'highcharts-angular'; // Add this import
+import { HighchartsChartModule } from 'highcharts-angular';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { CommonModule } from '@angular/common';
 
 // Initialize Highcharts modules
 HC_sankey(Highcharts);
@@ -75,8 +78,10 @@ interface DiseaseMetadata {
   styleUrls: ['./result.component.css'],
   standalone: true,
   imports: [
-    // ...other imports...
-    HighchartsChartModule
+    CommonModule,
+    HighchartsChartModule,
+    MatTableModule,
+    MatTabsModule
   ]
 })
 export class ResultComponent implements OnInit {
