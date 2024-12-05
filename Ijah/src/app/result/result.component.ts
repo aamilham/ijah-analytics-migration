@@ -2,15 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { ActivatedRoute } from '@angular/router';
 import * as Highcharts from 'highcharts';
-import HC_sankey from 'highcharts/modules/sankey';
 import { MatTableDataSource } from '@angular/material/table';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 
-// Initialize Highcharts modules
-HC_sankey(Highcharts);
+// Initialize Chart.js modules
 Chart.register(...registerables);
 
 // Interfaces for table data
@@ -90,66 +88,8 @@ export class ResultComponent implements OnInit {
 
   // Highcharts
   Highcharts: typeof Highcharts = Highcharts;
-  sankeyOptions: Highcharts.Options = {
-    chart: {
-      type: 'sankey'
-    },
-    title: {
-      text: undefined
-    },
-    credits: {
-      enabled: false
-    },
-    plotOptions: {
-      sankey: {
-        dataLabels: {
-          enabled: true,
-          format: '{point.name}'
-        },
-        tooltip: {
-          headerFormat: '',
-          pointFormat: '<b>{point.fromNode}</b> → <b>{point.toNode}</b><br/>Weight: <b>{point.weight}</b>'
-        }
-      }
-    },
-    series: [{
-      type: 'sankey',
-      name: 'Connectivity Flow',
-      data: [
-        // Sample data - replace with actual data
-        {
-          from: 'Plant A',
-          to: 'Compound X',
-          weight: 5
-        },
-        {
-          from: 'Plant B',
-          to: 'Compound Y',
-          weight: 3
-        },
-        {
-          from: 'Compound X',
-          to: 'Protein Alpha',
-          weight: 4
-        },
-        {
-          from: 'Compound Y',
-          to: 'Protein Beta',
-          weight: 2
-        },
-        {
-          from: 'Protein Alpha',
-          to: 'Disease 1',
-          weight: 3
-        },
-        {
-          from: 'Protein Beta',
-          to: 'Disease 2',
-          weight: 2
-        }
-      ]
-    }]
-  };
+  sankeyOptions: Highcharts.Options | undefined;
+  private sankeyModuleLoaded = false;
 
   // Columns for tables
   plantToCompoundColumns: string[] = [
@@ -187,6 +127,7 @@ export class ResultComponent implements OnInit {
   compoundMetadataColumns: string[] = ['casId', 'pubchemName', 'iupacName', 'knapsackId', 'keggId', 'pubchemId', 'drugbankId'];
   proteinMetadataColumns: string[] = ['casId', 'keggId', 'pubchemId', 'drugbankId'];
   diseaseMetadataColumns: string[] = ['omimId', 'diseaseName'];
+
 
   // Data sources for tables
   plantToCompoundDataSource = new MatTableDataSource<PlantToCompoundData>([
@@ -261,10 +202,63 @@ export class ResultComponent implements OnInit {
   isProteinSelected: boolean = false;
   isDiseaseSelected: boolean = false;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) {
+    // Initialize Highcharts Sankey module
+    this.loadSankeyModule().then(() => {
+      this.sankeyModuleLoaded = true;
+      this.initializeHighchartsOptions();
+      this.initializeCharts();
+    });
+  }
+
+  private async loadSankeyModule() {
+    try {
+      const sankeyInit = await import('highcharts/modules/sankey');
+      sankeyInit.default(Highcharts);
+    } catch (error) {
+      console.error('Error loading Sankey module:', error);
+    }
+  }
+
+  private initializeHighchartsOptions() {
+    this.sankeyOptions = {
+      chart: {
+        type: 'sankey'
+      },
+      title: {
+        text: undefined
+      },
+      credits: {
+        enabled: false
+      },
+      plotOptions: {
+        sankey: {
+          dataLabels: {
+            enabled: true,
+            format: '{point.name}'
+          },
+          tooltip: {
+            headerFormat: '',
+            pointFormat: '<b>{point.fromNode}</b> → <b>{point.toNode}</b><br/>Weight: <b>{point.weight}</b>'
+          }
+        }
+      },
+      series: [{
+        type: 'sankey',
+        name: 'Connectivity Flow',
+        data: [
+          { from: 'Plant A', to: 'Compound X', weight: 5 },
+          { from: 'Plant B', to: 'Compound Y', weight: 3 },
+          { from: 'Compound X', to: 'Protein Alpha', weight: 4 },
+          { from: 'Compound Y', to: 'Protein Beta', weight: 2 },
+          { from: 'Protein Alpha', to: 'Disease 1', weight: 3 },
+          { from: 'Protein Beta', to: 'Disease 2', weight: 2 }
+        ]
+      }]
+    };
+  }
 
   ngOnInit() {
-    this.initializeCharts();
     this.route.queryParams.subscribe(params => {
       // Check which type was selected from home page
       const selectedType = params['type']?.toLowerCase();
@@ -278,53 +272,57 @@ export class ResultComponent implements OnInit {
   private initializeCharts() {
     // Initialize Connectivity Pie Chart
     const connectivityCtx = document.getElementById('connectivityPieChart') as HTMLCanvasElement;
-    this.connectivityChart = new Chart(connectivityCtx, {
-      type: 'pie',
-      data: {
-        labels: ['Protein-Disease', 'Plant-Compound', 'Compound-Protein'],
-        datasets: [{
-          data: [30, 40, 30],
-          backgroundColor: [
-            '#FF6384',
-            '#36A2EB',
-            '#FFCE56'
-          ]
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'bottom'
+    if (connectivityCtx) {
+      this.connectivityChart = new Chart(connectivityCtx, {
+        type: 'pie',
+        data: {
+          labels: ['Protein-Disease', 'Plant-Compound', 'Compound-Protein'],
+          datasets: [{
+            data: [30, 40, 30],
+            backgroundColor: [
+              '#FF6384',
+              '#36A2EB',
+              '#FFCE56'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
           }
         }
-      }
-    });
+      });
+    }
 
     // Initialize Status Doughnut Chart
     const statusCtx = document.getElementById('statusDoughnutChart') as HTMLCanvasElement;
-    this.statusChart = new Chart(statusCtx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Known by Experiment', 'Unknown', 'Known by Prediction', 'Undefined'],
-        datasets: [{
-          data: [25, 25, 25, 25],
-          backgroundColor: [
-            '#4CAF50',
-            '#F44336',
-            '#2196F3',
-            '#9E9E9E'
-          ]
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'bottom'
+    if (statusCtx) {
+      this.statusChart = new Chart(statusCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Known by Experiment', 'Unknown', 'Known by Prediction', 'Undefined'],
+          datasets: [{
+            data: [25, 25, 25, 25],
+            backgroundColor: [
+              '#4CAF50',
+              '#F44336',
+              '#2196F3',
+              '#9E9E9E'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
           }
         }
-      }
-    });
+      });
+    }
   }
 }

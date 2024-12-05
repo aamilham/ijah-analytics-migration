@@ -62,11 +62,13 @@
   <div class="container connectivity-container">
     <h2>Connectivity Diagram</h2>
     <div class="connectivity-content">
-      <highcharts-chart
-        [Highcharts]="Highcharts"
-        [options]="sankeyOptions"
-        class="sankey-chart">
-      </highcharts-chart>
+      <div *ngIf="sankeyOptions" class="chart-container">
+        <highcharts-chart
+          [Highcharts]="Highcharts"
+          [options]="sankeyOptions"
+          style="width: 100%; height: 400px; display: block;">
+        </highcharts-chart>
+      </div>
     </div>
   </div>
 
