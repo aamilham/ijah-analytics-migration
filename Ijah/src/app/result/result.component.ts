@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ActivatedRoute } from '@angular/router';
 import * as Highcharts from 'highcharts';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,7 +10,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 
 // Initialize Chart.js modules
-Chart.register(...registerables);
+Chart.register(...registerables, ChartDataLabels);
 
 // Interfaces for table data
 interface PlantToCompoundData {
@@ -288,9 +289,34 @@ export class ResultComponent implements OnInit {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
+          layout: {
+            padding: {
+              left: 80,
+              right: 80,
+              top: 40,
+              bottom: 40
+            }
+          },
           plugins: {
             legend: {
-              position: 'bottom'
+              display: false
+            },
+            datalabels: {
+              anchor: 'end',
+              align: 'end',
+              formatter: (value: number, ctx: any) => {
+                const label = ctx.chart.data.labels[ctx.dataIndex] as string;
+                const total = (ctx.chart.data.datasets[0].data as number[]).reduce((a: number, b: number) => a + b, 0);
+                const percentage = ((value / total) * 100).toFixed(2);
+                return `${label}\n${percentage}%`;
+              },
+              color: '#000',
+              font: {
+                size: 8,
+                weight: 'bold'
+              },
+              textAlign: 'center'
             }
           }
         }
@@ -316,9 +342,55 @@ export class ResultComponent implements OnInit {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           plugins: {
             legend: {
-              position: 'bottom'
+              display: true,
+              position: 'top',
+              labels: {
+                boxWidth: 15,
+                padding: 8,
+                font: {
+                  size: 10,
+                  family: 'Arial, sans-serif',
+                  style: 'normal',
+                  lineHeight: 1.2
+                },
+                usePointStyle: true,
+                pointStyle: 'rectRounded',
+                generateLabels: (chart) => {
+                  const labels = ['Known by Experiment', 'Known by Prediction', 'Unknown', 'Undefined'];
+                  const backgroundColors = Array.isArray(chart.data.datasets[0].backgroundColor) ? chart.data.datasets[0].backgroundColor : [];
+                  return labels.map((label, index) => ({
+                    text: label,
+                    fillStyle: backgroundColors[index] || '#000',
+                    hidden: false,
+                    lineCap: 'butt',
+                    lineDash: [],
+                    lineDashOffset: 0,
+                    lineJoin: 'miter',
+                    strokeStyle: 'transparent',
+                    pointStyle: 'rectRounded',
+                    rotation: 0
+                  }));
+                }
+              }
+            },
+            datalabels: {
+              anchor: 'end',
+              align: 'end',
+              formatter: (value: number, ctx: any) => {
+                const label = ctx.chart.data.labels[ctx.dataIndex] as string;
+                const total = (ctx.chart.data.datasets[0].data as number[]).reduce((a: number, b: number) => a + b, 0);
+                const percentage = ((value / total) * 100).toFixed(2);
+                return `${label}\n${percentage}%`;
+              },
+              color: '#000',
+              font: {
+                size: 8,
+                weight: 'bold'
+              },
+              textAlign: 'center'
             }
           }
         }
