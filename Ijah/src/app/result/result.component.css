@@ -125,6 +125,14 @@ h3 {
   min-height: 350px;
 }
 
+.chart-container {
+  margin-top: 40px;
+}
+
+.legend-container {
+  margin-bottom: 100px;
+}
+
 .table-container {
   min-height: 600px;
   background-color: transparent;

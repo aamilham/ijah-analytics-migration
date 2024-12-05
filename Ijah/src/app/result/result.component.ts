@@ -277,15 +277,16 @@ export class ResultComponent implements OnInit {
       this.connectivityChart = new Chart(connectivityCtx, {
         type: 'pie',
         data: {
-          labels: ['Protein-Disease', 'Plant-Compound', 'Compound-Protein'],
           datasets: [{
-            data: [30, 40, 30],
             backgroundColor: [
-              '#FF6384',
-              '#36A2EB',
-              '#FFCE56'
-            ]
-          }]
+              getComputedStyle(document.documentElement).getPropertyValue("--secondary-400"),
+              getComputedStyle(document.documentElement).getPropertyValue("--secondary-300"),
+              getComputedStyle(document.documentElement).getPropertyValue("--secondary-200")
+            ],
+            data: [30, 45, 25],
+            label: 'Dataset 1'
+          }],
+          labels: ['Plant-Compound', 'Compound-Protein', 'Protein-Disease']
         },
         options: {
           responsive: true,
@@ -329,16 +330,17 @@ export class ResultComponent implements OnInit {
       this.statusChart = new Chart(statusCtx, {
         type: 'doughnut',
         data: {
-          labels: ['Known by Experiment', 'Unknown', 'Known by Prediction', 'Undefined'],
           datasets: [{
-            data: [25, 25, 25, 25],
             backgroundColor: [
-              '#4CAF50',
-              '#F44336',
-              '#2196F3',
-              '#9E9E9E'
-            ]
-          }]
+              getComputedStyle(document.documentElement).getPropertyValue("--secondary-400"),
+              getComputedStyle(document.documentElement).getPropertyValue("--secondary-300"),
+              getComputedStyle(document.documentElement).getPropertyValue("--secondary-200"),
+              getComputedStyle(document.documentElement).getPropertyValue("--neutral-300")
+            ],
+            data: [25, 35, 20, 20],
+            label: 'Doughnut Dataset'
+          }],
+          labels: ['Known by Experiment', 'Known by Prediction', 'Unknown', 'Undefined']
         },
         options: {
           responsive: true,
