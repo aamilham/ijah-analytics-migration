@@ -1,12 +1,11 @@
 <?php
 
-/* change list : aamilham 
-1. this file didnt update so much 
-2. add env for mail and mail pass
-3. add error handling using json  */
+/* change list : aamilham
+ 1. this file didnt update so much
+ 2. add env for mail and mail pass
+ 3. add error handling using json */
 
-function exception_error_handler($errno, $errstr, $errfile, $errline ) :
-void {
+function exception_error_handler($errno, $errstr, $errfile, $errline) : void {
     throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
 }
 set_error_handler("exception_error_handler");
@@ -35,11 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 
     if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
-        header("Access-Control-Allow-Headers:        {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+        header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+
     exit(0);
 }
 
-// feedback mail config 
+// feedback mail config
 $ijahMail = getenv('IJAH_MAIL') ?: 'ijahweb@gmail.com';
 $ijahMailPass = getenv('IJAH_MAIL_PASS') ?: 'jamujoss';
 
@@ -54,10 +54,11 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     throw new Exception('Failed to parse database config: ' . json_last_error_msg());
 }
 
-// database connection ///////////////////////////////////////////////////////////////
-$link = pg_connect("host={$dbConfig['host']} dbname={$dbConfig['database']} user={$dbConfig['user']} password={$dbConfig['password']}");
+// database connection /////////////////////////////////////////////////////////////
+$connStr = "host={$dbConfig['host']} dbname={$dbConfig['database']} user={$dbConfig['user']} password={$dbConfig['password']}";
+$link = pg_connect($connStr);
 if (!$link) {
-    throw new Exception('Failed to connect to database' . pg_last_error());
+    throw new Exception('Failed to connect to database: ' . pg_last_error());
 }
 
 $predictorChannelHost = '127.0.0.1';
@@ -65,5 +66,4 @@ $predictorChannelHost = '127.0.0.1';
 // Prediction-related config
 $timeToWait = 10;
 $predictorChannelPort = 5000;
-
 ?>

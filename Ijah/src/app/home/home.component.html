@@ -1,21 +1,18 @@
 <div class="content-wrapper">
-  <!-- Absolute centered background image -->
   <img
     src="assets/img/search_background.png"
     alt="Background Image"
     class="center-background"
   />
 
-  <!-- Main content starts here -->
   <div class="container-center">
     <h1 class="title">IJAH Analytics</h1>
     <p class="description">
-      Search and Predict Connectivity Between Plant, Compound, Protein, and
-      Disease.
+      Search and Predict Connectivity Between Plant, Compound, Protein, and Disease.
     </p>
-    <!-- Input fields with labels and icons -->
+
     <div class="input-group-flex">
-      <!-- Plant Filter -->
+      <!-- PLANT -->
       <div class="input-wrapper">
         <label for="plantSelect">Plant</label>
         <div class="input-icon-container">
@@ -25,33 +22,30 @@
             class="custom-ng-select"
             [items]="filteredPlantList"
             bindLabel="name"
+            bindValue="name"
             [multiple]="true"
-            [placeholder]="getPlantPlaceholder()"
+            placeholder="Search"
             [(ngModel)]="selectedPlants"
             [virtualScroll]="true"
             [loading]="loading"
             [bufferAmount]="10"
-            appendTo="body"
             [closeOnSelect]="false"
-            [hideSelected]="true"
-            [clearable]="false"
-            [disabled]="isPlantDisabled()"
-            (focus)="onFocus($event)"
+            [hideSelected]="false"
+            [clearable]="true"
             [searchable]="true"
-            (search)="onSearchChange($event)"
+            (search)="onSearchChange($event)" 
             (open)="onOpen($event, 'plant')"
             (close)="onClose()"
             (select)="onSelect()"
-            (add)="onAdd()"
           >
             <ng-template ng-option-tmp let-item="item">
-              <span [title]="item.name">{{ item.name }}</span>
+              {{ item.name }}
             </ng-template>
           </ng-select>
         </div>
       </div>
 
-      <!-- Compound Filter -->
+      <!-- COMPOUND -->
       <div class="input-wrapper">
         <label for="compoundSelect">Compound</label>
         <div class="input-icon-container">
@@ -61,33 +55,30 @@
             class="custom-ng-select"
             [items]="filteredCompoundList"
             bindLabel="name"
+            bindValue="name"
             [multiple]="true"
-            [placeholder]="getCompoundPlaceholder()"
+            placeholder="Search"
             [(ngModel)]="selectedCompounds"
             [virtualScroll]="true"
             [loading]="loading"
             [bufferAmount]="10"
-            appendTo="body"
             [closeOnSelect]="false"
-            [hideSelected]="true"
-            [clearable]="false"
-            [disabled]="isCompoundDisabled()"
-            (focus)="onFocus($event)"
+            [hideSelected]="false"
+            [clearable]="true"
             [searchable]="true"
             (search)="onSearchChange($event)"
             (open)="onOpen($event, 'compound')"
             (close)="onClose()"
             (select)="onSelect()"
-            (add)="onAdd()"
           >
             <ng-template ng-option-tmp let-item="item">
-              <span [title]="item.name">{{ item.name }}</span>
+              {{ item.name }}
             </ng-template>
           </ng-select>
         </div>
       </div>
 
-      <!-- Protein Filter -->
+      <!-- PROTEIN -->
       <div class="input-wrapper">
         <label for="proteinSelect">Protein</label>
         <div class="input-icon-container">
@@ -97,33 +88,30 @@
             class="custom-ng-select"
             [items]="filteredProteinList"
             bindLabel="name"
+            bindValue="name"
             [multiple]="true"
-            [placeholder]="getProteinPlaceholder()"
+            placeholder="Search"
             [(ngModel)]="selectedProteins"
             [virtualScroll]="true"
             [loading]="loading"
             [bufferAmount]="10"
-            appendTo="body"
             [closeOnSelect]="false"
-            [hideSelected]="true"
-            [clearable]="false"
-            [disabled]="isProteinDisabled()"
-            (focus)="onFocus($event)"
+            [hideSelected]="false"
+            [clearable]="true"
             [searchable]="true"
             (search)="onSearchChange($event)"
             (open)="onOpen($event, 'protein')"
             (close)="onClose()"
             (select)="onSelect()"
-            (add)="onAdd()"
           >
             <ng-template ng-option-tmp let-item="item">
-              <span [title]="item.name">{{ item.name }}</span>
+              {{ item.name }}
             </ng-template>
           </ng-select>
         </div>
       </div>
 
-      <!-- Disease Filter -->
+      <!-- DISEASE -->
       <div class="input-wrapper">
         <label for="diseaseSelect">Disease</label>
         <div class="input-icon-container">
@@ -133,34 +121,30 @@
             class="custom-ng-select"
             [items]="filteredDiseaseList"
             bindLabel="name"
+            bindValue="name"
             [multiple]="true"
-            [placeholder]="getDiseasePlaceholder()"
+            placeholder="Search"
             [(ngModel)]="selectedDiseases"
             [virtualScroll]="true"
             [loading]="loading"
             [bufferAmount]="10"
-            appendTo="body"
             [closeOnSelect]="false"
-            [hideSelected]="true"
-            [clearable]="false"
-            [disabled]="isDiseaseDisabled()"
-            (focus)="onFocus($event)"
+            [hideSelected]="false"
+            [clearable]="true"
             [searchable]="true"
             (search)="onSearchChange($event)"
             (open)="onOpen($event, 'disease')"
             (close)="onClose()"
             (select)="onSelect()"
-            (add)="onAdd()"
           >
             <ng-template ng-option-tmp let-item="item">
-              <span [title]="item.name">{{ item.name }}</span>
+              {{ item.name }}
             </ng-template>
           </ng-select>
         </div>
       </div>
     </div>
 
-    <!-- Button group -->
     <div class="btn-group-flex">
       <button 
         class="btn btn-custom" 
@@ -177,7 +161,7 @@
       >Reset</button>
     </div>
 
-    <!-- Search Results -->
+
     <div class="results-container" *ngIf="searchResults">
       <h2>Search Results</h2>
       <div class="results-content">

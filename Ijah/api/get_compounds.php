@@ -1,49 +1,45 @@
 <?php
-require_once 'cors_header.php';
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+// Include CORS headers
+header('Access-Control-Allow-Origin: http://localhost:4200');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Credentials: true');
 
-require_once 'init.php';
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit();
+}
+
+header('Content-Type: application/json');
 
 try {
-    // Get search term from query parameter
-    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-    
-    // Base query with COALESCE to handle multiple ID fields
-    $query = "SELECT com_id as id, 
-              COALESCE(com_drugbank_id, com_knapsack_id, com_kegg_id, com_pubchem_id, com_cas_id) as name 
-              FROM compound";
-    
-    // Add search condition if search term is provided
-    if (!empty($search)) {
-        // Using ILIKE for case-insensitive search and adding wildcards for partial matches
-        $search = pg_escape_string($link, $search);
-        $query .= " WHERE 
-                   com_drugbank_id ILIKE '%$search%' OR 
-                   com_knapsack_id ILIKE '%$search%' OR 
-                   com_kegg_id ILIKE '%$search%' OR 
-                   com_pubchem_id ILIKE '%$search%' OR 
-                   com_cas_id ILIKE '%$search%'";
+    $host = "localhost";
+    $dbname = "ijahdatabase";
+    $user = "postgres";
+    $password = "Freedom255";
+
+    $connStr = "host=$host dbname=$dbname user=$user password=$password";
+    $conn = pg_connect($connStr);
+    if (!$conn) {
+        throw new Exception('Database connection failed: ' . pg_last_error());
     }
-    
-    // Add ordering by the COALESCE result
-    $query .= " ORDER BY name";
-    
-    $result = pg_query($link, $query);
-    
+
+    // Using com_pubchem_id as the name since there's no com_name column
+    $result = pg_query($conn, "SELECT com_pubchem_id AS name FROM compound WHERE com_pubchem_id IS NOT NULL ORDER BY com_pubchem_id");
     if (!$result) {
-        throw new Exception(pg_last_error($link));
+        throw new Exception('Query failed: ' . pg_last_error($conn));
     }
-    
-    $compounds = array();
+
+    $data = [];
     while ($row = pg_fetch_assoc($result)) {
-        $compounds[] = $row;
+        if (!empty($row['name'])) {
+            $data[] = $row;
+        }
     }
-    
-    echo json_encode($compounds);
-    
+
+    echo json_encode($data);
+    pg_close($conn);
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['error' => $e->getMessage()]);

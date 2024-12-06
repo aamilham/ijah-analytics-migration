@@ -33,14 +33,19 @@ h3 {
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 0;
   margin-top: 20px;
 }
 
 .content-summary, .connectivity-summary, .status-summary {
-  padding: 15px;
+  padding: 10px;
   border-radius: 6px;
   outline: none;
+}
+
+.connectivity-summary {
+  padding: 10px;
+  overflow: visible;
 }
 
 .content-items {
@@ -110,6 +115,7 @@ h3 {
 
 .connectivity-container {
   min-height: 400px;
+  overflow: visible !important;
 }
 
 .connectivity-content {
@@ -126,7 +132,10 @@ h3 {
 }
 
 .chart-container {
-  margin-top: 40px;
+  margin-top: 20px;
+  padding: 0;
+  position: relative;
+  overflow: visible;
 }
 
 .legend-container {
@@ -189,6 +198,8 @@ canvas {
   width: 100% !important;
   height: auto !important;
   max-height: 250px;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .metadata-container {
@@ -267,4 +278,23 @@ th.mat-mdc-header-cell {
 .result-title h1 {
   margin: 0;
   font-size: 2rem;
+}
+
+::ng-deep .chartjs-labels {
+  position: absolute !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+  white-space: nowrap !important;
+  font-size: 12px !important;
+  color: #000000 !important;
+  transform-origin: center !important;
+}
+
+@media (max-width: 768px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+  .content-items {
+    grid-template-columns: 1fr;
+  }
 }

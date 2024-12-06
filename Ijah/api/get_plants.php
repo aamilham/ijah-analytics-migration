@@ -1,42 +1,45 @@
 <?php
-require_once 'cors_header.php';
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+// Include CORS headers
+header('Access-Control-Allow-Origin: http://localhost:4200');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Credentials: true');
 
-require_once 'init.php';
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit();
+}
+
+header('Content-Type: application/json');
 
 try {
-    // Get search term from query parameter
-    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-    
-    // Base query
-    $query = "SELECT pla_id as id, pla_name as name FROM plant";
-    
-    // Add search condition if search term is provided
-    if (!empty($search)) {
-        // Using ILIKE for case-insensitive search and adding wildcards for partial matches
-        $search = pg_escape_string($link, $search);
-        $query .= " WHERE pla_name ILIKE '%$search%'";
+    $host = "localhost";
+    $dbname = "ijahdatabase";
+    $user = "postgres";
+    $password = "Freedom255";
+
+    $connStr = "host=$host dbname=$dbname user=$user password=$password";
+    $conn = pg_connect($connStr);
+    if (!$conn) {
+        throw new Exception('Database connection failed: ' . pg_last_error());
     }
-    
-    // Add ordering
-    $query .= " ORDER BY pla_name";
-    
-    $result = pg_query($link, $query);
-    
+
+    // Using pla_name as the name field
+    $result = pg_query($conn, "SELECT pla_name AS name FROM plant WHERE pla_name IS NOT NULL ORDER BY pla_name");
     if (!$result) {
-        throw new Exception(pg_last_error($link));
+        throw new Exception('Query failed: ' . pg_last_error($conn));
     }
-    
-    $plants = array();
+
+    $data = [];
     while ($row = pg_fetch_assoc($result)) {
-        $plants[] = $row;
+        if (!empty($row['name'])) {
+            $data[] = $row;
+        }
     }
-    
-    echo json_encode($plants);
-    
+
+    echo json_encode($data);
+    pg_close($conn);
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['error' => $e->getMessage()]);
