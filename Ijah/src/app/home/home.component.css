@@ -82,7 +82,6 @@
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
   padding: 8px;
-  overflow: hidden; /* Ensure content doesn't overflow */
 }
 
 ::ng-deep .custom-ng-select .ng-value-container {
@@ -123,6 +122,27 @@
   min-width: 50px !important;
   max-width: 100% !important;
   padding: 2px !important;
+}
+
+::ng-deep .ng-dropdown-panel {
+  position: absolute !important;
+  z-index: 1000 !important;
+  margin-top: 4px !important;
+  width: 100% !important;
+  background: #fff !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 4px !important;
+  border: 1px solid #626262 !important;
+}
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items {
+  max-height: 200px !important;
+  overflow-y: auto !important;
+}
+
+::ng-deep .ng-dropdown-panel .ng-option {
+  padding: 8px 12px !important;
+  line-height: 1.4 !important;
 }
 
 /* Button group styling */

@@ -1,11 +1,17 @@
 <?php
-require_once 'cors_header.php';
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+// Include CORS headers
+header('Access-Control-Allow-Origin: http://localhost:4200');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Credentials: true');
 
-require_once 'init.php';
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit();
+}
+
+header('Content-Type: application/json');
 
 try {
     // Get search term from query parameter
@@ -22,23 +28,22 @@ try {
         $search = pg_escape_string($link, $search);
         $query .= " WHERE pro_name ILIKE '%$search%' OR pro_uniprot_id ILIKE '%$search%' OR pro_uniprot_abbrv ILIKE '%$search%'";
     }
-    
-    // Add ordering
-    $query .= " ORDER BY pro_name";
-    
-    $result = pg_query($link, $query);
-    
+
+    // Using pro_name as the name field
+    $result = pg_query($conn, "SELECT pro_name AS name FROM protein WHERE pro_name IS NOT NULL ORDER BY pro_name");
     if (!$result) {
-        throw new Exception(pg_last_error($link));
+        throw new Exception('Query failed: ' . pg_last_error($conn));
     }
-    
-    $proteins = array();
+
+    $data = [];
     while ($row = pg_fetch_assoc($result)) {
-        $proteins[] = $row;
+        if (!empty($row['name'])) {
+            $data[] = $row;
+        }
     }
-    
-    echo json_encode($proteins);
-    
+
+    echo json_encode($data);
+    pg_close($conn);
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['error' => $e->getMessage()]);

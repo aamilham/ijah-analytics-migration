@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,6 @@ export class DataService {
     this.cacheExpiry.set(key, Date.now() + this.CACHE_DURATION);
   }
 
-  // Get all plants
   getPlants(): Observable<any[]> {
     const cached = this.getCachedData('plants');
     if (cached) {
@@ -59,7 +58,6 @@ export class DataService {
     );
   }
 
-  // Get all compounds
   getCompounds(): Observable<any[]> {
     const cached = this.getCachedData('compounds');
     if (cached) {
@@ -77,7 +75,6 @@ export class DataService {
     );
   }
 
-  // Get all proteins
   getProteins(): Observable<any[]> {
     const cached = this.getCachedData('proteins');
     if (cached) {
@@ -99,7 +96,6 @@ export class DataService {
     );
   }
 
-  // Get all diseases
   getDiseases(): Observable<any[]> {
     const cached = this.getCachedData('diseases');
     if (cached) {
@@ -121,9 +117,8 @@ export class DataService {
     );
   }
 
-  // Search based on selected items
   search(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/predict.php`, data).pipe(
+    return this.http.post<any>(`${this.apiUrl}/search.php`, data).pipe(
       catchError(error => this.handleError(error))
     );
   }

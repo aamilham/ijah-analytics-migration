@@ -9,10 +9,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 
-// Initialize Chart.js modules
+// Register Chart.js plugins
 Chart.register(...registerables, ChartDataLabels);
 
-// Interfaces for table data
 interface PlantToCompoundData {
   plantLatinName: string;
   localPlantName: string;
@@ -90,9 +89,7 @@ export class ResultComponent implements OnInit {
   // Highcharts
   Highcharts: typeof Highcharts = Highcharts;
   sankeyOptions: Highcharts.Options | undefined;
-  private sankeyModuleLoaded = false;
 
-  // Columns for tables
   plantToCompoundColumns: string[] = [
     'plantLatinName', 
     'localPlantName', 
@@ -129,86 +126,24 @@ export class ResultComponent implements OnInit {
   proteinMetadataColumns: string[] = ['casId', 'keggId', 'pubchemId', 'drugbankId'];
   diseaseMetadataColumns: string[] = ['omimId', 'diseaseName'];
 
+  plantToCompoundDataSource = new MatTableDataSource<PlantToCompoundData>([]);
+  compoundToProteinDataSource = new MatTableDataSource<CompoundToProteinData>([]);
+  proteinToDiseaseDataSource = new MatTableDataSource<ProteinToDiseaseData>([]);
+  plantMetadataSource = new MatTableDataSource<PlantMetadata>([]);
+  compoundMetadataSource = new MatTableDataSource<CompoundMetadata>([]);
+  proteinMetadataSource = new MatTableDataSource<ProteinMetadata>([]);
+  diseaseMetadataSource = new MatTableDataSource<DiseaseMetadata>([]);
 
-  // Data sources for tables
-  plantToCompoundDataSource = new MatTableDataSource<PlantToCompoundData>([
-    {
-      plantLatinName: 'Example Plant',
-      localPlantName: 'Local Name',
-      compoundCAS: '123-45-6',
-      compoundCommonName: 'Example Compound',
-      compoundIUPAC: 'IUPAC Name',
-      dataSource: 'Example Database',
-      confidenceScore: 0.85
-    }
-  ]);
-
-  compoundToProteinDataSource = new MatTableDataSource<CompoundToProteinData>([
-    {
-      compoundCAS: '123-45-6',
-      compoundCommonName: 'Example Compound',
-      compoundIUPAC: 'IUPAC Name',
-      uniprotID: 'P12345',
-      uniprotProteinName: 'Example Protein',
-      pdbIDs: '1ABC',
-      dataSource: 'Example Database',
-      confidenceScore: 0.75
-    }
-  ]);
-
-  proteinToDiseaseDataSource = new MatTableDataSource<ProteinToDiseaseData>([
-    {
-      uniprotID: 'P12345',
-      proteinName: 'Example Protein',
-      pdbIDs: '1ABC',
-      omimID: '123456',
-      diseaseName: 'Example Disease',
-      dataSource: 'Example Database',
-      confidenceScore: 0.90
-    }
-  ]);
-
-  plantMetadataSource = new MatTableDataSource<PlantMetadata>([
-    { latinName: 'Example Plant', localName: 'Local Name' }
-  ]);
-
-  compoundMetadataSource = new MatTableDataSource<CompoundMetadata>([
-    {
-      casId: '123-45-6',
-      pubchemName: 'Example Compound',
-      iupacName: 'IUPAC Name',
-      knapsackId: 'KNP123',
-      keggId: 'KEGG123',
-      pubchemId: 'PUB123',
-      drugbankId: 'DB123'
-    }
-  ]);
-
-  proteinMetadataSource = new MatTableDataSource<ProteinMetadata>([
-    {
-      casId: '123-45-6',
-      keggId: 'KEGG123',
-      pubchemId: 'PUB123',
-      drugbankId: 'DB123'
-    }
-  ]);
-
-  diseaseMetadataSource = new MatTableDataSource<DiseaseMetadata>([
-    { omimId: '123456', diseaseName: 'Example Disease' }
-  ]);
-
-  // Selected states
   isPlantSelected: boolean = false;
   isCompoundSelected: boolean = false;
   isProteinSelected: boolean = false;
   isDiseaseSelected: boolean = false;
 
+  searchResults: any = null;
+
   constructor(private route: ActivatedRoute) {
-    // Initialize Highcharts Sankey module
     this.loadSankeyModule().then(() => {
-      this.sankeyModuleLoaded = true;
       this.initializeHighchartsOptions();
-      this.initializeCharts();
     });
   }
 
@@ -247,42 +182,83 @@ export class ResultComponent implements OnInit {
       series: [{
         type: 'sankey',
         name: 'Connectivity Flow',
-        data: [
-          { from: 'Plant A', to: 'Compound X', weight: 5 },
-          { from: 'Plant B', to: 'Compound Y', weight: 3 },
-          { from: 'Compound X', to: 'Protein Alpha', weight: 4 },
-          { from: 'Compound Y', to: 'Protein Beta', weight: 2 },
-          { from: 'Protein Alpha', to: 'Disease 1', weight: 3 },
-          { from: 'Protein Beta', to: 'Disease 2', weight: 2 }
-        ]
+        data: []
       }]
     };
   }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      // Check which type was selected from home page
       const selectedType = params['type']?.toLowerCase();
       this.isPlantSelected = selectedType === 'plant';
       this.isCompoundSelected = selectedType === 'compound';
       this.isProteinSelected = selectedType === 'protein';
       this.isDiseaseSelected = selectedType === 'disease';
     });
+
+    const resultsStr = sessionStorage.getItem('searchResults');
+    if (resultsStr) {
+      this.searchResults = JSON.parse(resultsStr);
+    }
+
+    this.updateTableData();
+    this.updateSankeyData();
+    this.initializeCharts();
+  }
+
+  private updateTableData() {
+    if (this.searchResults) {
+      if (this.searchResults.plantToCompoundConnections) {
+        this.plantToCompoundDataSource.data = this.searchResults.plantToCompoundConnections;
+      }
+
+      if (this.searchResults.compoundToProteinConnections) {
+        this.compoundToProteinDataSource.data = this.searchResults.compoundToProteinConnections;
+      }
+
+      if (this.searchResults.proteinToDiseaseConnections) {
+        this.proteinToDiseaseDataSource.data = this.searchResults.proteinToDiseaseConnections;
+      }
+
+      if (this.searchResults.plantMetadata) {
+        this.plantMetadataSource.data = this.searchResults.plantMetadata;
+      }
+
+      if (this.searchResults.compoundMetadata) {
+        this.compoundMetadataSource.data = this.searchResults.compoundMetadata;
+      }
+
+      if (this.searchResults.proteinMetadata) {
+        this.proteinMetadataSource.data = this.searchResults.proteinMetadata;
+      }
+
+      if (this.searchResults.diseaseMetadata) {
+        this.diseaseMetadataSource.data = this.searchResults.diseaseMetadata;
+      }
+    }
+  }
+
+  private updateSankeyData() {
+    if (this.searchResults && this.searchResults.sankeyLinks) {
+      this.sankeyOptions = {
+        ...this.sankeyOptions,
+        series: [{
+          type: 'sankey',
+          name: 'Connectivity Flow',
+          data: this.searchResults.sankeyLinks
+        }]
+      };
+    }
   }
 
   private initializeCharts() {
-    // Initialize Connectivity Pie Chart
     const connectivityCtx = document.getElementById('connectivityPieChart') as HTMLCanvasElement;
     if (connectivityCtx) {
       this.connectivityChart = new Chart(connectivityCtx, {
         type: 'pie',
         data: {
           datasets: [{
-            backgroundColor: [
-              getComputedStyle(document.documentElement).getPropertyValue("--secondary-400"),
-              getComputedStyle(document.documentElement).getPropertyValue("--secondary-300"),
-              getComputedStyle(document.documentElement).getPropertyValue("--secondary-200")
-            ],
+            backgroundColor: ['#4caf50', '#ffeb3b', '#2196f3'],
             data: [30, 45, 25],
             label: 'Dataset 1'
           }],
@@ -318,25 +294,19 @@ export class ResultComponent implements OnInit {
                 weight: 'bold'
               },
               textAlign: 'center'
-            }
+            } as any
           }
-        }
+        } as any
       });
     }
 
-    // Initialize Status Doughnut Chart
     const statusCtx = document.getElementById('statusDoughnutChart') as HTMLCanvasElement;
     if (statusCtx) {
       this.statusChart = new Chart(statusCtx, {
         type: 'doughnut',
         data: {
           datasets: [{
-            backgroundColor: [
-              getComputedStyle(document.documentElement).getPropertyValue("--secondary-400"),
-              getComputedStyle(document.documentElement).getPropertyValue("--secondary-300"),
-              getComputedStyle(document.documentElement).getPropertyValue("--secondary-200"),
-              getComputedStyle(document.documentElement).getPropertyValue("--neutral-300")
-            ],
+            backgroundColor: ['#4caf50', '#ffeb3b', '#2196f3', '#9e9e9e'],
             data: [25, 35, 20, 20],
             label: 'Doughnut Dataset'
           }],
@@ -360,7 +330,7 @@ export class ResultComponent implements OnInit {
                 },
                 usePointStyle: true,
                 pointStyle: 'rectRounded',
-                generateLabels: (chart) => {
+                generateLabels: (chart: any) => { // <-- Tambahkan tipe any pada parameter
                   const labels = ['Known by Experiment', 'Known by Prediction', 'Unknown', 'Undefined'];
                   const backgroundColors = Array.isArray(chart.data.datasets[0].backgroundColor) ? chart.data.datasets[0].backgroundColor : [];
                   return labels.map((label, index) => ({
@@ -383,7 +353,7 @@ export class ResultComponent implements OnInit {
               align: 'end',
               formatter: (value: number, ctx: any) => {
                 const label = ctx.chart.data.labels[ctx.dataIndex] as string;
-                const total = (ctx.chart.data.datasets[0].data as number[]).reduce((a: number, b: number) => a + b, 0);
+                const total = (ctx.chart.data.datasets[0].data as number[]).reduce((a, b) => a + b, 0);
                 const percentage = ((value / total) * 100).toFixed(2);
                 return `${label}\n${percentage}%`;
               },
@@ -393,9 +363,9 @@ export class ResultComponent implements OnInit {
                 weight: 'bold'
               },
               textAlign: 'center'
-            }
+            } as any
           }
-        }
+        } as any
       });
     }
   }
