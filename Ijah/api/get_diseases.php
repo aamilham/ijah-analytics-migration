@@ -12,13 +12,13 @@ try {
     $search = isset($_GET['search']) ? trim($_GET['search']) : '';
     
     // Base query
-    $query = "SELECT dis_id as id, dis_name as name FROM disease";
+    $query = "SELECT dis_id as id, dis_omim_id, dis_name, CONCAT(dis_omim_id, ' | ', dis_name) as name FROM disease";
     
     // Add search condition if search term is provided
     if (!empty($search)) {
         // Using ILIKE for case-insensitive search and adding wildcards for partial matches
         $search = pg_escape_string($link, $search);
-        $query .= " WHERE dis_name ILIKE '%$search%'";
+        $query .= " WHERE dis_name ILIKE '%$search%' OR dis_omim_id ILIKE '%$search%'";
     }
     
     // Add ordering
