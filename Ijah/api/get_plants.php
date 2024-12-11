@@ -12,13 +12,19 @@ try {
     $search = isset($_GET['search']) ? trim($_GET['search']) : '';
     
     // Base query
-    $query = "SELECT pla_id as id, pla_name as name FROM plant";
+    $query = "SELECT pla_id as id, pla_name, pla_idr_name, 
+              CASE 
+                WHEN pla_idr_name IS NOT NULL AND pla_idr_name != '' 
+                THEN CONCAT(pla_name, ' | ', pla_idr_name) 
+                ELSE pla_name 
+              END as name 
+              FROM plant";
     
     // Add search condition if search term is provided
     if (!empty($search)) {
         // Using ILIKE for case-insensitive search and adding wildcards for partial matches
         $search = pg_escape_string($link, $search);
-        $query .= " WHERE pla_name ILIKE '%$search%'";
+        $query .= " WHERE pla_name ILIKE '%$search%' OR pla_idr_name ILIKE '%$search%'";
     }
     
     // Add ordering
