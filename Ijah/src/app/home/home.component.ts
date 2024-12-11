@@ -64,8 +64,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadAllData();
-    this.initializeFilteredLists();
+    this.loadInitialData();
     this.loadMemoFromLocalStorage();
   }
 
@@ -109,24 +108,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onOpen(event: any, type: string) {
     this.activeDropdown = type;
-    if (this.searchDebouncer) {
-      clearTimeout(this.searchDebouncer);
-    }
-    
-    // Pre-load data for the opened dropdown
-    switch(type) {
-      case 'plant':
-        this.filteredPlantList = this.plantList.slice(0, 50);
-        break;
-      case 'compound':
-        this.filteredCompoundList = this.compoundList.slice(0, 50);
-        break;
-      case 'protein':
-        this.filteredProteinList = this.proteinList.slice(0, 50);
-        break;
-      case 'disease':
-        this.filteredDiseaseList = this.diseaseList.slice(0, 50);
-        break;
+    const element = event.currentTarget;
+    const select = this.selectInstances.get(element);
+    if (select) {
+      const searchInput = this.searchInputCache.get(element);
+      if (searchInput) {
+        this.animationFrame = requestAnimationFrame(() => searchInput.focus());
+      }
     }
   }
 
@@ -235,27 +223,29 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  async loadAllData() {
-    try {
-      // Load data in parallel
-      const [plants, compounds, proteins, diseases] = await Promise.all([
-        this.dataService.getPlants().toPromise(),
-        this.dataService.getCompounds().toPromise(),
-        this.dataService.getProteins().toPromise(),
-        this.dataService.getDiseases().toPromise()
-      ]);
-
-      // Sort data alphabetically for faster searching
-      this.plantList = (plants || []).sort((a, b) => a.name.localeCompare(b.name));
-      this.compoundList = (compounds || []).sort((a, b) => a.name.localeCompare(b.name));
-      this.proteinList = (proteins || []).sort((a, b) => a.name.localeCompare(b.name));
-      this.diseaseList = (diseases || []).sort((a, b) => a.name.localeCompare(b.name));
-
-      // Initialize filtered lists with sorted data
-      this.initializeFilteredLists();
-    } catch (error) {
+  loadInitialData() {
+    this.loading = true;
+    Promise.all([
+      this.dataService.getPlants().toPromise(),
+      this.dataService.getCompounds().toPromise(),
+      this.dataService.getProteins().toPromise(),
+      this.dataService.getDiseases().toPromise()
+    ]).then(([plants, compounds, proteins, diseases]) => {
+      this.plantList = plants || [];
+      this.compoundList = compounds || [];
+      this.proteinList = proteins || [];
+      this.diseaseList = diseases || [];
+      
+      this.filteredPlantList = [...this.plantList];
+      this.filteredCompoundList = [...this.compoundList];
+      this.filteredProteinList = [...this.proteinList];
+      this.filteredDiseaseList = [...this.diseaseList];
+      
+      this.loading = false;
+    }).catch(error => {
       console.error('Error loading data:', error);
-    }
+      this.loading = false;
+    });
   }
 
   onSearch() {
@@ -292,11 +282,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getProteinPlaceholder(): string {
-    return this.selectedDiseases.length > 0 ? '' : 'Search';
+    return this.selectedProteins.length ? `${this.selectedProteins.length} proteins selected` : 'Select proteins...';
   }
 
   getDiseasePlaceholder(): string {
-    return this.selectedProteins.length > 0 ? '' : 'Search';
+    return this.selectedDiseases.length ? `${this.selectedDiseases.length} diseases selected` : 'Select diseases...';
   }
 
   isPlantDisabled(): boolean {
@@ -308,11 +298,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   isProteinDisabled(): boolean {
-    return this.loading || this.selectedDiseases.length > 0;
+    return this.loading;
   }
 
   isDiseaseDisabled(): boolean {
-    return this.loading || this.selectedProteins.length > 0;
+    return this.loading;
   }
 
   onReset() {
