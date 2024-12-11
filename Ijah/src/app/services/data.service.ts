@@ -49,9 +49,13 @@ export class DataService {
 
     return this.http.get<any[]>(`${this.apiUrl}/get_plants.php`).pipe(
       tap(data => {
-        this.setCachedData('plants', data);
+        const formattedData = data.map(item => ({
+          ...item,
+          name: item.pla_idr_name ? `${item.pla_name} | ${item.pla_idr_name}` : item.pla_name
+        }));
+        this.setCachedData('plants', formattedData);
       }),
-      catchError(error => this.handleError(error))
+      catchError(this.handleError)
     );
   }
 
@@ -85,9 +89,13 @@ export class DataService {
 
     return this.http.get<any[]>(`${this.apiUrl}/get_proteins.php`).pipe(
       tap(data => {
-        this.setCachedData('proteins', data);
+        const formattedData = data.map(item => ({
+          ...item,
+          name: `${item.pro_uniprot_id} | ${item.pro_uniprot_abbrv} | ${item.pro_name}`
+        }));
+        this.setCachedData('proteins', formattedData);
       }),
-      catchError(error => this.handleError(error))
+      catchError(this.handleError)
     );
   }
 
@@ -103,9 +111,13 @@ export class DataService {
 
     return this.http.get<any[]>(`${this.apiUrl}/get_diseases.php`).pipe(
       tap(data => {
-        this.setCachedData('diseases', data);
+        const formattedData = data.map(item => ({
+          ...item,
+          name: `${item.dis_omim_id} | ${item.dis_name}`
+        }));
+        this.setCachedData('diseases', formattedData);
       }),
-      catchError(error => this.handleError(error))
+      catchError(this.handleError)
     );
   }
 
