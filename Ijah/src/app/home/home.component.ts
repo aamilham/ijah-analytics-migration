@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DataService } from '../services/data.service';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { Router } from '@angular/router';
+import { SharedService } from '../services/shared.service';
+
 
 @Component({
   selector: 'app-home',
@@ -50,7 +53,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private sharedService: SharedService,
+    private router: Router
   ) {
     // Initialize the Map to store NgSelect instances
     this.selectInstances = new Map<HTMLElement, NgSelectComponent>();
@@ -263,6 +268,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.dataService.search(searchData).subscribe({
       next: (results: any) => {
+        // Kirim hasil pencarian ke SharedService
+        this.sharedService.updatePlantToCompoundData(results.plant_vs_compound || []);
+        this.sharedService.updateCompoundToProteinData(results.compound_vs_protein || []);
+        this.sharedService.updateProteinToDiseaseData(results.protein_vs_disease || []);
+        this.loading = false;
+
+        this.router.navigate(['/result']);
+      },
+      error: (error: Error) => {
+        console.error('Search error:', error);
+        this.loading = false;
+      }
+    });
+    //change by aam to test
+/*     this.dataService.search(searchData).subscribe({
+      next: (results: any) => {
         this.searchResults = results;
         this.loading = false;
       },
@@ -270,7 +291,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         console.error('Search error:', error);
         this.loading = false;
       }
-    });
+    }); */
   }
 
   getPlantPlaceholder(): string {
