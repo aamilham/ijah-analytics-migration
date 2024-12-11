@@ -12,13 +12,15 @@ try {
     $search = isset($_GET['search']) ? trim($_GET['search']) : '';
     
     // Base query
-    $query = "SELECT pro_id as id, pro_name as name FROM protein";
+    $query = "SELECT pro_id as id, pro_uniprot_id, pro_uniprot_abbrv, pro_name, 
+              CONCAT(pro_uniprot_id, ' | ', pro_uniprot_abbrv, ' | ', pro_name) as name 
+              FROM protein";
     
     // Add search condition if search term is provided
     if (!empty($search)) {
         // Using ILIKE for case-insensitive search and adding wildcards for partial matches
         $search = pg_escape_string($link, $search);
-        $query .= " WHERE pro_name ILIKE '%$search%'";
+        $query .= " WHERE pro_name ILIKE '%$search%' OR pro_uniprot_id ILIKE '%$search%' OR pro_uniprot_abbrv ILIKE '%$search%'";
     }
     
     // Add ordering
