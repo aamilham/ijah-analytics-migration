@@ -256,6 +256,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   onSearch() {
     if (this.loading) return;
 
+    // Get selected types
+    const selectedTypes = {
+      plants: this.selectedPlants.length > 0,
+      compounds: this.selectedCompounds.length > 0,
+      proteins: this.selectedProteins.length > 0,
+      diseases: this.selectedDiseases.length > 0
+    };
+
     const searchData = {
       plants: this.selectedPlants,
       compounds: this.selectedCompounds,
@@ -268,30 +276,32 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.dataService.search(searchData).subscribe({
       next: (results: any) => {
-        // Kirim hasil pencarian ke SharedService
+        // Update data in SharedService
         this.sharedService.updatePlantToCompoundData(results.plant_vs_compound || []);
         this.sharedService.updateCompoundToProteinData(results.compound_vs_protein || []);
         this.sharedService.updateProteinToDiseaseData(results.protein_vs_disease || []);
+        
+        // Navigate to result page with counts and selected types
+        const queryParams = {
+          data: JSON.stringify({
+            counts: {
+              plants: results.counts?.plants || 0,
+              compounds: results.counts?.compounds || 0,
+              proteins: results.counts?.proteins || 0,
+              diseases: results.counts?.diseases || 0
+            },
+            selectedTypes
+          })
+        };
+        
         this.loading = false;
-
-        this.router.navigate(['/result']);
+        this.router.navigate(['/result'], { queryParams });
       },
       error: (error: Error) => {
         console.error('Search error:', error);
         this.loading = false;
       }
     });
-    //change by aam to test
-/*     this.dataService.search(searchData).subscribe({
-      next: (results: any) => {
-        this.searchResults = results;
-        this.loading = false;
-      },
-      error: (error: Error) => {
-        console.error('Search error:', error);
-        this.loading = false;
-      }
-    }); */
   }
 
   getPlantPlaceholder(): string {
