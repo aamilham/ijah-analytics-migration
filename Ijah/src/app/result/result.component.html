@@ -14,7 +14,7 @@
               <div class="circle green"></div>
               <span class="label" [class.selected]="isPlantSelected">Plant(s)</span>
               <div class="value-container">
-                <span class="value" [class.selected]="isPlantSelected">0</span>
+                <span class="value" [class.selected]="isPlantSelected">{{plantCount}}</span>
                 <span class="selected-tag" *ngIf="isPlantSelected">Selected</span>
               </div>
             </div>
@@ -22,7 +22,7 @@
               <div class="circle yellow"></div>
               <span class="label" [class.selected]="isCompoundSelected">Compound(s)</span>
               <div class="value-container">
-                <span class="value" [class.selected]="isCompoundSelected">0</span>
+                <span class="value" [class.selected]="isCompoundSelected">{{compoundCount}}</span>
                 <span class="selected-tag" *ngIf="isCompoundSelected">Selected</span>
               </div>
             </div>
@@ -30,7 +30,7 @@
               <div class="circle blue"></div>
               <span class="label" [class.selected]="isProteinSelected">Protein(s)</span>
               <div class="value-container">
-                <span class="value" [class.selected]="isProteinSelected">0</span>
+                <span class="value" [class.selected]="isProteinSelected">{{proteinCount}}</span>
                 <span class="selected-tag" *ngIf="isProteinSelected">Selected</span>
               </div>
             </div>
@@ -38,7 +38,7 @@
               <div class="circle red"></div>
               <span class="label" [class.selected]="isDiseaseSelected">Disease(s)</span>
               <div class="value-container">
-                <span class="value" [class.selected]="isDiseaseSelected">0</span>
+                <span class="value" [class.selected]="isDiseaseSelected">{{diseaseCount}}</span>
                 <span class="selected-tag" *ngIf="isDiseaseSelected">Selected</span>
               </div>
             </div>
