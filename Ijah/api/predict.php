@@ -258,6 +258,7 @@ if (empty($plantCompoundData) && empty($compoundProteinData) && empty($proteinDi
 } else {
     // Calculate counts based on relationships
     $counts = array();
+    $relationshipCounts = array();
 
     // Count plants from input or relationships
     $counts['plants'] = !empty($plantIds) ? count($plantIds) : 
@@ -310,6 +311,33 @@ if (empty($plantCompoundData) && empty($compoundProteinData) && empty($proteinDi
     }
     $counts['diseases'] = count($uniqueDiseases);
 
+    // Count relationships and calculate percentages
+    $relationshipCounts['plant_vs_compound'] = !empty($plantCompoundData) ? count($plantCompoundData) : 0;
+    $relationshipCounts['compound_vs_protein'] = !empty($compoundProteinData) ? count($compoundProteinData) : 0;
+    $relationshipCounts['protein_vs_disease'] = !empty($proteinDiseaseData) ? count($proteinDiseaseData) : 0;
+    
+    // Calculate total relationships
+    $totalRelationships = $relationshipCounts['plant_vs_compound'] + 
+                         $relationshipCounts['compound_vs_protein'] + 
+                         $relationshipCounts['protein_vs_disease'];
+
+    // Calculate percentages
+    $relationshipCounts['percentages'] = array(
+        'plant_vs_compound' => $totalRelationships > 0 ? 
+            round(($relationshipCounts['plant_vs_compound'] / $totalRelationships) * 100, 2) : 0,
+        'compound_vs_protein' => $totalRelationships > 0 ? 
+            round(($relationshipCounts['compound_vs_protein'] / $totalRelationships) * 100, 2) : 0,
+        'protein_vs_disease' => $totalRelationships > 0 ? 
+            round(($relationshipCounts['protein_vs_disease'] / $totalRelationships) * 100, 2) : 0
+    );
+
+    // Add total relationships count
+    $relationshipCounts['total'] = $totalRelationships;
+
+    // Add counts to response
+    $respArr['counts'] = $counts;
+    $respArr['relationship_counts'] = $relationshipCounts;
+
     // Add relationships to response
     if (!empty($plantCompoundData)) {
         $respArr['plant_vs_compound'] = array_values($plantCompoundData);
@@ -352,13 +380,11 @@ if (empty($plantCompoundData) && empty($compoundProteinData) && empty($proteinDi
         $respArr['protein_vs_disease'] = $formattedProteinDisease;
     }
 
-    $respArr['counts'] = $counts;
+    // Add logging for final response
+    error_log("Counts: " . json_encode($counts));
+    error_log("Compound vs Protein Data to send: " . json_encode(isset($respArr['compound_vs_protein']) ? $respArr['compound_vs_protein'] : []));
+    error_log("Protein vs Disease Data to send: " . json_encode(isset($respArr['protein_vs_disease']) ? $respArr['protein_vs_disease'] : []));
 }
-
-// Add logging for final response
-error_log("Counts: " . json_encode($counts));
-error_log("Compound vs Protein Data to send: " . json_encode(isset($respArr['compound_vs_protein']) ? $respArr['compound_vs_protein'] : []));
-error_log("Protein vs Disease Data to send: " . json_encode(isset($respArr['protein_vs_disease']) ? $respArr['protein_vs_disease'] : []));
 
 echo json_encode($respArr);
 error_log("predict.php response: " . json_encode($respArr));
