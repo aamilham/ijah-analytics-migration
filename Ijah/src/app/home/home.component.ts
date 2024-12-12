@@ -133,53 +133,127 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.searchDebouncer = setTimeout(() => {
-      if (!event?.term || event.term.length < this.MINIMUM_SEARCH_LENGTH) {
+      if (!event?.term) {
+        this.resetFilteredList(this.activeDropdown);
+        return;
+      }
+
+      // Trim the search term and normalize spaces
+      const cleanTerm = event.term.trim().replace(/\s+/g, ' ');
+      
+      if (cleanTerm.length < this.MINIMUM_SEARCH_LENGTH) {
         this.resetFilteredList(this.activeDropdown);
         return;
       }
       
-      const searchTerm = event.term.toLowerCase();
-      this.performSearch(searchTerm);
+      this.performSearch(cleanTerm);
     }, this.searchDebounceTime);
-  }
-
-  private performSearch(searchTerm: string) {
-    const binarySearch = (list: any[], term: string, maxResults: number = 50) => {
-      return list
-        .filter(item => item.name.toLowerCase().includes(term))
-        .slice(0, maxResults);
-    };
-
-    switch(this.activeDropdown) {
-      case 'plant':
-        this.filteredPlantList = binarySearch(this.plantList, searchTerm);
-        break;
-      case 'compound':
-        this.filteredCompoundList = binarySearch(this.compoundList, searchTerm);
-        break;
-      case 'protein':
-        this.filteredProteinList = binarySearch(this.proteinList, searchTerm);
-        break;
-      case 'disease':
-        this.filteredDiseaseList = binarySearch(this.diseaseList, searchTerm);
-        break;
-    }
   }
 
   private resetFilteredList(type: string | null) {
     const initialItems = 50;
     switch(type) {
       case 'plant':
-        this.filteredPlantList = this.plantList.slice(0, initialItems);
+        // Filter out selected plants
+        this.filteredPlantList = this.plantList
+          .filter(plant => !this.selectedPlants.some(selected => selected.id === plant.id))
+          .slice(0, initialItems);
         break;
       case 'compound':
-        this.filteredCompoundList = this.compoundList.slice(0, initialItems);
+        // Filter out selected compounds
+        this.filteredCompoundList = this.compoundList
+          .filter(compound => !this.selectedCompounds.some(selected => selected.id === compound.id))
+          .slice(0, initialItems);
         break;
       case 'protein':
-        this.filteredProteinList = this.proteinList.slice(0, initialItems);
+        // Filter out selected proteins
+        this.filteredProteinList = this.proteinList
+          .filter(protein => !this.selectedProteins.some(selected => selected.id === protein.id))
+          .slice(0, initialItems);
         break;
       case 'disease':
-        this.filteredDiseaseList = this.diseaseList.slice(0, initialItems);
+        // Filter out selected diseases
+        this.filteredDiseaseList = this.diseaseList
+          .filter(disease => !this.selectedDiseases.some(selected => selected.id === disease.id))
+          .slice(0, initialItems);
+        break;
+    }
+  }
+
+  private performSearch(searchTerm: string) {
+    // Split search terms and ensure no empty strings or extra spaces
+    const searchWords = searchTerm
+      .toLowerCase()
+      .split(' ')
+      .filter((word: string) => word.length > 0)
+      .map((word: string) => word.trim());
+    
+    const searchInList = (list: any[], selectedItems: any[] = [], maxResults: number = 50) => {
+      const scores = new Map<any, number>();
+      
+      // Filter out already selected items
+      const availableItems = list.filter(item => 
+        !selectedItems.some(selected => selected.id === item.id)
+      );
+      
+      availableItems.forEach(item => {
+        const name = item.name.toLowerCase().trim();
+        let score = 0;
+        
+        searchWords.forEach(word => {
+          // Exact match gets highest score
+          if (name === word) {
+            score += 100;
+          }
+          // Starting with the word gets high score
+          else if (name.startsWith(word)) {
+            score += 75;
+          }
+          // Word appears in the middle gets medium score
+          else if (name.includes(word)) {
+            score += 50;
+          }
+          // Individual parts match (for handling first/last names)
+          else {
+            const nameParts = name.split(' ')
+              .filter((part: string) => part.length > 0);
+            nameParts.forEach((part: string) => {
+              const cleanPart = part.trim();
+              if (cleanPart === word) {
+                score += 40;
+              } else if (cleanPart.startsWith(word)) {
+                score += 30;
+              } else if (cleanPart.includes(word)) {
+                score += 20;
+              }
+            });
+          }
+        });
+        
+        if (score > 0) {
+          scores.set(item, score);
+        }
+      });
+      
+      return Array.from(scores.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, maxResults)
+        .map(([item]) => item);
+    };
+
+    // Update filtered lists based on search results, excluding selected items
+    switch(this.activeDropdown) {
+      case 'plant':
+        this.filteredPlantList = searchInList(this.plantList, this.selectedPlants);
+        break;
+      case 'compound':
+        this.filteredCompoundList = searchInList(this.compoundList, this.selectedCompounds);
+        break;
+      case 'protein':
+        this.filteredProteinList = searchInList(this.proteinList, this.selectedProteins);
+        break;
+      case 'disease':
+        this.filteredDiseaseList = searchInList(this.diseaseList, this.selectedDiseases);
         break;
     }
   }
@@ -309,19 +383,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getPlantPlaceholder(): string {
-    return this.selectedCompounds.length > 0 ? '' : 'Search';
+    return this.isPlantDisabled() ? '' : 'Search';
   }
 
   getCompoundPlaceholder(): string {
-    return this.selectedPlants.length > 0 ? '' : 'Search';
+    return this.isCompoundDisabled() ? '' : 'Search';
   }
 
   getProteinPlaceholder(): string {
-    return this.selectedProteins.length ? `${this.selectedProteins.length} proteins selected` : 'Select proteins...';
+    return this.isProteinDisabled() ? '' : 'Search';
   }
 
   getDiseasePlaceholder(): string {
-    return this.selectedDiseases.length ? `${this.selectedDiseases.length} diseases selected` : 'Select diseases...';
+    return this.isDiseaseDisabled() ? '' : 'Search';
   }
 
   isPlantDisabled(): boolean {
@@ -333,11 +407,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   isProteinDisabled(): boolean {
-    return this.loading;
+    return this.loading || this.selectedDiseases.length > 0;
   }
 
   isDiseaseDisabled(): boolean {
-    return this.loading;
+    return this.loading || this.selectedProteins.length > 0;
   }
 
   onReset() {
