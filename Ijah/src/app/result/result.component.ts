@@ -55,30 +55,57 @@ interface ProteinToDiseaseData {
 }
 
 interface PlantMetadata {
-  latinName?: string;
-  localName?: string;
+  pla_id?: string;
+  pla_name?: string;
+  pla_idr_name?: string;
+  pla_description?: string;
 }
 
 interface CompoundMetadata {
-  casId?: string;
-  pubchemName?: string;
-  iupacName?: string;
-  knapsackId?: string;
-  keggId?: string;
-  pubchemId?: string;
-  drugbankId?: string;
+  com_id?: string;
+  com_cas_id?: string;
+  com_drugbank_id?: string;
+  com_knapsack_id?: string;
+  com_kegg_id?: string;
+  com_pubchem_id?: string;
+  com_inchikey?: string;
+  com_smiles?: string;
+  com_name?: string;
 }
 
 interface ProteinMetadata {
-  casId?: string;
-  keggId?: string;
-  pubchemId?: string;
-  drugbankId?: string;
+  pro_id?: string;
+  pro_uniprot_id?: string;
+  pro_name?: string;
+  pro_description?: string;
 }
 
 interface DiseaseMetadata {
+  dis_id?: string;
+  dis_omim_id?: string;
+  dis_name?: string;
+  dis_description?: string;
+}
+
+interface SankeyNode {
+  name: string;
+  label: string;
+  commonName?: string;
+  description?: string;
+  casId?: string;
+  drugbankId?: string;
+  knapsackId?: string;
+  keggId?: string;
+  pubchemId?: string;
+  inchikey?: string;
+  smiles?: string;
+  uniprotId?: string;
   omimId?: string;
-  diseaseName?: string;
+}
+
+interface SankeyData {
+  nodes: SankeyNode[];
+  links: any[];
 }
 
 @Component({
@@ -97,28 +124,28 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
   // Columns for tables
   plantToCompoundColumns: string[] = [
-    'plantLatinName', 
-    'plantCommonName', 
-    'compoundCommonName', 
-    'compoundId', 
-    'compoundCAS', 
+    'plantLatinName',
+    'plantCommonName',
+    'compoundId',
+    'compoundCommonName',
+    'compoundCAS',
     'confidenceScore'
   ];
 
   compoundToProteinColumns: string[] = [
-    'compoundCommonName', 
-    'compoundId', 
-    'compoundCAS', 
-    'uniprotProteinName', 
-    'uniprotID', 
+    'compoundId',
+    'compoundCommonName',
+    'compoundCAS',
+    'uniprotID',
+    'uniprotProteinName',
     'confidenceScore'
   ];
 
   proteinToDiseaseColumns: string[] = [
-    'proteinName', 
-    'uniprotID', 
-    'diseaseName', 
-    'omimID', 
+    'uniprotID',
+    'proteinName',
+    'omimID',
+    'diseaseName',
     'confidenceScore'
   ];
 
@@ -132,8 +159,8 @@ export class ResultComponent implements OnInit, AfterViewInit {
     this.plantToCompoundDataSource.data = data.map(item => ({
       plantLatinName: item.pla_name,
       plantCommonName: item.pla_idr_name || 'Unknown',
+      compoundId: item.com_id,
       compoundCommonName: item.com_name || 'Unknown',
-      compoundId: item.com_id || 'Unknown',
       compoundCAS: item.com_cas_id,
       confidenceScore: item.weight || 0
     }));
@@ -141,71 +168,222 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
   updateCompoundToProteinTable(data: any[]) {
     this.compoundToProteinDataSource.data = data.map(item => ({
+      compoundId: item.com_id,
       compoundCommonName: item.com_name || 'Unknown',
-      compoundId: item.com_id || 'Unknown',
       compoundCAS: item.com_cas_id,
-      uniprotProteinName: item.pro_name,
       uniprotID: item.pro_uniprot_id,
+      uniprotProteinName: item.pro_name,
       confidenceScore: item.weight || 0
     }));
   }
 
   updateProteinToDiseaseTable(data: any[]) {
     this.proteinToDiseaseDataSource.data = data.map(item => ({
-      proteinName: item.pro_name,
       uniprotID: item.pro_uniprot_id,
-      diseaseName: item.dis_name,
+      proteinName: item.pro_name,
       omimID: item.dis_omim_id,
+      diseaseName: item.dis_name,
       confidenceScore: item.weight || 0
     }));
   }
 
-  plantMetadataColumns: string[] = ['latinName', 'localName'];
-  compoundMetadataColumns: string[] = ['casId', 'pubchemName', 'iupacName', 'knapsackId', 'keggId', 'pubchemId', 'drugbankId'];
-  proteinMetadataColumns: string[] = ['casId', 'keggId', 'pubchemId', 'drugbankId'];
-  diseaseMetadataColumns: string[] = ['omimId', 'diseaseName'];
+  // Metadata table columns
+  plantMetadataColumns: string[] = [
+    'pla_id',
+    'pla_name',
+    'pla_idr_name',
+    'pla_description'
+  ];
 
-  // Selected states
+  compoundMetadataColumns: string[] = [
+    'com_id',
+    'com_cas_id',
+    'com_drugbank_id',
+    'com_knapsack_id',
+    'com_kegg_id',
+    'com_pubchem_id',
+    'com_inchikey',
+    'com_smiles',
+    'com_name'
+  ];
+
+  proteinMetadataColumns: string[] = [
+    'pro_id',
+    'pro_uniprot_id',
+    'pro_name',
+    'pro_description'
+  ];
+
+  diseaseMetadataColumns: string[] = [
+    'dis_id',
+    'dis_omim_id',
+    'dis_name',
+    'dis_description'
+  ];
+
+  // Selected states and data
+  selectedPlant: any = null;
+  selectedCompound: any = null;
+  selectedProtein: any = null;
+  selectedDisease: any = null;
+
+  // Metadata sources
+  plantMetadataSource = new MatTableDataSource<PlantMetadata>([]);
+  compoundMetadataSource = new MatTableDataSource<CompoundMetadata>([]);
+  proteinMetadataSource = new MatTableDataSource<ProteinMetadata>([]);
+  diseaseMetadataSource = new MatTableDataSource<DiseaseMetadata>([]);
+
+  onNodeClick(event: any) {
+    const node = event.target;
+    if (!node || !node.name) return;
+
+    const nodeType = node.name.split('_')[0];
+    const nodeData = this.getNodeData(node);
+
+    // Reset all selections
+    this.selectedPlant = null;
+    this.selectedCompound = null;
+    this.selectedProtein = null;
+    this.selectedDisease = null;
+
+    // Update selected item and metadata based on node type
+    switch (nodeType) {
+      case 'plant':
+        this.selectedPlant = nodeData;
+        this.updatePlantMetadata(nodeData);
+        this.isPlantSelected = true;
+        this.isCompoundSelected = false;
+        this.isProteinSelected = false;
+        this.isDiseaseSelected = false;
+        break;
+      case 'compound':
+        this.selectedCompound = nodeData;
+        this.updateCompoundMetadata(nodeData);
+        this.isPlantSelected = false;
+        this.isCompoundSelected = true;
+        this.isProteinSelected = false;
+        this.isDiseaseSelected = false;
+        break;
+      case 'protein':
+        this.selectedProtein = nodeData;
+        this.updateProteinMetadata(nodeData);
+        this.isPlantSelected = false;
+        this.isCompoundSelected = false;
+        this.isProteinSelected = true;
+        this.isDiseaseSelected = false;
+        break;
+      case 'disease':
+        this.selectedDisease = nodeData;
+        this.updateDiseaseMetadata(nodeData);
+        this.isPlantSelected = false;
+        this.isCompoundSelected = false;
+        this.isProteinSelected = false;
+        this.isDiseaseSelected = true;
+        break;
+    }
+  }
+
+  private getNodeData(node: any): any {
+    if (!node || !node.name) return null;
+
+    // Extract node data based on the node type
+    const [nodeType, nodeId] = node.name.split('_');
+    
+    // Find the corresponding data from our data arrays
+    switch (nodeType) {
+      case 'plant':
+        return this.plantData.find(p => p.pla_id === nodeId) || {
+          pla_id: nodeId,
+          pla_name: node.label || 'Unknown',
+          pla_idr_name: 'N/A',
+          pla_description: 'No description available'
+        };
+      case 'compound':
+        return this.compoundData.find(c => c.com_id === nodeId) || {
+          com_id: nodeId,
+          com_cas_id: node.casId || 'N/A',
+          com_drugbank_id: node.drugbankId || 'N/A',
+          com_knapsack_id: node.knapsackId || 'N/A',
+          com_kegg_id: node.keggId || 'N/A',
+          com_pubchem_id: node.pubchemId || 'N/A',
+          com_inchikey: node.inchikey || 'N/A',
+          com_smiles: node.smiles || 'N/A',
+          com_name: node.label || 'Unknown'
+        };
+      case 'protein':
+        return this.proteinData.find(p => p.pro_id === nodeId) || {
+          pro_id: nodeId,
+          pro_uniprot_id: node.uniprotId || 'N/A',
+          pro_name: node.label || 'Unknown',
+          pro_description: 'No description available'
+        };
+      case 'disease':
+        return this.diseaseData.find(d => d.dis_id === nodeId) || {
+          dis_id: nodeId,
+          dis_omim_id: node.omimId || 'N/A',
+          dis_name: node.label || 'Unknown',
+          dis_description: 'No description available'
+        };
+      default:
+        return null;
+    }
+  }
+
+  private updatePlantMetadata(plant: PlantMetadata | null) {
+    if (plant) {
+      this.plantMetadataSource.data = [plant];
+    } else {
+      this.plantMetadataSource.data = [];
+    }
+  }
+
+  private updateCompoundMetadata(compound: CompoundMetadata | null) {
+    if (compound) {
+      this.compoundMetadataSource.data = [compound];
+    } else {
+      this.compoundMetadataSource.data = [];
+    }
+  }
+
+  private updateProteinMetadata(protein: ProteinMetadata | null) {
+    if (protein) {
+      this.proteinMetadataSource.data = [protein];
+    } else {
+      this.proteinMetadataSource.data = [];
+    }
+  }
+
+  private updateDiseaseMetadata(disease: DiseaseMetadata | null) {
+    if (disease) {
+      this.diseaseMetadataSource.data = [disease];
+    } else {
+      this.diseaseMetadataSource.data = [];
+    }
+  }
+
+  // Is selected states
   isPlantSelected: boolean = false;
   isCompoundSelected: boolean = false;
   isProteinSelected: boolean = false;
   isDiseaseSelected: boolean = false;
-
-  // Metadata sources
-  plantMetadataSource = new MatTableDataSource<PlantMetadata>([
-    { latinName: 'Example Plant', localName: 'Local Name' }
-  ]);
-
-  compoundMetadataSource = new MatTableDataSource<CompoundMetadata>([
-    {
-      casId: '123-45-6',
-      pubchemName: 'Example Compound',
-      iupacName: 'IUPAC Name',
-      knapsackId: 'KNP123',
-      keggId: 'KEGG123',
-      pubchemId: 'PUB123',
-      drugbankId: 'DB123'
-    }
-  ]);
-
-  proteinMetadataSource = new MatTableDataSource<ProteinMetadata>([
-    {
-      casId: '123-45-6',
-      keggId: 'KEGG123',
-      pubchemId: 'PUB123',
-      drugbankId: 'DB123'
-    }
-  ]);
-
-  diseaseMetadataSource = new MatTableDataSource<DiseaseMetadata>([
-    { omimId: '123456', diseaseName: 'Example Disease' }
-  ]);
 
   // Count variables
   plantCount: number = 0;
   compoundCount: number = 0;
   proteinCount: number = 0;
   diseaseCount: number = 0;
+
+  // Sankey data
+  sankeyData: SankeyData = {
+    nodes: [],
+    links: []
+  };
+
+  // Data arrays with proper typing
+  plantData: PlantMetadata[] = [];
+  compoundData: CompoundMetadata[] = [];
+  proteinData: ProteinMetadata[] = [];
+  diseaseData: DiseaseMetadata[] = [];
 
   constructor(
     private route: ActivatedRoute, 
@@ -495,6 +673,15 @@ export class ResultComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    // Initialize data when component loads
+    this.initializeData();
+    
+    // Initialize empty metadata tables
+    this.plantMetadataSource.data = [];
+    this.compoundMetadataSource.data = [];
+    this.proteinMetadataSource.data = [];
+    this.diseaseMetadataSource.data = [];
+
     // Subscribe to route params to get the data
     this.route.queryParams.subscribe(params => {
       if (params['data']) {
@@ -531,8 +718,8 @@ export class ResultComponent implements OnInit, AfterViewInit {
       this.plantToCompoundDataSource.data = data.map((item) => ({
         plantLatinName: item.pla_name,
         plantCommonName: item.pla_idr_name || 'Unknown',
+        compoundId: item.com_id,
         compoundCommonName: item.com_name || 'Unknown',
-        compoundId: item.com_id || 'Unknown',
         compoundCAS: item.com_cas_id,
         confidenceScore: item.weight || 0,
       }));
@@ -544,11 +731,11 @@ export class ResultComponent implements OnInit, AfterViewInit {
       if (!data) return;
       
       this.compoundToProteinDataSource.data = data.map((item) => ({
+        compoundId: item.com_id,
         compoundCommonName: item.com_name || 'Unknown',
-        compoundId: item.com_id || 'Unknown',
         compoundCAS: item.com_cas_id,
-        uniprotProteinName: item.pro_name,
         uniprotID: item.pro_uniprot_id,
+        uniprotProteinName: item.pro_name,
         confidenceScore: item.weight || 0,
       }));
       this.updateCharts();
@@ -559,14 +746,63 @@ export class ResultComponent implements OnInit, AfterViewInit {
       if (!data) return;
       
       this.proteinToDiseaseDataSource.data = data.map((item) => ({
-        proteinName: item.pro_name,
         uniprotID: item.pro_uniprot_id,
-        diseaseName: item.dis_name,
+        proteinName: item.pro_name,
         omimID: item.dis_omim_id,
+        diseaseName: item.dis_name,
         confidenceScore: item.weight || 0,
       }));
       this.updateCharts();
     });
+  }
+
+  private initializeData(): void {
+    if (!this.sankeyData || !this.sankeyData.nodes) {
+      console.warn('Sankey data not initialized');
+      return;
+    }
+
+    // Convert Sankey data to our metadata format
+    this.plantData = this.sankeyData.nodes
+      .filter((node: SankeyNode) => node.name.startsWith('plant_'))
+      .map((node: SankeyNode) => ({
+        pla_id: node.name.split('_')[1],
+        pla_name: node.label,
+        pla_idr_name: node.commonName || 'N/A',
+        pla_description: node.description || 'No description available'
+      }));
+
+    this.compoundData = this.sankeyData.nodes
+      .filter((node: SankeyNode) => node.name.startsWith('compound_'))
+      .map((node: SankeyNode) => ({
+        com_id: node.name.split('_')[1],
+        com_cas_id: node.casId || 'N/A',
+        com_drugbank_id: node.drugbankId || 'N/A',
+        com_knapsack_id: node.knapsackId || 'N/A',
+        com_kegg_id: node.keggId || 'N/A',
+        com_pubchem_id: node.pubchemId || 'N/A',
+        com_inchikey: node.inchikey || 'N/A',
+        com_smiles: node.smiles || 'N/A',
+        com_name: node.label
+      }));
+
+    this.proteinData = this.sankeyData.nodes
+      .filter((node: SankeyNode) => node.name.startsWith('protein_'))
+      .map((node: SankeyNode) => ({
+        pro_id: node.name.split('_')[1],
+        pro_uniprot_id: node.uniprotId || 'N/A',
+        pro_name: node.label,
+        pro_description: node.description || 'No description available'
+      }));
+
+    this.diseaseData = this.sankeyData.nodes
+      .filter((node: SankeyNode) => node.name.startsWith('disease_'))
+      .map((node: SankeyNode) => ({
+        dis_id: node.name.split('_')[1],
+        dis_omim_id: node.omimId || 'N/A',
+        dis_name: node.label,
+        dis_description: node.description || 'No description available'
+      }));
   }
 
   private updateCharts() {
