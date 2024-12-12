@@ -25,7 +25,6 @@ if (!empty($requestList)) {
   foreach($requestList as $req) {
     if (!empty($req['id'])) {
       $val = $req['id'];
-
       $id = '';
       switch (true){
         case str_contains($val, 'PLA') :
@@ -40,10 +39,9 @@ if (!empty($requestList)) {
                 com_pubchem_id,com_inchikey,com_smiles,com_pubchem_name,com_iupac_name';
             break;
         case str_contains($val, 'PRO') :
-            $id = 'com_id';
-            $table = 'compound';
-            $col = 'com_id,com_cas_id,com_drugbank_id,com_knapsack_id,com_kegg_id,
-                com_pubchem_id,com_inchikey,com_smiles,com_pubchem_name,com_iupac_name';
+            $id = 'pro_id';
+            $table = 'protein';
+            $col = 'pro_id,pro_uniprot_id,pro_name,pro_description';
             break;
         case str_contains($val, 'DIS') :
             $id = 'dis_id';
