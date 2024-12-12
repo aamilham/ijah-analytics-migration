@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root', // Menjadikan service ini tersedia di seluruh aplikasi
@@ -21,6 +22,8 @@ export class SharedService {
   proteinCount$ = this.proteinCountSource.asObservable();
   diseaseCount$ = this.diseaseCountSource.asObservable();
 
+  constructor(private http: HttpClient) { }
+
   // Method to update all counts at once from initial data
   updateCounts(counts: { plants: number, compounds: number, proteins: number, diseases: number }) {
     this.plantCountSource.next(counts.plants);
@@ -39,5 +42,22 @@ export class SharedService {
 
   updateProteinToDiseaseData(data: any[]) {
     this.proteinToDiseaseSource.next(data);
+  }
+
+  // Metadata retrieval methods
+  getPlantMetadata(id: string) {
+    return this.http.get<any>(`/api/metadata/plant/${id}`);
+  }
+
+  getCompoundMetadata(id: string) {
+    return this.http.get<any>(`/api/metadata/compound/${id}`);
+  }
+
+  getProteinMetadata(id: string) {
+    return this.http.get<any>(`/api/metadata/protein/${id}`);
+  }
+
+  getDiseaseMetadata(id: string) {
+    return this.http.get<any>(`/api/metadata/disease/${id}`);
   }
 }
