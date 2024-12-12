@@ -47,12 +47,12 @@
 
         <!-- Connectivity Pie Chart -->
         <div class="connectivity-summary">
-          <canvas id="connectivityPieChart"></canvas>
+          <div id="connectivityPieChart" style="width: 100%; height: 300px;"></div>
         </div>
 
         <!-- Status Doughnut Chart -->
-        <div class="status-summary" style="height: 250px;">
-          <canvas id="statusDoughnutChart"></canvas>
+        <div class="status-summary">
+          <div id="statusDoughnutChart" style="width: 100%; height: 300px;"></div>
         </div>
       </div>
     </div>
@@ -62,12 +62,10 @@
   <div class="container connectivity-container">
     <h2>Connectivity Diagram</h2>
     <div class="connectivity-content">
-      <div *ngIf="sankeyOptions" class="chart-container">
-        <highcharts-chart
-          [Highcharts]="Highcharts"
-          [options]="sankeyOptions"
-          style="width: 100%; height: 400px; display: block;">
-        </highcharts-chart>
+      <div id="sankey_diagram" style="width: 100%; height: 800px; position: relative; margin: 40px 0; padding: 30px;"></div>
+      <div *ngIf="!plantToCompoundDataSource?.data?.length && !compoundToProteinDataSource?.data?.length && !proteinToDiseaseDataSource?.data?.length" 
+           class="no-data-message">
+        No connectivity data available
       </div>
     </div>
   </div>
