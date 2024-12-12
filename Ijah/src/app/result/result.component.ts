@@ -716,11 +716,11 @@ export class ResultComponent implements OnInit, AfterViewInit {
       if (!data) return;
       
       this.plantToCompoundDataSource.data = data.map((item) => ({
-        plantLatinName: item.pla_name,
+        plantLatinName: item.pla_name || 'Unknown',
         plantCommonName: item.pla_idr_name || 'Unknown',
-        compoundId: item.com_id,
+        compoundId: item.com_id || 'Unknown',
         compoundCommonName: item.com_name || 'Unknown',
-        compoundCAS: item.com_cas_id,
+        compoundCAS: item.com_cas_id || 'Unknown',
         confidenceScore: item.weight || 0,
       }));
       this.updateCharts();
@@ -731,11 +731,11 @@ export class ResultComponent implements OnInit, AfterViewInit {
       if (!data) return;
       
       this.compoundToProteinDataSource.data = data.map((item) => ({
-        compoundId: item.com_id,
+        compoundId: item.com_id || 'Unknown',
         compoundCommonName: item.com_name || 'Unknown',
-        compoundCAS: item.com_cas_id,
-        uniprotID: item.pro_uniprot_id,
-        uniprotProteinName: item.pro_name,
+        compoundCAS: item.com_cas_id || 'Unknown',
+        uniprotID: item.pro_uniprot_id || 'Unknown',
+        uniprotProteinName: item.pro_name || 'Unknown',
         confidenceScore: item.weight || 0,
       }));
       this.updateCharts();
@@ -746,13 +746,103 @@ export class ResultComponent implements OnInit, AfterViewInit {
       if (!data) return;
       
       this.proteinToDiseaseDataSource.data = data.map((item) => ({
-        uniprotID: item.pro_uniprot_id,
-        proteinName: item.pro_name,
-        omimID: item.dis_omim_id,
-        diseaseName: item.dis_name,
+        uniprotID: item.pro_uniprot_id || 'Unknown',
+        proteinName: item.pro_name || 'Unknown',
+        omimID: item.dis_omim_id || 'Unknown',
+        diseaseName: item.dis_name || 'Unknown',
         confidenceScore: item.weight || 0,
       }));
       this.updateCharts();
+    });
+
+    // Plant Metadata
+    this.sharedService.plantToCompoundData$.subscribe((data) => {
+      const plantMetadata = data.map((item) => ({
+        pla_id: item.pla_id || 'Unknown',
+        pla_name: item.pla_name || 'Unknown',
+        pla_idr_name: item.pla_idr_name || 'Unknown',
+        pla_description: item.pla_description || 'Unknown'
+      }));
+      this.plantMetadataSource.data = plantMetadata;
+    });
+
+      // Compound Metadata
+    this.sharedService.compoundToProteinData$.subscribe((compoundToProtein) => {
+      const compoundMetadataFromProtein = compoundToProtein.map((item) => ({
+        com_id: item.com_cas_id || 'Unknown',
+        pubchemName: 'Unknown', // Modify if data is available
+        iupacName: 'Unknown', // Modify if data is available
+        knapsackId: 'Unknown', // Modify if data is available
+        keggId: 'Unknown', // Modify if data is available
+        pubchemId: 'Unknown', // Modify if data is available
+        drugbankId: 'Unknown', // Modify if data is available
+      }));
+
+      // Fallback to plantToCompoundData if compoundToProteinData is empty
+      this.sharedService.plantToCompoundData$.subscribe((plantToCompound) => {
+        const compoundMetadataFromPlant = plantToCompound.map((item) => ({
+          com_id: item.com_id || 'Unknown',
+          com_cas_id: item.com_cas_id || 'Unknown',
+          com_drugbank_id: item.com_drugbank_id || 'Unknown',
+          com_knapsack_id: item.com_knapsack_id || 'Unknown',
+          com_kegg_id: item.com_kegg_id || 'Unknown',
+          com_pubchem_id: item.com_pubchem_id || 'Unknown',
+          com_inchikey: item.com_inchikey || 'Unknown',
+          com_smiles: item.com_smiles || 'Unknown',
+          com_name: item.com_name || 'Unknown'
+        }));
+
+        // Combine data from both sources, prioritizing compoundToProteinData
+        this.compoundMetadataSource.data = [
+          ...compoundMetadataFromProtein,
+          ...compoundMetadataFromPlant.filter((item) =>
+            !compoundMetadataFromProtein.some(
+              (proteinItem) => proteinItem.com_id === item.com_id
+            )
+          ),
+        ];
+      });
+    });
+
+      // Protein Metadata
+    this.sharedService.compoundToProteinData$.subscribe((compoundToProtein) => {
+      const proteinMetadataFromCompound = compoundToProtein.map((item) => ({
+        pro_id: item.pro_id || 'Unknown',
+        pro_uniprot_id: item.pro_uniprot_id || 'Unknown',
+        pro_name: item.pro_name || 'Unknown',
+        pro_description: item.pro_description || 'Unknown',
+      }));
+
+      // Fallback to proteinToDiseaseData if compoundToProtein is empty
+      this.sharedService.proteinToDiseaseData$.subscribe((proteinToDisease) => {
+        const proteinMetadataFromDisease = proteinToDisease.map((item) => ({
+          pro_id: item.pro_id || 'Unknown',
+          pro_uniprot_id: item.pro_uniprot_id || 'Unknown',
+          pro_name: item.pro_name || 'Unknown',
+          pro_description: item.pro_description || 'Unknown',
+        }));
+
+        // Combine data from both sources, prioritizing compoundToProteinData
+        this.proteinMetadataSource.data = [
+          ...proteinMetadataFromCompound,
+          ...proteinMetadataFromDisease.filter((item) =>
+            !proteinMetadataFromCompound.some(
+              (compoundItem) => compoundItem.pro_id === item.pro_id
+            )
+          ),
+        ];
+      });
+    });
+
+    // Disease Metadata
+    this.sharedService.proteinToDiseaseData$.subscribe((data) => {
+      const diseaseMetadata = data.map((item) => ({
+        dis_id: item.dis_id || 'Unknown',
+        dis_omim_id: item.dis_omim_id || 'Unknown',
+        dis_name: item.dis_name || 'Unknown',
+        dis_description: item.dis_description || 'Unknown',
+      }));
+      this.diseaseMetadataSource.data = diseaseMetadata;
     });
   }
 
