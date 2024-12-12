@@ -8,10 +8,26 @@ export class SharedService {
   private plantToCompoundSource = new BehaviorSubject<any[]>([]);
   private compoundToProteinSource = new BehaviorSubject<any[]>([]);
   private proteinToDiseaseSource = new BehaviorSubject<any[]>([]);
+  private plantCountSource = new BehaviorSubject<number>(0);
+  private compoundCountSource = new BehaviorSubject<number>(0);
+  private proteinCountSource = new BehaviorSubject<number>(0);
+  private diseaseCountSource = new BehaviorSubject<number>(0);
 
   plantToCompoundData$ = this.plantToCompoundSource.asObservable();
   compoundToProteinData$ = this.compoundToProteinSource.asObservable();
   proteinToDiseaseData$ = this.proteinToDiseaseSource.asObservable();
+  plantCount$ = this.plantCountSource.asObservable();
+  compoundCount$ = this.compoundCountSource.asObservable();
+  proteinCount$ = this.proteinCountSource.asObservable();
+  diseaseCount$ = this.diseaseCountSource.asObservable();
+
+  // Method to update all counts at once from initial data
+  updateCounts(counts: { plants: number, compounds: number, proteins: number, diseases: number }) {
+    this.plantCountSource.next(counts.plants);
+    this.compoundCountSource.next(counts.compounds);
+    this.proteinCountSource.next(counts.proteins);
+    this.diseaseCountSource.next(counts.diseases);
+  }
 
   updatePlantToCompoundData(data: any[]) {
     this.plantToCompoundSource.next(data);
