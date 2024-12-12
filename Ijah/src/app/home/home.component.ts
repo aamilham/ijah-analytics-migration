@@ -112,8 +112,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onOpen(event: any, type: string) {
+    if (!event || !event.target) return;
+    
     this.activeDropdown = type;
-    const element = event.currentTarget;
+    const element = event.target.closest('.ng-select');
+    if (!element) return;
+    
     const select = this.selectInstances.get(element);
     if (select) {
       const searchInput = this.searchInputCache.get(element);
